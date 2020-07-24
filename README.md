@@ -1,6 +1,6 @@
 ## Genetic Algorithms for Python
 
-Genetic Algorithms for python.
+Genetic Algorithms for Python.
 
 ## Table of Contents
 
