@@ -1,0 +1,3 @@
+[flake8]
+exclude = */python/*
+max-line-length = 180

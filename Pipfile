@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+autopep8 = "*"
+pep8-naming = "*"
+wheel = "*"
+
+[packages]
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+format = "autopep8 -ivr src"
+lint = "flake8 --show-source src"
