@@ -32,3 +32,8 @@ class ISettings(metaclass=ABCMeta):
     @abstractmethod
     def action_number(self):
         pass
+
+    @property
+    @abstractmethod
+    def fps(self):
+        pass
