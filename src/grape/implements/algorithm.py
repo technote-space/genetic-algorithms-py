@@ -14,31 +14,34 @@ class Algorithm(AbstractAlgorithm):
     アルゴリズム
     """
 
-    def __init__(self, target):
+    def __init__(self, target, __best_changed=None):
         self.__target = target
+        self.__best_changed = __best_changed
+
         settings = target.ga_settings
         super().__init__(
-            self.__best_changed,
+            self.__best_changed_function,
             self.__get_islands(target),
             Termination(settings.terminate_offspring_number),
             Migration(settings.migration_rate, settings.migration_interval)
         )
 
-    @staticmethod
-    def __best_changed(algorithm):
+    def __best_changed_function(self, algorithm):
         algorithm.draw()
+        if self.__best_changed:
+            self.__best_changed(algorithm)
 
     @staticmethod
     def __get_islands(target):
         settings = target.ga_settings
-        dataset = TestDataset(settings.test_number, TestData(target))
-        functions = FunctionSet(target)
         total_island_number = max(1, settings.island_number)
         cultural_island_number = math.floor(total_island_number * settings.cultural_island_rate)
         mgg_island_number = max(1, total_island_number - cultural_island_number)
         cultural_island_number = total_island_number - mgg_island_number
-        population_size = math.floor(settings.population_size / total_island_number)
 
+        dataset = TestDataset(settings.test_number, TestData(target))
+        population_size = math.floor(settings.population_size / total_island_number)
+        functions = FunctionSet(target)
         islands = []
         for _ in range(mgg_island_number):
             islands.append(MggIsland(
