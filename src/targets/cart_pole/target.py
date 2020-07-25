@@ -16,7 +16,7 @@ class CartPole(AbstractTarget):
 
         self.__settings = Settings()
         self.__ga_settings = GaSettings()
-        self.__env = gym.make('CartPole-v0')
+        self.__env = gym.make('CartPole-v1')
         self.__observe = self.__env.reset()
 
     def __del__(self):
@@ -45,4 +45,4 @@ class CartPole(AbstractTarget):
         return self.__observe[index] < 0
 
     def _perform_get_fitness(self):
-        return self.action_step / self.settings.action_limit
+        return self.action_step / self.settings.action_limit + (1 - abs(self.__observe[0]) / 2.4) * 0.01

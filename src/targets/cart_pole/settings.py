@@ -14,7 +14,7 @@ class Settings(AbstractSettings):
 
     @property
     def action_limit(self):
-        return 200
+        return 500
 
     @property
     def perception_number(self):
