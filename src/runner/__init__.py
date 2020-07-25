@@ -2,7 +2,7 @@ import time
 
 
 class Runner:
-    def __init__(self, algorithm, sleep):
+    def __init__(self, algorithm, sleep=1):
         self.__algorithm = algorithm
         self.__sleep = sleep
         self.__main()

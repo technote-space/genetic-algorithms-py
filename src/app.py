@@ -20,10 +20,7 @@ def main():
     parser.add_argument('target', help='target', choices=get_choices())
     args = parser.parse_args()
 
-    Runner(
-        Algorithm(get_targets()[args.target]()),
-        1
-    )
+    Runner(Algorithm(get_targets()[args.target]()))
 
 
 if __name__ == "__main__":
