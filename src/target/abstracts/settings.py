@@ -32,3 +32,7 @@ class AbstractSettings(ISettings):
     @abstractmethod
     def action_number(self):
         pass
+
+    @property
+    def fps(self):
+        return 8
