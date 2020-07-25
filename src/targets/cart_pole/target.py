@@ -19,6 +19,10 @@ class CartPole(AbstractTarget):
         self.__env = gym.make('CartPole-v0')
         self.__observe = self.__env.reset()
 
+    def __del__(self):
+        if self.__env:
+            self.__env.close()
+
     @property
     def settings(self):
         return self.__settings

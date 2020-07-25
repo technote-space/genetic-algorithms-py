@@ -76,6 +76,8 @@ class AbstractAlgorithm(IAlgorithm):
         self.termination.init()
         self._update_chromosomes()
         self._perform_reset()
+        self.__fitness = 0
+        self.__best = None
 
     def _perform_reset(self):
         pass

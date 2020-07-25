@@ -18,6 +18,10 @@ class Settings(AbstractSettings):
         return Helper.get_energy()
 
     @property
+    def step_limit(self):
+        return Helper.get_step_limit()
+
+    @property
     def perception_number(self):
         return 1
 

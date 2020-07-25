@@ -51,7 +51,7 @@ class AbstractIsland(IIsland):
         self.__initialized = False
         self.population.init()
 
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=3) as executor:
             executor.map(self.fitness.evaluate, self.population.chromosomes)
 
         self.__generation_number = 0
@@ -67,8 +67,7 @@ class AbstractIsland(IIsland):
         self.fitness.evaluate(chromosome)
 
     def __evaluate_parents(self, chromosome):
-        if chromosome.fitness < 0:
-            self.fitness.evaluate(chromosome)
+        self.fitness.evaluate(chromosome)
 
     def step(self):
         if not self.__initialized:
@@ -77,9 +76,9 @@ class AbstractIsland(IIsland):
         parents, population = self.selection.select(self.population.chromosomes)
         offspring = self.crossover.cross(parents, self.crossover_probability)
 
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=3) as executor:
             executor.map(self.__evaluate_offspring, offspring)
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=3) as executor:
             executor.map(self.__evaluate_parents, parents)
 
         self.population.update(self.reinsertion.select(population, offspring, parents, self.population.size))

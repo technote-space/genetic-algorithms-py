@@ -37,7 +37,7 @@ class Phenotype:
 
         # noinspection PyBroadException
         try:
-            with ThreadPoolExecutor(max_workers=10) as executor:
+            with ThreadPoolExecutor(max_workers=3) as executor:
                 results = executor.map(self._episode, map(lambda x: (x, functions), dataset.create_dataset()))
                 for result in results:
                     sum_steps += result[0]

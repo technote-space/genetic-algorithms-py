@@ -32,6 +32,10 @@ class Helper:
         return 400
 
     @staticmethod
+    def get_step_limit():
+        return 800
+
+    @staticmethod
     def __get_foods():
         return (
             [1, 0],
