@@ -14,7 +14,7 @@ class Algorithm(AbstractAlgorithm):
     アルゴリズム
     """
 
-    def __init__(self, target, __best_changed=None):
+    def __init__(self, target, *__best_changed):
         self.__target = target
         self.__best_changed = __best_changed
 
@@ -27,9 +27,14 @@ class Algorithm(AbstractAlgorithm):
         )
 
     def __best_changed_function(self, algorithm):
-        algorithm.draw()
-        if self.__best_changed:
-            self.__best_changed(algorithm)
+        self.__cloned_target = self.__target.clone()
+        phenotype = self.best.phenotype
+        phenotype.while_end(phenotype.get_context(self.__cloned_target, FunctionSet(self.__cloned_target)))
+
+        self.draw()
+        for func in self.__best_changed:
+            if callable(func):
+                func(algorithm, self.__cloned_target, self.best)
 
     @staticmethod
     def __get_islands(target):
@@ -67,11 +72,8 @@ class Algorithm(AbstractAlgorithm):
         return islands
 
     def draw(self):
-        target = self.__target.clone()
-        phenotype = self.best.phenotype
-        phenotype.while_end(phenotype.get_context(target, FunctionSet(target)))
-        target.draw()
+        self.__cloned_target.draw()
 
         print(self.progress, f'{self.fitness:.3f}')
-        print(f'{target.get_fitness():.3f}', target.step, target.action_step)
+        print(f'{self.__cloned_target.get_fitness():.3f}', self.__cloned_target.step, self.__cloned_target.action_step)
         print()
