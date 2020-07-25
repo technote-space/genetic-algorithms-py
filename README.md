@@ -22,5 +22,17 @@ curl -L 'https://raw.githubusercontent.com/technote-space/python-setup/bin/setup
 
 ### Run
 ```shell script
-python src/app.py
+python src/app.py [target]
 ```
+
+### Play
+```shell script
+python src/app.py -p [target]
+```
+
+### Target
+#### Santa Fe Trail
+準備中...
+
+#### Cart Pole
+準備中...
