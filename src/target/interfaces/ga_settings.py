@@ -62,3 +62,8 @@ class IGaSettings(metaclass=ABCMeta):
     @abstractmethod
     def node_count(self):
         pass
+
+    @property
+    @abstractmethod
+    def test_number(self):
+        pass

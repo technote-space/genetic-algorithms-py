@@ -51,3 +51,7 @@ class AbstractGaSettings(IGaSettings):
     @property
     def node_count(self):
         return 100
+
+    @property
+    def test_number(self):
+        return 1

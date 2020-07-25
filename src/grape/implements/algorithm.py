@@ -27,7 +27,7 @@ class Algorithm(AbstractAlgorithm):
     @staticmethod
     def __get_islands(target):
         settings = target.ga_settings
-        dataset = TestDataset(1, TestData(target))
+        dataset = TestDataset(settings.test_number, TestData(target))
         functions = FunctionSet(target)
         total_island_number = max(1, settings.island_number)
         cultural_island_number = math.floor(total_island_number * settings.cultural_island_rate)
