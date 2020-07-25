@@ -14,20 +14,24 @@ class Algorithm(AbstractAlgorithm):
     アルゴリズム
     """
 
-    def __init__(self, target, best_changed):
+    def __init__(self, target):
         self.__target = target
         settings = target.ga_settings
         super().__init__(
-            best_changed,
+            self.__best_changed,
             self.__get_islands(target),
             Termination(settings.terminate_offspring_number),
             Migration(settings.migration_rate, settings.migration_interval)
         )
 
     @staticmethod
+    def __best_changed(algorithm):
+        algorithm.draw()
+
+    @staticmethod
     def __get_islands(target):
         settings = target.ga_settings
-        dataset = TestDataset(1, TestData(target))
+        dataset = TestDataset(settings.test_number, TestData(target))
         functions = FunctionSet(target)
         total_island_number = max(1, settings.island_number)
         cultural_island_number = math.floor(total_island_number * settings.cultural_island_rate)
@@ -65,5 +69,6 @@ class Algorithm(AbstractAlgorithm):
         phenotype.while_end(phenotype.get_context(target, FunctionSet(target)))
         target.draw()
 
-        print(self.progress, self.fitness, target.step, target.action_step)
+        print(self.progress, f'{self.fitness:.3f}')
+        print(f'{target.get_fitness():.3f}', target.step, target.action_step)
         print()

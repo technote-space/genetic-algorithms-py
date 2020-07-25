@@ -1,5 +1,4 @@
 from target import AbstractSettings
-from .implements.helper import Helper
 
 
 class Settings(AbstractSettings):
@@ -11,16 +10,16 @@ class Settings(AbstractSettings):
 
     @property
     def name(self):
-        return Helper.get_name()
+        return 'Cart Pole'
 
     @property
     def action_limit(self):
-        return Helper.get_energy()
+        return 200
 
     @property
     def perception_number(self):
-        return 1
+        return 4
 
     @property
     def action_number(self):
-        return 3
+        return 2

@@ -21,7 +21,7 @@ class AbstractSettings(ISettings):
 
     @property
     def step_limit(self):
-        return self.action_limit * 10
+        return self.action_limit * (self.perception_number + 1)
 
     @property
     @abstractmethod
