@@ -1,3 +1,4 @@
+import os
 from abc import abstractmethod
 from ..interfaces import ITarget
 
@@ -91,3 +92,13 @@ class AbstractTarget(ITarget):
 
     def draw(self):
         pass
+
+    def _perform_render(self):
+        self.draw()
+
+    def render(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print()
+        self._perform_render()
+
+        print(f'{self.get_fitness():.3f}', self.step, self.action_step)

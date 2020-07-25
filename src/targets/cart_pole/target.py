@@ -46,3 +46,6 @@ class CartPole(AbstractTarget):
 
     def _perform_get_fitness(self):
         return self.action_step / self.settings.action_limit + (1 - abs(self.__observe[0]) / 2.4) * 0.01
+
+    def _perform_render(self):
+        self.__env.render()

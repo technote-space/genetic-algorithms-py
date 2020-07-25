@@ -1,5 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
 from .context import Context
+from .functions import Perception
 
 
 class Phenotype:
@@ -50,6 +51,14 @@ class Phenotype:
     @staticmethod
     def _next(node, context):
         context.functions.get_function(node[0]).execute(node[1], node[2], context)
+
+    def until_action(self, context):
+        while not context.target.has_reached:
+            node = self.__genotype.get_node_genes(context.current)
+            func = context.functions.get_function(node[0])
+            func.execute(node[1], node[2], context)
+            if type(func) is not Perception:
+                break
 
     def while_end(self, context):
         while not context.target.has_reached:

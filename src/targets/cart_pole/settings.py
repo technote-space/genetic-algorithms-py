@@ -23,3 +23,7 @@ class Settings(AbstractSettings):
     @property
     def action_number(self):
         return 2
+
+    @property
+    def fps(self):
+        return 30

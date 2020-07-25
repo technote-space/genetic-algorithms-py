@@ -60,3 +60,7 @@ class ITarget(metaclass=ABCMeta):
     @abstractmethod
     def draw(self):
         pass
+
+    @abstractmethod
+    def render(self):
+        pass
