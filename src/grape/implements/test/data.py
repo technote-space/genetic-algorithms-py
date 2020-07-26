@@ -1,3 +1,4 @@
+from targets import get_target
 from ...interfaces import ITestData
 
 
@@ -9,11 +10,11 @@ class TestData(ITestData):
     """
 
     def __init__(self, target):
-        self.__adam = target
+        self.__target = target
 
     @property
-    def adam(self):
-        return self.__adam
+    def target(self):
+        return self.__target
 
     def create_new(self):
-        return self.adam.clone()
+        return get_target(self.target)

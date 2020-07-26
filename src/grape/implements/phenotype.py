@@ -38,7 +38,7 @@ class Phenotype:
         # noinspection PyBroadException
         try:
             for target in dataset.create_dataset():
-                result = self._episode((target, functions))
+                result = self._episode(target, functions)
                 sum_steps += result[0]
                 sum_score += result[1]
         except Exception:
@@ -66,8 +66,7 @@ class Phenotype:
     def get_context(self, target, functions, current=0):
         return Context(target, current, self.__genotype.node_count, functions, self)
 
-    def _episode(self, settings):
-        target, functions = settings
+    def _episode(self, target, functions):
         context = self.get_context(target, functions)
         self.while_end(context)
 

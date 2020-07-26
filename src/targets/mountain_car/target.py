@@ -26,9 +26,6 @@ class MountainCar(AbstractGymTarget):
         }
         self.__max_position = 0
 
-    def clone(self):
-        return MountainCar()
-
     @staticmethod
     def __perceive(value, left, right):
         return left <= value < right

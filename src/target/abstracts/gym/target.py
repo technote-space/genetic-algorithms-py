@@ -35,10 +35,6 @@ class AbstractGymTarget(AbstractTarget):
     def observation(self):
         return self.__observation
 
-    @abstractmethod
-    def clone(self):
-        pass
-
     # noinspection PyMethodMayBeStatic
     def _get_action(self, index):
         return index

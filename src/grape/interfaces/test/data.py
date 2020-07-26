@@ -10,7 +10,7 @@ class ITestData(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def adam(self):
+    def target(self):
         pass
 
     @abstractmethod

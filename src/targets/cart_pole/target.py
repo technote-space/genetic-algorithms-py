@@ -13,9 +13,6 @@ class CartPole(AbstractGymTarget):
     def __init__(self):
         super().__init__('CartPole-v1', Settings, GaSettings)
 
-    def clone(self):
-        return CartPole()
-
     def _perform_perceive(self, index):
         return self.observation[index] < 0
 

@@ -1,21 +1,9 @@
 import argparse
 from runner import Runner
 from player import Player
-from targets import SantaFeTrail, CartPole, MountainCar
+from targets import get_choices
 from grape import Algorithm
 from tools import IO
-
-
-def get_targets():
-    return {
-        'santa-fe-trail': SantaFeTrail,
-        'cart-pole': CartPole,
-        'mountain-car': MountainCar,
-    }
-
-
-def get_choices():
-    return get_targets().keys()
 
 
 def main():
@@ -26,11 +14,10 @@ def main():
     args = parser.parse_args()
 
     io = IO(args.file)
-    target = get_targets()[args.target]()
     if args.player:
-        Player(target, io.load_chromosome())
+        Player(args.target, io.load_chromosome())
     else:
-        Runner(Algorithm(target, io.save_chromosome))
+        Runner(Algorithm(args.target, io.save_chromosome))
 
 
 if __name__ == "__main__":
