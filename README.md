@@ -17,35 +17,35 @@ Genetic Algorithms for Python.
 </details>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-### Setup
+## Setup
 ```shell script
 curl -L 'https://raw.githubusercontent.com/technote-space/python-setup/bin/setup.sh' | bash -s -- 3.7.7 ga
 pipenv install -d
 ```
 
-### Run
+## Run
 ```shell script
 python src/app.py [target]
 ```
 
-### Play
+## Play
 ```shell script
 python src/app.py -p [target]
 ```
 
-#### Target
-##### Santa Fe Trail
+### Target
+#### Santa Fe Trail
 `santa-fe-trail`
 
 準備中...
 
-##### Cart Pole
+#### Cart Pole
 `cart-pole`
 
 準備中...
 
 
-### Linter
+## Linter
 lint
 ```shell script
 pipenv run lint
