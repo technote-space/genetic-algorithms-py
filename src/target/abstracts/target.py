@@ -40,8 +40,8 @@ class AbstractTarget(ITarget):
     @property
     def has_reached(self):
         return self.__has_finished or \
-               self.action_step >= self.settings.action_limit or \
-               self.step >= self.settings.step_limit
+            self.action_step >= self.settings.action_limit or \
+            self.step >= self.settings.step_limit
 
     def _on_finished(self):
         self.__has_finished = True
