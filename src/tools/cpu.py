@@ -14,19 +14,19 @@ class Cpu:
         self.__index = 0
         self.__started = False
         self.__count = max(1, count)
-        self.__history = [0] * self.__count
+        self.__cpu_history = [0] * self.__count
+        self.__prev_sleep = FitnessHelper.sleep
 
     def run(self):
-        self.__history[self.__index] = psutil.cpu_percent(interval=None)
+        self.__cpu_history[self.__index] = psutil.cpu_percent(interval=None)
         self.__index = (self.__index + 1) % self.__count
 
+        count = self.__count
         if not self.__started:
             self.__started = self.__index == 0
-        if self.__started:
-            percent = sum(self.__history) / self.__count
-            FitnessHelper.sleep *= percent / self.__percent
+            if not self.__started:
+                count = self.__index
 
-            print(percent)
-
-        print(self.__history)
-        print(FitnessHelper.sleep)
+        percent = sum(self.__cpu_history) / count
+        FitnessHelper.sleep = FitnessHelper.sleep * percent / self.__percent * 0.7 + self.__prev_sleep * 0.3
+        self.__prev_sleep = FitnessHelper.sleep
