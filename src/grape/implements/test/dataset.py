@@ -10,15 +10,15 @@ class TestDataset(ITestDataset):
 
     def __init__(self, length, data):
         self.__length = length
-        self.__adam = data
+        self.__data = data
 
     @property
     def length(self):
         return self.__length
 
     @property
-    def adam(self):
-        return self.__adam
+    def data(self):
+        return self.__data
 
     def create_dataset(self):
-        return map(lambda _: self.adam.create_new(), range(self.length))
+        return map(lambda _: self.data.create_new(), range(self.length))

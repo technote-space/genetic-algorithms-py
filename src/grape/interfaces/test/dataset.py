@@ -15,7 +15,7 @@ class ITestDataset(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def adam(self):
+    def data(self):
         pass
 
     @abstractmethod

@@ -1,4 +1,3 @@
-from concurrent.futures import ThreadPoolExecutor
 from .context import Context
 from .functions import Perception
 
@@ -29,8 +28,12 @@ class Phenotype:
 
     def calc_fitness(self, dataset, functions):
         step, fitness = self._run_episodes(dataset, functions)
-        self.__step = step
         self.__fitness = fitness
+        self.__step = step
+
+    def set_fitness(self, fitness, step):
+        self.__fitness = fitness
+        self.__step = step
 
     def _run_episodes(self, dataset, functions):
         sum_score = 0
@@ -38,11 +41,10 @@ class Phenotype:
 
         # noinspection PyBroadException
         try:
-            with ThreadPoolExecutor(max_workers=3) as executor:
-                results = executor.map(self._episode, map(lambda x: (x, functions), dataset.create_dataset()))
-                for result in results:
-                    sum_steps += result[0]
-                    sum_score += result[1]
+            for target in dataset.create_dataset():
+                result = self._episode(target, functions)
+                sum_steps += result[0]
+                sum_score += result[1]
         except Exception:
             return 0, 0
 
@@ -68,8 +70,7 @@ class Phenotype:
     def get_context(self, target, functions, current=0):
         return Context(target, current, self.__genotype.node_count, functions, self)
 
-    def _episode(self, settings):
-        target, functions = settings
+    def _episode(self, target, functions):
         context = self.get_context(target, functions)
         self.while_end(context)
 

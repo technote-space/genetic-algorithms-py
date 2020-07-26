@@ -1,6 +1,5 @@
 from abc import abstractmethod
 from functools import reduce
-import threading
 from ..interfaces import IAlgorithm
 
 
@@ -86,13 +85,8 @@ class AbstractAlgorithm(IAlgorithm):
         if self.has_reached:
             return
 
-        threads = []
         for island in self.islands:
-            t = threading.Thread(target=island.step)
-            t.start()
-            threads.append(t)
-        for thread in threads:
-            thread.join()
+            island.step()
 
         if self.migration:
             self.migration.migrate(self)

@@ -12,6 +12,7 @@ class MggIsland(GrapeIsland):
 
     def __init__(
             self,
+            helper,
             population_size,
             crossover_probability,
             mutation_probability,
@@ -22,6 +23,7 @@ class MggIsland(GrapeIsland):
             crossover_time
     ):
         super().__init__(
+            helper,
             population_size,
             MggCrossover(mix_probability, crossover_time),
             crossover_probability,

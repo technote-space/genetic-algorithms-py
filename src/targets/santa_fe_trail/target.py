@@ -48,9 +48,6 @@ class SantaFeTrail(AbstractTarget):
     def ga_settings(self):
         return self.__ga_settings
 
-    def clone(self):
-        return SantaFeTrail()
-
     def __go_forward(self):
         self.__agent.go_forward()
         if self.__field.is_finished:

@@ -10,6 +10,11 @@ class ITarget(metaclass=ABCMeta):
 
     @property
     @abstractmethod
+    def name(self):
+        pass
+
+    @property
+    @abstractmethod
     def is_player(self):
         pass
 
@@ -39,10 +44,6 @@ class ITarget(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def clone(self):
-        pass
-
-    @abstractmethod
     def action(self, index):
         pass
 
@@ -60,6 +61,10 @@ class ITarget(metaclass=ABCMeta):
 
     @abstractmethod
     def get_fitness(self):
+        pass
+
+    @abstractmethod
+    def set_name(self, name):
         pass
 
     @abstractmethod

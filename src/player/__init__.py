@@ -1,4 +1,5 @@
 import time
+from targets import get_target
 from grape import Genotype, FunctionSet
 
 
@@ -10,18 +11,17 @@ class Player:
     """
 
     def __init__(self, target, chromosome):
-        functions = FunctionSet(target)
         self.__target = target
+
+        functions = FunctionSet(get_target(target))
+        self.__functions = functions
         self.__genotype = Genotype(0, functions)
         self.__genotype.create_from_nodes(chromosome)
         self.__reset()
         self.__main()
 
     def __reset(self):
-        target = self.__target.clone()
-        target.on_player()
-        functions = FunctionSet(target)
-        self.__context = self.__genotype.phenotype.get_context(target, functions)
+        self.__context = self.__genotype.phenotype.get_context(get_target(self.__target, True), self.__functions)
 
     def __main(self):
         while True:

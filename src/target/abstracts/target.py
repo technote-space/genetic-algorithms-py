@@ -11,10 +11,15 @@ class AbstractTarget(ITarget):
     """
 
     def __init__(self):
+        self.__name = None
         self.__step = 0
         self.__action_step = 0
         self.__has_finished = False
         self.__is_player = False
+
+    @property
+    def name(self):
+        return self.__name
 
     @property
     def is_player(self):
@@ -57,10 +62,6 @@ class AbstractTarget(ITarget):
     def _on_finished(self):
         self.__has_finished = True
 
-    @abstractmethod
-    def clone(self):
-        pass
-
     def action(self, index):
         if self.has_reached:
             raise Exception('The step has reached to limit')
@@ -96,6 +97,9 @@ class AbstractTarget(ITarget):
             return fitness + 1.0 / (self.action_step + self.step)
 
         return fitness
+
+    def set_name(self, name):
+        self.__name = name
 
     def on_player(self):
         self.__is_player = True

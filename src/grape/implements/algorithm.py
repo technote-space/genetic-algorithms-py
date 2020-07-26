@@ -1,10 +1,12 @@
 import math
+from targets import get_target
 from ga import AbstractAlgorithm
 from .termination import Termination
 from .migration import Migration
 from .function_set import FunctionSet
 from .generations import MggIsland, CulturalIsland
 from .test import TestData, TestDataset
+from .fitness_helper import FitnessHelper
 
 
 class Algorithm(AbstractAlgorithm):
@@ -18,16 +20,17 @@ class Algorithm(AbstractAlgorithm):
         self.__target = target
         self.__best_changed = __best_changed
 
-        settings = target.ga_settings
+        target_instance = get_target(target)
+        settings = target_instance.ga_settings
         super().__init__(
             self.__best_changed_function,
-            self.__get_islands(target),
+            self.__get_islands(target, target_instance),
             Termination(settings.terminate_offspring_number),
             Migration(settings.migration_rate, settings.migration_interval)
         )
 
     def __best_changed_function(self, algorithm):
-        self.__cloned_target = self.__target.clone()
+        self.__cloned_target = get_target(self.__target)
         phenotype = self.best.phenotype
         phenotype.while_end(phenotype.get_context(self.__cloned_target, FunctionSet(self.__cloned_target)))
 
@@ -37,8 +40,8 @@ class Algorithm(AbstractAlgorithm):
                 func(algorithm, self.__cloned_target, self.best)
 
     @staticmethod
-    def __get_islands(target):
-        settings = target.ga_settings
+    def __get_islands(target, target_instance):
+        settings = target_instance.ga_settings
         total_island_number = max(1, settings.island_number)
         cultural_island_number = math.floor(total_island_number * settings.cultural_island_rate)
         mgg_island_number = max(1, total_island_number - cultural_island_number)
@@ -46,10 +49,12 @@ class Algorithm(AbstractAlgorithm):
 
         dataset = TestDataset(settings.test_number, TestData(target))
         population_size = math.floor(settings.population_size / total_island_number)
-        functions = FunctionSet(target)
+        functions = FunctionSet(target_instance)
+        helper = FitnessHelper(target)
         islands = []
         for _ in range(mgg_island_number):
             islands.append(MggIsland(
+                helper,
                 population_size,
                 settings.crossover_probability,
                 settings.mutation_probability,
@@ -62,6 +67,7 @@ class Algorithm(AbstractAlgorithm):
         if cultural_island_number > 0:
             for _ in range(cultural_island_number):
                 islands.append(CulturalIsland(
+                    helper,
                     population_size,
                     settings.crossover_probability,
                     settings.mutation_probability,
