@@ -10,6 +10,11 @@ class ITarget(metaclass=ABCMeta):
 
     @property
     @abstractmethod
+    def is_player(self):
+        pass
+
+    @property
+    @abstractmethod
     def step(self):
         pass
 
@@ -55,6 +60,10 @@ class ITarget(metaclass=ABCMeta):
 
     @abstractmethod
     def get_fitness(self):
+        pass
+
+    @abstractmethod
+    def on_player(self):
         pass
 
     @abstractmethod

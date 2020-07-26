@@ -14,6 +14,11 @@ class AbstractTarget(ITarget):
         self.__step = 0
         self.__action_step = 0
         self.__has_finished = False
+        self.__is_player = False
+
+    @property
+    def is_player(self):
+        return self.__is_player
 
     @property
     def step(self):
@@ -85,6 +90,9 @@ class AbstractTarget(ITarget):
             return fitness + 1.0 / (self.action_step + self.step)
 
         return fitness
+
+    def on_player(self):
+        self.__is_player = True
 
     @abstractmethod
     def _perform_get_fitness(self):

@@ -19,6 +19,7 @@ class Player:
 
     def __reset(self):
         target = self.__target.clone()
+        target.on_player()
         functions = FunctionSet(target)
         self.__context = self.__genotype.phenotype.get_context(target, functions)
 
