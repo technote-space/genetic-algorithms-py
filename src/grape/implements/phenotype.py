@@ -1,4 +1,3 @@
-from concurrent.futures import ThreadPoolExecutor
 from .context import Context
 from .functions import Perception
 
@@ -38,11 +37,10 @@ class Phenotype:
 
         # noinspection PyBroadException
         try:
-            with ThreadPoolExecutor(max_workers=3) as executor:
-                results = executor.map(self._episode, map(lambda x: (x, functions), dataset.create_dataset()))
-                for result in results:
-                    sum_steps += result[0]
-                    sum_score += result[1]
+            for target in dataset.create_dataset():
+                result = self._episode((target, functions))
+                sum_steps += result[0]
+                sum_score += result[1]
         except Exception:
             return 0, 0
 

@@ -1,4 +1,3 @@
-from concurrent.futures import ThreadPoolExecutor
 from ..interfaces import IIsland
 
 
@@ -51,9 +50,8 @@ class AbstractIsland(IIsland):
         self.__initialized = False
         self.population.init()
 
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            executor.map(self.fitness.evaluate, self.population.chromosomes)
-
+        for chromosome in self.population.chromosomes:
+            self.fitness.evaluate(chromosome)
         self.__generation_number = 0
         self.__offspring_number = 0
         self._perform_reset()
@@ -76,10 +74,10 @@ class AbstractIsland(IIsland):
         parents, population = self.selection.select(self.population.chromosomes)
         offspring = self.crossover.cross(parents, self.crossover_probability)
 
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            executor.map(self.__evaluate_offspring, offspring)
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            executor.map(self.__evaluate_parents, parents)
+        for chromosome in offspring:
+            self.__evaluate_offspring(chromosome)
+        for chromosome in parents:
+            self.__evaluate_parents(chromosome)
 
         self.population.update(self.reinsertion.select(population, offspring, parents, self.population.size))
         self.__generation_number += 1
