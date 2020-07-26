@@ -12,6 +12,7 @@ Genetic Algorithms for Python.
 - [Setup](#setup)
 - [Run](#run)
 - [Play](#play)
+  - [Target](#target)
 - [Linter](#linter)
 
 </details>
