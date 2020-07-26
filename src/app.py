@@ -1,7 +1,7 @@
 import argparse
 from runner import Runner
 from player import Player
-from targets import SantaFeTrail, CartPole
+from targets import SantaFeTrail, CartPole, MountainCar
 from grape import Algorithm
 from tools import IO
 
@@ -10,6 +10,7 @@ def get_targets():
     return {
         'santa-fe-trail': SantaFeTrail,
         'cart-pole': CartPole,
+        'mountain-car': MountainCar,
     }
 
 
