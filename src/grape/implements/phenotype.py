@@ -28,8 +28,12 @@ class Phenotype:
 
     def calc_fitness(self, dataset, functions):
         step, fitness = self._run_episodes(dataset, functions)
-        self.__step = step
         self.__fitness = fitness
+        self.__step = step
+
+    def set_fitness(self, fitness, step):
+        self.__fitness = fitness
+        self.__step = step
 
     def _run_episodes(self, dataset, functions):
         sum_score = 0

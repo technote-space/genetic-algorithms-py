@@ -6,6 +6,7 @@ from .migration import Migration
 from .function_set import FunctionSet
 from .generations import MggIsland, CulturalIsland
 from .test import TestData, TestDataset
+from .fitness_helper import FitnessHelper
 
 
 class Algorithm(AbstractAlgorithm):
@@ -49,9 +50,11 @@ class Algorithm(AbstractAlgorithm):
         dataset = TestDataset(settings.test_number, TestData(target))
         population_size = math.floor(settings.population_size / total_island_number)
         functions = FunctionSet(target_instance)
+        helper = FitnessHelper(target)
         islands = []
         for _ in range(mgg_island_number):
             islands.append(MggIsland(
+                helper,
                 population_size,
                 settings.crossover_probability,
                 settings.mutation_probability,
@@ -64,6 +67,7 @@ class Algorithm(AbstractAlgorithm):
         if cultural_island_number > 0:
             for _ in range(cultural_island_number):
                 islands.append(CulturalIsland(
+                    helper,
                     population_size,
                     settings.crossover_probability,
                     settings.mutation_probability,

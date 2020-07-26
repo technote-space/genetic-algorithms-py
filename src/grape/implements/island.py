@@ -15,6 +15,7 @@ class GrapeIsland(AbstractIsland):
 
     def __init__(
             self,
+            helper,
             population_size,
             crossover,
             crossover_probability,
@@ -34,3 +35,8 @@ class GrapeIsland(AbstractIsland):
             mutation_probability,
             reinsertion
         )
+
+        self.__helper = helper
+
+    def _evaluate(self, chromosomes):
+        self.__helper.run(chromosomes)

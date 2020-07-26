@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from ..interfaces import IIsland
 
 
@@ -60,12 +61,13 @@ class AbstractIsland(IIsland):
     def _perform_reset(self):
         pass
 
-    def __evaluate_offspring(self, chromosome):
-        self.mutation.mutate(chromosome, self.mutation_probability)
-        self.fitness.evaluate(chromosome)
+    def _perform_mutate(self, chromosomes):
+        for chromosome in chromosomes:
+            self.mutation.mutate(chromosome, self.mutation_probability)
 
-    def __evaluate_parents(self, chromosome):
-        self.fitness.evaluate(chromosome)
+    @abstractmethod
+    def _evaluate(self, chromosomes):
+        pass
 
     def step(self):
         if not self.__initialized:
@@ -74,10 +76,9 @@ class AbstractIsland(IIsland):
         parents, population = self.selection.select(self.population.chromosomes)
         offspring = self.crossover.cross(parents, self.crossover_probability)
 
-        for chromosome in offspring:
-            self.__evaluate_offspring(chromosome)
-        for chromosome in parents:
-            self.__evaluate_parents(chromosome)
+        self._perform_mutate(offspring)
+        self._evaluate(offspring)
+        self._evaluate(parents)
 
         self.population.update(self.reinsertion.select(population, offspring, parents, self.population.size))
         self.__generation_number += 1

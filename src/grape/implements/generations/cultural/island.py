@@ -12,6 +12,7 @@ class CulturalIsland(GrapeIsland):
 
     def __init__(
             self,
+            helper,
             population_size,
             crossover_probability,
             mutation_probability,
@@ -20,6 +21,7 @@ class CulturalIsland(GrapeIsland):
             node_count
     ):
         super().__init__(
+            helper,
             population_size,
             CulturalCrossover(),
             crossover_probability,
