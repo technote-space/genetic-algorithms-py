@@ -10,6 +10,7 @@ from .phenotype import Phenotype
 from .population import Population
 from .selection import Selection
 from .termination import Termination
+from .fitness_helper import FitnessHelper
 
 from .functions import Action, Perception, Start
 from .generations import CulturalCrossover, CulturalReinsertion, CulturalIsland
@@ -18,7 +19,7 @@ from .test import TestData, TestDataset
 
 __all__ = [
     'Algorithm', 'Context', 'Fitness', 'FunctionSet', 'Genotype', 'GrapeIsland',
-    'Migration', 'Mutation', 'Phenotype', 'Population', 'Selection', 'Termination',
+    'Migration', 'Mutation', 'Phenotype', 'Population', 'Selection', 'Termination', 'FitnessHelper',
     'Action', 'Perception', 'Start',
     'CulturalCrossover', 'CulturalReinsertion', 'CulturalIsland',
     'MggCrossover', 'MggReinsertion', 'MggIsland',
