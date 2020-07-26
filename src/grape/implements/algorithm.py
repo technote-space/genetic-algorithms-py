@@ -74,6 +74,6 @@ class Algorithm(AbstractAlgorithm):
     def draw(self):
         self.__cloned_target.draw()
 
-        print(self.progress, f'{self.fitness:.3f}')
+        print(f'{self.progress:.3f}', f'{self.fitness:.3f}')
         print(f'{self.__cloned_target.get_fitness():.3f}', self.__cloned_target.step, self.__cloned_target.action_step)
         print()
