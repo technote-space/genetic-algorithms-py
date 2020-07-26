@@ -20,6 +20,7 @@ Genetic Algorithms for Python.
 ### Setup
 ```shell script
 curl -L 'https://raw.githubusercontent.com/technote-space/python-setup/bin/setup.sh' | bash -s -- 3.7.7 ga
+pipenv install -d
 ```
 
 ### Run
@@ -32,9 +33,25 @@ python src/app.py [target]
 python src/app.py -p [target]
 ```
 
-### Target
-#### Santa Fe Trail
+#### Target
+##### Santa Fe Trail
+`santa-fe-trail`
+
 準備中...
 
-#### Cart Pole
+##### Cart Pole
+`cart-pole`
+
 準備中...
+
+
+### Linter
+lint
+```shell script
+pipenv run lint
+```
+
+format
+```shell script
+pipenv run format
+```
