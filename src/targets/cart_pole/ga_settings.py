@@ -1,21 +1,9 @@
-from target import AbstractGaSettings
+from target import AbstractGymGaSettings
 
 
-class GaSettings(AbstractGaSettings):
+class GaSettings(AbstractGymGaSettings):
     """
     Description:
     ------------
     GAの設定
     """
-
-    @property
-    def test_number(self):
-        return 10
-
-    @property
-    def population_size(self):
-        return 100
-
-    @property
-    def node_count(self):
-        return 50

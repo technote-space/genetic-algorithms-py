@@ -1,7 +1,7 @@
-from target import AbstractSettings
+from target import AbstractGymSettings
 
 
-class Settings(AbstractSettings):
+class Settings(AbstractGymSettings):
     """
     Description:
     ------------
@@ -13,17 +13,5 @@ class Settings(AbstractSettings):
         return 'Cart Pole'
 
     @property
-    def action_limit(self):
-        return 500
-
-    @property
     def perception_number(self):
         return 4
-
-    @property
-    def action_number(self):
-        return 2
-
-    @property
-    def fps(self):
-        return 30
