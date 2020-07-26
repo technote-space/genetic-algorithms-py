@@ -11,13 +11,14 @@ def main():
     parser.add_argument('target', help='target', choices=get_choices())
     parser.add_argument('-f', '--file', help='file name', default='chromosome.json')
     parser.add_argument('-p', '--player', help='player mode', action='store_true')
+    parser.add_argument('-l', '--load', help='cpu load', default=15, type=int)
     args = parser.parse_args()
 
     io = IO(args.file)
     if args.player:
         Player(args.target, io.load_chromosome())
     else:
-        Runner(Algorithm(args.target, io.save_chromosome))
+        Runner(Algorithm(args.target, io.save_chromosome), args.load)
 
 
 if __name__ == "__main__":

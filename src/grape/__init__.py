@@ -1,3 +1,3 @@
-from .implements import Algorithm, Genotype, FunctionSet
+from .implements import Algorithm, Genotype, FunctionSet, FitnessHelper
 
-__all__ = ['Algorithm', 'Genotype', 'FunctionSet']
+__all__ = ['Algorithm', 'Genotype', 'FunctionSet', 'FitnessHelper']

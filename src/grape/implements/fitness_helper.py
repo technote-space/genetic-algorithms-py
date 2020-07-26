@@ -29,7 +29,7 @@ class FitnessHelper:
     適応度計算ツール
     """
 
-    pool_size = 4
+    pool_size = 6
     sleep = 0.1
 
     def __init__(self, target):
