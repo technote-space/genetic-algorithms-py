@@ -19,5 +19,5 @@ class CartPole(AbstractGymTarget):
     def _perform_perceive(self, index):
         return self.observation[index] < 0
 
-    def _perform_get_fitness(self):
-        return self.action_step / self.settings.action_limit + (1 - abs(self.observation[0]) / 2.4) * 0.01
+    def _correction_fitness(self):
+        return (1 - abs(self.observation[0]) / 2.4) * 0.01

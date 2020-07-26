@@ -21,7 +21,7 @@ class AbstractGymSettings(AbstractSettings):
 
     @property
     def action_limit(self):
-        return self.__env._max_episode_steps
+        return self.__env.spec.max_episode_steps
 
     @property
     @abstractmethod
