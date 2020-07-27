@@ -10,7 +10,8 @@ class AbstractGymSettings(AbstractSettings):
     Gym用の設定の基底クラス
     """
 
-    def __init__(self, env):
+    def __init__(self, gym_id, env):
+        self.__gym_id = gym_id
         self.__env = env
         self.__action_number = None
 
@@ -18,6 +19,10 @@ class AbstractGymSettings(AbstractSettings):
     @abstractmethod
     def name(self):
         pass
+
+    @property
+    def gym_id(self):
+        return self.__gym_id
 
     @property
     def action_limit(self):

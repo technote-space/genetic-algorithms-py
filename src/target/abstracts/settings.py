@@ -15,6 +15,10 @@ class AbstractSettings(ISettings):
         pass
 
     @property
+    def gym_id(self):
+        return None
+
+    @property
     @abstractmethod
     def action_limit(self):
         pass

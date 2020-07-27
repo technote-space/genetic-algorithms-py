@@ -15,6 +15,11 @@ class ISettings(metaclass=ABCMeta):
 
     @property
     @abstractmethod
+    def gym_id(self):
+        pass
+
+    @property
+    @abstractmethod
     def action_limit(self):
         pass
 

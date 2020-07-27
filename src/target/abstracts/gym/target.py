@@ -14,7 +14,7 @@ class AbstractGymTarget(AbstractTarget):
         super().__init__()
 
         self.__env = gym.make(gym_id)
-        self.__settings = settings(self.__env)
+        self.__settings = settings(gym_id, self.__env)
         self.__ga_settings = ga_settings()
         self.__observation = self.__env.reset()
         self.__reward = 0
