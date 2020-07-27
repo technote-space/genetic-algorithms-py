@@ -20,7 +20,8 @@ class MggIsland(GrapeIsland):
             functions,
             node_count,
             mix_probability,
-            crossover_time
+            crossover_time,
+            evaluate_parents_fitness
     ):
         super().__init__(
             helper,
@@ -31,5 +32,6 @@ class MggIsland(GrapeIsland):
             MggReinsertion(),
             dataset,
             functions,
-            node_count
+            node_count,
+            evaluate_parents_fitness
         )

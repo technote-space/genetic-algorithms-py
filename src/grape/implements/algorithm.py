@@ -62,7 +62,8 @@ class Algorithm(AbstractAlgorithm):
                 functions,
                 settings.node_count,
                 settings.mix_probability,
-                settings.crossover_time
+                settings.crossover_time,
+                settings.test_number > 1
             ))
         if cultural_island_number > 0:
             for _ in range(cultural_island_number):
@@ -73,7 +74,8 @@ class Algorithm(AbstractAlgorithm):
                     settings.mutation_probability,
                     dataset,
                     functions,
-                    settings.node_count
+                    settings.node_count,
+                    settings.test_number > 1
                 ))
         return islands
 
