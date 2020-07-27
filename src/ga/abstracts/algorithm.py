@@ -1,5 +1,6 @@
 from abc import abstractmethod
 from functools import reduce
+from concurrent.futures import ThreadPoolExecutor
 from ..interfaces import IAlgorithm
 
 
@@ -81,12 +82,16 @@ class AbstractAlgorithm(IAlgorithm):
     def _perform_reset(self):
         pass
 
+    @staticmethod
+    def __island_step(island):
+        island.step()
+
     def step(self):
         if self.has_reached:
             return
 
-        for island in self.islands:
-            island.step()
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            executor.map(self.__island_step, self.islands)
 
         if self.migration:
             self.migration.migrate(self)
