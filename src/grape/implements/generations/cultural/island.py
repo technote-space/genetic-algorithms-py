@@ -18,7 +18,8 @@ class CulturalIsland(GrapeIsland):
             mutation_probability,
             dataset,
             functions,
-            node_count
+            node_count,
+            evaluate_parents_fitness
     ):
         super().__init__(
             helper,
@@ -29,5 +30,6 @@ class CulturalIsland(GrapeIsland):
             CulturalReinsertion(),
             dataset,
             functions,
-            node_count
+            node_count,
+            evaluate_parents_fitness
         )

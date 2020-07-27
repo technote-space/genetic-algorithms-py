@@ -17,7 +17,8 @@ class IIsland(metaclass=ABCMeta):
             crossover_probability,
             mutation,
             mutation_probability,
-            reinsertion
+            reinsertion,
+            evaluate_parents_fitness
     ):
         self.__population = population
         self.__fitness = fitness
@@ -27,6 +28,7 @@ class IIsland(metaclass=ABCMeta):
         self.__mutation = mutation
         self.__mutation_probability = mutation_probability
         self.__reinsertion = reinsertion
+        self.__evaluate_parents_fitness = evaluate_parents_fitness
 
     @property
     def population(self):
@@ -59,6 +61,10 @@ class IIsland(metaclass=ABCMeta):
     @property
     def reinsertion(self):
         return self.__reinsertion
+
+    @property
+    def evaluate_parents_fitness(self):
+        return self.__evaluate_parents_fitness
 
     @property
     @abstractmethod

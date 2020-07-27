@@ -23,7 +23,8 @@ class GrapeIsland(AbstractIsland):
             reinsertion,
             dataset,
             functions,
-            node_count
+            node_count,
+            evaluate_parents_fitness
     ):
         super().__init__(
             Population(population_size, Genotype(node_count, functions)),
@@ -33,7 +34,8 @@ class GrapeIsland(AbstractIsland):
             crossover_probability,
             Mutation(),
             mutation_probability,
-            reinsertion
+            reinsertion,
+            evaluate_parents_fitness
         )
 
         self.__helper = helper

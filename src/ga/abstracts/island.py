@@ -18,7 +18,8 @@ class AbstractIsland(IIsland):
             crossover_probability,
             mutation,
             mutation_probability,
-            reinsertion
+            reinsertion,
+            evaluate_parents_fitness
     ):
         super().__init__(
             population,
@@ -28,7 +29,8 @@ class AbstractIsland(IIsland):
             crossover_probability,
             mutation,
             mutation_probability,
-            reinsertion
+            reinsertion,
+            evaluate_parents_fitness
         )
 
         self.__generation_number = 0
@@ -78,7 +80,8 @@ class AbstractIsland(IIsland):
 
         self._perform_mutate(offspring)
         self._evaluate(offspring)
-        self._evaluate(parents)
+        if self.evaluate_parents_fitness:
+            self._evaluate(parents)
 
         self.population.update(self.reinsertion.select(population, offspring, parents, self.population.size))
         self.__generation_number += 1
