@@ -9,7 +9,7 @@ class TestDataset(ITestDataset):
     """
 
     def __init__(self, length, data):
-        self.__length = length
+        self.__length = max(1, length)
         self.__data = data
 
     @property
