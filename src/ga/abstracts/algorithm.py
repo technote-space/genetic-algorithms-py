@@ -90,7 +90,7 @@ class AbstractAlgorithm(IAlgorithm):
         if self.has_reached:
             return
 
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(max_workers=3) as executor:
             executor.map(self.__island_step, self.islands)
 
         if self.migration:
