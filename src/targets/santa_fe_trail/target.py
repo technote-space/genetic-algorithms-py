@@ -20,24 +20,12 @@ class SantaFeTrail(AbstractTarget):
         self.__field = Field()
         self.__agent = Agent(self.__field)
         self.__actions = {
-            0: {
-                "func": self.__go_forward,
-                "label": "前進",
-            },
-            1: {
-                "func": self.__turn_left,
-                "label": "左回転",
-            },
-            2: {
-                "func": self.__turn_right,
-                "label": "右回転",
-            },
+            0: self.__go_forward,
+            1: self.__turn_left,
+            2: self.__turn_right,
         }
         self.__perceptions = {
-            0: {
-                "func": self.__is_food,
-                "label": "餌",
-            },
+            0: self.__is_food,
         }
 
     @property
@@ -60,7 +48,7 @@ class SantaFeTrail(AbstractTarget):
         self.__agent.turn_left()
 
     def _perform_action(self, index):
-        self.__actions[index]["func"]()
+        self.__actions[index]()
 
     def __is_food(self):
         fx = self.__agent.fx
@@ -68,13 +56,7 @@ class SantaFeTrail(AbstractTarget):
         return self.__field.check(fx, fy, FieldFlags.FOOD) and not self.__field.check(fx, fy, FieldFlags.VISITED)
 
     def _perform_perceive(self, index):
-        return self.__perceptions[index]["func"]()
-
-    def get_action_expression(self, index):
-        return self.__actions[index]["label"]
-
-    def get_perceive_expression(self, index):
-        return self.__perceptions[index]["label"]
+        return self.__perceptions[index]()
 
     def _perform_get_fitness(self):
         return self.__field.get_fitness()

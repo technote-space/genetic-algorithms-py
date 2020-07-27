@@ -85,12 +85,6 @@ class AbstractTarget(ITarget):
     def _perform_perceive(self, index):
         pass
 
-    def get_action_expression(self, index):
-        return f'行動{index}'
-
-    def get_perceive_expression(self, index):
-        return f'知覚{index}'
-
     def get_fitness(self):
         fitness = self._perform_get_fitness()
         if fitness >= 1:

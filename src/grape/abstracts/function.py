@@ -15,15 +15,3 @@ class AbstractFunction(IFunction):
 
     def execute(self, c1, c2, context):
         self._run(c1, c2, context)
-
-    @abstractmethod
-    def function_expression(self, c1, c2, context):
-        pass
-
-    @abstractmethod
-    def connection_expression(self, c1, c2, context):
-        pass
-
-    @abstractmethod
-    def possible_connections(self, c1, c2, context):
-        pass

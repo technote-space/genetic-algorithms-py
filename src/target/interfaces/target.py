@@ -52,14 +52,6 @@ class ITarget(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_action_expression(self, index):
-        pass
-
-    @abstractmethod
-    def get_perceive_expression(self, index):
-        pass
-
-    @abstractmethod
     def get_fitness(self):
         pass
 
