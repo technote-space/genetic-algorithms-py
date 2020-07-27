@@ -30,7 +30,7 @@ class FitnessHelper:
     """
 
     pool_size = 6
-    sleep = 0.01
+    sleep = 0.1
 
     def __init__(self, target):
         self.__target = target
