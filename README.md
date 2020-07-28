@@ -14,6 +14,9 @@ Genetic Algorithms for Python.
 - [Play](#play)
   - [Target](#target)
 - [Linter](#linter)
+- [Docker](#docker)
+  - [Build Docker Image](#build-docker-image)
+  - [Run](#run-1)
 
 </details>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -60,4 +63,15 @@ pipenv run lint
 format
 ```shell script
 pipenv run format
+```
+
+## Docker
+### Build Docker Image
+```shell script
+docker build -t ga:latest .
+```
+
+### Run
+```shell script
+docker run ga:latest [target]
 ```
