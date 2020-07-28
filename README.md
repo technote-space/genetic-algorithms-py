@@ -61,3 +61,14 @@ format
 ```shell script
 pipenv run format
 ```
+
+## Docker
+### Build Docker Image
+```shell script
+docker build -t ga:latest .
+```
+
+### Run
+```shell script
+docker run ga:latest [target]
+```
