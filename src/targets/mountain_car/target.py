@@ -12,29 +12,29 @@ class MountainCar(AbstractGymTarget):
 
     def __init__(self):
         super().__init__('MountainCar-v0', Settings, GaSettings)
-        self.__perceptions = {
-            0: self.__perceive_position(-1.2, -0.9),
-            1: self.__perceive_position(-0.9, -0.6),
-            2: self.__perceive_position(-0.6, -0.3),
-            3: self.__perceive_position(-0.3, 0),
-            4: self.__perceive_position(0, 0.3),
-            5: self.__perceive_position(0.3, 0.6),
-            6: self.__perceive_velocity(-0.07, -0.035),
-            7: self.__perceive_velocity(-0.035, 0),
-            8: self.__perceive_velocity(0, 0.035),
-            9: self.__perceive_velocity(0.035, 0.07),
-        }
+        self.____perception_settings = [
+            (0, -1.2, -0.9),
+            (0, -0.9, -0.6),
+            (0, -0.6, -0.3),
+            (0, -0.3, 0),
+            (0, 0, 0.3),
+            (0, 0.3, 0.6),
+            (1, -0.07, -0.035),
+            (1, -0.035, 0),
+            (1, 0, 0.035),
+            (1, 0.035, 0.07),
+        ]
+        self.__perceptions = {}
+        for index, setting in enumerate(self.____perception_settings):
+            self.__perceptions[index] = self.__get_perceive_function(setting[0], setting[1], setting[2])
         self.__max_position = 0
 
     @staticmethod
     def __perceive(value, left, right):
         return left <= value < right
 
-    def __perceive_position(self, left, right):
-        return lambda: self.__perceive(self.observation[0], left, right)
-
-    def __perceive_velocity(self, left, right):
-        return lambda: self.__perceive(self.observation[1], left, right)
+    def __get_perceive_function(self, target, left, right):
+        return lambda: self.__perceive(self.observation[target], left, right)
 
     def _perform_perceive(self, index):
         return self.__perceptions[index]()
@@ -45,3 +45,7 @@ class MountainCar(AbstractGymTarget):
             return self.__max_position / 0.5
 
         return 1
+
+    def get_perceive_expression(self, index, observation_name):
+        setting = self.____perception_settings[index]
+        return f'{setting[1]} <= {observation_name}[{setting[0]}] < {setting[2]}'

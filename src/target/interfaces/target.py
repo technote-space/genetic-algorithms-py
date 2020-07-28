@@ -70,3 +70,11 @@ class ITarget(metaclass=ABCMeta):
     @abstractmethod
     def render(self):
         pass
+
+    @abstractmethod
+    def get_action_expression(self, index):
+        pass
+
+    @abstractmethod
+    def get_perceive_expression(self, index, observation_name):
+        pass

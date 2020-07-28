@@ -14,3 +14,15 @@ class Action(AbstractFunction):
     def _run(self, c1, c2, context):
         context.target.action(self.__index)
         context.set_current(c1)
+
+    def get_possible_connections(self, c1, c2, context):
+        return c1,
+
+    def programming(self, c1, c2, context):
+        return {
+            "id": context.current,
+            "actions": [
+                f'self.__context.action({self.__index})',
+            ],
+            "next": c1
+        }
