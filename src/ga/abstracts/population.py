@@ -12,16 +12,16 @@ class AbstractPopulation(IPopulation):
     def __init__(self, size, adam):
         super().__init__(size, adam)
 
-        self._chromosomes = []
+        self.__chromosomes = []
 
     @property
     def chromosomes(self):
-        return self._chromosomes
+        return self.__chromosomes
 
     def init(self):
-        self._chromosomes = []
+        self.__chromosomes = []
         for _ in range(self.size):
-            self._chromosomes.append(self.adam.create_new())
+            self.__chromosomes.append(self.adam.create_new())
         self._perform_init()
 
     def _perform_init(self):
@@ -31,4 +31,4 @@ class AbstractPopulation(IPopulation):
         if self.size != len(chromosomes):
             raise Exception('Population size does not match the setting.')
 
-        self._chromosomes = copy.copy(chromosomes)
+        self.__chromosomes = copy.copy(chromosomes)

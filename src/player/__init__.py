@@ -30,7 +30,5 @@ class Player:
                 self.__context.target.render()
                 time.sleep(1.0 / self.__context.target.settings.fps)
 
-            for _ in range(3):
-                time.sleep(1)
-
+            time.sleep(2)
             self.__reset()
