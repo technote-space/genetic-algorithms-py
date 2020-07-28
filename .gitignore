@@ -1,4 +1,5 @@
 __pycache__/
 .idea/
 .python-version
-chromosome*.json
+/chromosome*.json
+/program*/

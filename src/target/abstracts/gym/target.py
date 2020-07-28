@@ -64,3 +64,11 @@ class AbstractGymTarget(AbstractTarget):
 
     def _perform_render(self):
         self.__env.render()
+
+    # noinspection PyMethodMayBeStatic
+    def get_action_expression(self, index):
+        return f'{index}'
+
+    @abstractmethod
+    def get_perceive_expression(self, index, observation_name):
+        pass

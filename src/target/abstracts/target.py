@@ -114,3 +114,9 @@ class AbstractTarget(ITarget):
         self._perform_render()
 
         print(f'{self.get_fitness():.3f}', self.step, self.action_step)
+
+    def get_action_expression(self, index):
+        raise Exception('Not implemented.')
+
+    def get_perceive_expression(self, index, observation_name):
+        raise Exception('Not implemented.')

@@ -18,3 +18,6 @@ class CartPole(AbstractGymTarget):
 
     def _correction_fitness(self):
         return (1 - abs(self.observation[0]) / 2.4) * 0.01
+
+    def get_perceive_expression(self, index, observation_name):
+        return f'{observation_name}[{index}] < 0'

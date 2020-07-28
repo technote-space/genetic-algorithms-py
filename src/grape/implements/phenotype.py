@@ -75,3 +75,20 @@ class Phenotype:
         self.while_end(context)
 
         return context.target.step, context.target.get_fitness()
+
+    def get_programming(self, target):
+        blocks = {}
+        stack = [0]
+        while len(stack) > 0:
+            current = stack.pop()
+            if current in blocks:
+                continue
+
+            node = self.genotype.get_node_genes(current)
+            func = self.genotype.functions.get_function(node[0])
+            context = self.get_context(target, current)
+            blocks[current] = func.programming(node[1], node[2], context)
+            for c in func.get_possible_connections(node[1], node[2], context):
+                stack.append(c)
+
+        return list(blocks.values())

@@ -13,3 +13,19 @@ class Perception(AbstractFunction):
 
     def _run(self, c1, c2, context):
         context.set_current(c1 if context.target.perceive(self.__index) else c2)
+
+    def get_possible_connections(self, c1, c2, context):
+        return c1, c2
+
+    def programming(self, c1, c2, context):
+        return {
+            "id": context.current,
+            "actions": [],
+            "next": {
+                "perception": f'self.__context.perception({self.__index})',
+                "actions1": [],
+                "next1": c1,
+                "actions2": [],
+                "next2": c2
+            }
+        }
