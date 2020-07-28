@@ -1,4 +1,4 @@
-import psutil
+import psutil  # type: ignore
 import multiprocessing
 import threading
 import time
@@ -12,21 +12,28 @@ class Cpu:
     CPU負荷対応ツール
     """
 
-    def __init__(self, percent, rate=0.7, interval=5):
-        self.__percent = min(90, max(5, percent))
+    __percent: float
+    __rate: float
+    __interval: float
+    __prev_percent: float
+    __prev_sleep: float
+
+    def __init__(self, percent: float, rate: float = 0.7, interval: float = 5) -> None:
+        self.__percent = min(90.0, max(5.0, percent))
         self.__rate = rate
-        self.__interval = max(1, interval)
+        self.__interval = max(1.0, interval)
         self.__prev_percent = percent
         self.__prev_sleep = 0.1
         self.__start()
 
-    def __start(self):
+    def __start(self) -> None:
         t = threading.Thread(target=self.__run, daemon=True)
         t.start()
 
-    def __run(self):
+    def __run(self) -> None:
         while True:
-            percent = psutil.cpu_percent(interval=None) * self.__rate + self.__prev_percent * (1 - self.__rate)
+            percent: float = psutil.cpu_percent(interval=None)  # type: ignore
+            percent = percent * self.__rate + self.__prev_percent * (1 - self.__rate)
             FitnessHelper.sleep = max(0.001, min(2.0, FitnessHelper.sleep * percent / self.__percent * self.__rate + self.__prev_sleep * (1 - self.__rate)))
             if FitnessHelper.sleep > 1:
                 prev = FitnessHelper.pool_size

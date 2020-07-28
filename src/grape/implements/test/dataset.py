@@ -1,4 +1,6 @@
-from ...interfaces import ITestDataset
+from typing import Iterable
+from target import ITarget
+from ...interfaces import ITestDataset, ITestData
 
 
 class TestDataset(ITestDataset):
@@ -8,17 +10,23 @@ class TestDataset(ITestDataset):
     テストデータセット
     """
 
-    def __init__(self, length, data):
+    __length: int
+    __data: ITestData
+
+    def __init__(self, length: int, data: ITestData) -> None:
         self.__length = max(1, length)
         self.__data = data
 
     @property
-    def length(self):
+    def length(self) -> int:
         return self.__length
 
     @property
-    def data(self):
+    def data(self) -> ITestData:
         return self.__data
 
-    def create_dataset(self):
-        return map(lambda _: self.data.create_new(), range(self.length))
+    def __lambda(self, _: int) -> ITarget:
+        return self.data.create_new()
+
+    def create_dataset(self) -> Iterable[ITarget]:
+        return map(self.__lambda, range(self.length))

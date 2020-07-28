@@ -1,4 +1,6 @@
 from abc import ABCMeta, abstractmethod
+from typing import List
+from .function import IFunction
 
 
 class IFunctionSet(metaclass=ABCMeta):
@@ -10,22 +12,22 @@ class IFunctionSet(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def functions(self):
+    def functions(self) -> List[IFunction]:
         pass
 
     @property
     @abstractmethod
-    def length(self):
+    def length(self) -> int:
         pass
 
     @abstractmethod
-    def get_function(self, index):
+    def get_function(self, index: int) -> IFunction:
         pass
 
     @abstractmethod
-    def add(self, func):
+    def add(self, func: IFunction) -> None:
         pass
 
     @abstractmethod
-    def get_random_index(self):
+    def get_random_index(self) -> int:
         pass

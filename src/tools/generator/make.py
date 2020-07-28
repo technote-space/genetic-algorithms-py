@@ -1,6 +1,9 @@
 import shutil
 import os
 from functools import reduce
+from ga import IAlgorithm, IChromosome
+from grape import IGenotype
+from target import ITarget
 from .compressor import Compressor
 from .classes import Algorithm, App, Context, Finished, Runner, Package
 
@@ -12,12 +15,14 @@ class Make:
     生成クラス
     """
 
-    def __init__(self, directory):
+    __directory: str
+
+    def __init__(self, directory: str) -> None:
         self.__directory = directory
 
-    def generate(self, _algorithm, target, genotype):
+    def generate(self, _algorithm: IAlgorithm, target: ITarget, genotype: IChromosome) -> None:
         settings = target.settings
-        if settings.gym_id:
+        if settings.gym_id and isinstance(genotype, IGenotype):
             save_directory = os.path.join(os.getcwd(), self.__directory)
             if os.path.exists(save_directory):
                 shutil.rmtree(save_directory)

@@ -10,60 +10,60 @@ class IGaSettings(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def terminate_offspring_number(self):
+    def terminate_offspring_number(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def population_size(self):
+    def population_size(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def island_number(self):
+    def island_number(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def cultural_island_rate(self):
+    def cultural_island_rate(self) -> float:
         pass
 
     @property
     @abstractmethod
-    def migration_interval(self):
+    def migration_interval(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def migration_rate(self):
+    def migration_rate(self) -> float:
         pass
 
     @property
     @abstractmethod
-    def crossover_time(self):
+    def crossover_time(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def crossover_probability(self):
+    def crossover_probability(self) -> float:
         pass
 
     @property
     @abstractmethod
-    def mutation_probability(self):
+    def mutation_probability(self) -> float:
         pass
 
     @property
     @abstractmethod
-    def mix_probability(self):
+    def mix_probability(self) -> float:
         pass
 
     @property
     @abstractmethod
-    def node_count(self):
+    def node_count(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def test_number(self):
+    def test_number(self) -> int:
         pass

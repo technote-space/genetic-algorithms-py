@@ -1,4 +1,5 @@
-from ..interfaces import IContext
+from target import ITarget
+from ..interfaces import IContext, IFunctionSet, IPhenotype
 
 
 class Context(IContext):
@@ -8,7 +9,13 @@ class Context(IContext):
     コンテキスト
     """
 
-    def __init__(self, target, start, node_count, functions, phenotype):
+    __target: ITarget
+    __current: int
+    __node_count: int
+    __functions: IFunctionSet
+    __phenotype: IPhenotype
+
+    def __init__(self, target: ITarget, start: int, node_count: int, functions: IFunctionSet, phenotype: IPhenotype) -> None:
         self.__target = target
         self.__current = start
         self.__node_count = node_count
@@ -16,24 +23,24 @@ class Context(IContext):
         self.__phenotype = phenotype
 
     @property
-    def target(self):
+    def target(self) -> ITarget:
         return self.__target
 
     @property
-    def current(self):
+    def current(self) -> int:
         return self.__current
 
     @property
-    def node_count(self):
+    def node_count(self) -> int:
         return self.__node_count
 
     @property
-    def functions(self):
+    def functions(self) -> IFunctionSet:
         return self.__functions
 
     @property
-    def phenotype(self):
+    def phenotype(self) -> IPhenotype:
         return self.__phenotype
 
-    def set_current(self, current):
+    def set_current(self, current: int) -> None:
         self.__current = current

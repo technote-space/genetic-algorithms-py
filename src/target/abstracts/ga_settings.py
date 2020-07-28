@@ -9,49 +9,49 @@ class AbstractGaSettings(IGaSettings):
     """
 
     @property
-    def terminate_offspring_number(self):
+    def terminate_offspring_number(self) -> int:
         return 250000
 
     @property
-    def population_size(self):
+    def population_size(self) -> int:
         return 200
 
     @property
-    def island_number(self):
+    def island_number(self) -> int:
         return 10
 
     @property
-    def cultural_island_rate(self):
+    def cultural_island_rate(self) -> float:
         return 0.1
 
     @property
-    def migration_interval(self):
+    def migration_interval(self) -> int:
         return 2500
 
     @property
-    def migration_rate(self):
+    def migration_rate(self) -> float:
         return 0.01
 
     @property
-    def crossover_time(self):
+    def crossover_time(self) -> int:
         return 10
 
     @property
-    def crossover_probability(self):
+    def crossover_probability(self) -> float:
         return 0.02
 
     @property
-    def mutation_probability(self):
+    def mutation_probability(self) -> float:
         return 0.1
 
     @property
-    def mix_probability(self):
+    def mix_probability(self) -> float:
         return 0.1
 
     @property
-    def node_count(self):
-        return 100
+    def node_count(self) -> int:
+        return 50
 
     @property
-    def test_number(self):
+    def test_number(self) -> int:
         return 1

@@ -9,7 +9,7 @@ class Base(metaclass=ABCMeta):
     基底クラス
     """
 
-    def __init__(self, directory):
+    def __init__(self, directory) -> None:
         self.__directory = directory
 
     @abstractmethod

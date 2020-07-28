@@ -9,13 +9,13 @@ class Settings(AbstractGymSettings):
     """
 
     @property
-    def name(self):
+    def name(self) -> str:
         return 'Mountain Car'
 
     @property
-    def step_limit(self):
+    def step_limit(self) -> int:
         return self.action_limit * 10
 
     @property
-    def perception_number(self):
+    def perception_number(self) -> int:
         return 10

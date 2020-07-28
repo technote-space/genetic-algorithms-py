@@ -1,5 +1,6 @@
 import sys
-from target import AbstractTarget
+from typing import Mapping, Callable
+from target import AbstractTarget, ISettings, IGaSettings
 from .implements import Agent, Field, FieldFlags
 from .settings import Settings
 from .ga_settings import GaSettings
@@ -12,7 +13,14 @@ class SantaFeTrail(AbstractTarget):
     Santa Fe Trail
     """
 
-    def __init__(self):
+    __settings: Settings
+    __ga_settings: GaSettings
+    __field: Field
+    __agent: Agent
+    __actions: Mapping[int, Callable[[], None]]
+    __perceptions: Mapping[int, Callable[[], bool]]
+
+    def __init__(self) -> None:
         super().__init__()
 
         self.__settings = Settings()
@@ -29,39 +37,39 @@ class SantaFeTrail(AbstractTarget):
         }
 
     @property
-    def settings(self):
+    def settings(self) -> ISettings:
         return self.__settings
 
     @property
-    def ga_settings(self):
+    def ga_settings(self) -> IGaSettings:
         return self.__ga_settings
 
-    def __go_forward(self):
+    def __go_forward(self) -> None:
         self.__agent.go_forward()
         if self.__field.is_finished:
             self._on_finished()
 
-    def __turn_right(self):
+    def __turn_right(self) -> None:
         self.__agent.turn_right()
 
-    def __turn_left(self):
+    def __turn_left(self) -> None:
         self.__agent.turn_left()
 
-    def _perform_action(self, index):
+    def _perform_action(self, index: int) -> None:
         self.__actions[index]()
 
-    def __is_food(self):
+    def __is_food(self) -> bool:
         fx = self.__agent.fx
         fy = self.__agent.fy
         return self.__field.check(fx, fy, FieldFlags.FOOD) and not self.__field.check(fx, fy, FieldFlags.VISITED)
 
-    def _perform_perceive(self, index):
+    def _perform_perceive(self, index: int) -> bool:
         return self.__perceptions[index]()
 
-    def _perform_get_fitness(self):
+    def _perform_get_fitness(self) -> float:
         return self.__field.get_fitness()
 
-    def draw(self):
+    def draw(self) -> None:
         marks = {
             FieldFlags.NONE: '  ',
             FieldFlags.FOOD: '△ ',

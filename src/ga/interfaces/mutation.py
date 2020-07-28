@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from .chromosome import IChromosome
 
 
 class IMutation(metaclass=ABCMeta):
@@ -9,5 +10,5 @@ class IMutation(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def mutate(self, chromosome, probability):
+    def mutate(self, chromosome: IChromosome, probability: float) -> None:
         pass

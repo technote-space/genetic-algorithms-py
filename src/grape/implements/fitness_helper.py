@@ -1,12 +1,15 @@
-from multiprocessing import Pool
 import time
+from typing import Tuple, List, Callable
+from multiprocessing import Pool
+from ga import IChromosome
 from targets import get_target
 from .genotype import Genotype
 from .function_set import FunctionSet
 from .test import TestData, TestDataset
+from ..interfaces import IGenotype
 
 
-def evaluate(args):
+def evaluate(args: Tuple[str, List[int], float]) -> Tuple[float, float]:
     target, chromosomes, sleep = args
 
     target_instance = get_target(target)
@@ -29,15 +32,18 @@ class FitnessHelper:
     適応度計算ツール
     """
 
-    pool_size = 4
-    sleep = 0.1
+    pool_size: int = 4
+    sleep: float = 0.1
+    __target: str
 
-    def __init__(self, target):
+    def __init__(self, target: str) -> None:
         self.__target = target
 
-    def run(self, chromosomes):
+    def run(self, chromosomes: List[IChromosome]) -> None:
+        filter_func: Callable[[IChromosome], Tuple[str, List[int], float]] = lambda x: (self.__target, x.acids, FitnessHelper.sleep)
         with Pool(FitnessHelper.pool_size) as pool:
-            results = pool.map(evaluate, map(lambda x: (self.__target, x.acids, FitnessHelper.sleep), chromosomes))
+            results = pool.map(evaluate, map(filter_func, chromosomes))
 
         for index, chromosome in enumerate(chromosomes):
-            chromosome.phenotype.set_fitness(results[index][0], results[index][1])
+            if isinstance(chromosome, IGenotype):
+                chromosome.phenotype.set_fitness(results[index][0], results[index][1])

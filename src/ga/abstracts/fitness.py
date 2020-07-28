@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from ..interfaces import IFitness
+from ..interfaces import IFitness, IChromosome
 
 
 class AbstractFitness(IFitness):
@@ -10,5 +10,5 @@ class AbstractFitness(IFitness):
     """
 
     @abstractmethod
-    def evaluate(self, chromosome):
+    def evaluate(self, chromosome: IChromosome) -> None:
         pass

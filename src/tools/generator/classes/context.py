@@ -8,7 +8,7 @@ class Context(Base):
     Context
     """
 
-    def __init__(self, directory, target, fps, gym_id, action_limit, step_limit, action_number, perception_number):
+    def __init__(self, directory, target, fps, gym_id, action_limit, step_limit, action_number, perception_number) -> None:
         super().__init__(directory)
         self.__target = target
         self.__fps = fps

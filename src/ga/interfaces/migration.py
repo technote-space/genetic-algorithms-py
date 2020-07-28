@@ -1,4 +1,6 @@
 from abc import ABCMeta, abstractmethod
+from typing import List
+from .algorithm import IAlgorithm
 
 
 class IMigration(metaclass=ABCMeta):
@@ -8,30 +10,33 @@ class IMigration(metaclass=ABCMeta):
     移住のinterface
     """
 
-    def __init__(self, rate, interval):
+    __rate: float
+    __interval: int
+
+    def __init__(self, rate: float, interval: int) -> None:
         self.__rate = rate
         self.__interval = interval
 
     @property
-    def rate(self):
+    def rate(self) -> float:
         return self.__rate
 
     @property
-    def interval(self):
+    def interval(self) -> int:
         return self.__interval
 
     @abstractmethod
-    def init(self):
+    def init(self) -> None:
         pass
 
     @abstractmethod
-    def get_count(self, algorithm):
+    def get_count(self, algorithm: IAlgorithm) -> int:
         pass
 
     @abstractmethod
-    def get_destinations(self, algorithm):
+    def get_destinations(self, algorithm: IAlgorithm) -> List[int]:
         pass
 
     @abstractmethod
-    def migrate(self, algorithm):
+    def migrate(self, algorithm: IAlgorithm) -> None:
         pass

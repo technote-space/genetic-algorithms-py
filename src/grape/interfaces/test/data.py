@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from target import ITarget
 
 
 class ITestData(metaclass=ABCMeta):
@@ -10,9 +11,9 @@ class ITestData(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def target(self):
+    def target(self) -> str:
         pass
 
     @abstractmethod
-    def create_new(self):
+    def create_new(self) -> ITarget:
         pass

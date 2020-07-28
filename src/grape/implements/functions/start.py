@@ -1,4 +1,5 @@
 from .action import Action
+from ...interfaces import IContext
 
 
 class Start(Action):
@@ -8,13 +9,13 @@ class Start(Action):
     スタート
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(0)
 
-    def _run(self, c1, c2, context):
+    def _run(self, c1: int, c2: int, context: IContext) -> None:
         context.set_current(c1)
 
-    def programming(self, c1, c2, context):
+    def programming(self, c1: int, c2: int, context: IContext) -> object:
         return {
             "id": context.current,
             "actions": [],

@@ -6,7 +6,7 @@ class Compressor:
     """
 
     @staticmethod
-    def compress(program, start, threshold=6):
+    def compress(program, start: int, threshold: int = 6):
         blocks = {}
         for block in program:
             blocks[block["id"]] = block

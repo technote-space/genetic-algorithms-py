@@ -9,9 +9,9 @@ class Settings(AbstractGymSettings):
     """
 
     @property
-    def name(self):
+    def name(self) -> str:
         return 'Cart Pole'
 
     @property
-    def perception_number(self):
+    def perception_number(self) -> int:
         return 4

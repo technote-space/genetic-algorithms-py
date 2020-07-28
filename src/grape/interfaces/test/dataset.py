@@ -1,4 +1,7 @@
 from abc import ABCMeta, abstractmethod
+from typing import Iterable
+from target import ITarget
+from .data import ITestData
 
 
 class ITestDataset(metaclass=ABCMeta):
@@ -10,14 +13,14 @@ class ITestDataset(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def length(self):
+    def length(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def data(self):
+    def data(self) -> ITestData:
         pass
 
     @abstractmethod
-    def create_dataset(self):
+    def create_dataset(self) -> Iterable[ITarget]:
         pass

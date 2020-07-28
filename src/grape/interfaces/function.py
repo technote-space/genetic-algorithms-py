@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from typing import Iterable
 
 
 class IFunction(metaclass=ABCMeta):
@@ -9,13 +10,16 @@ class IFunction(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def execute(self, c1, c2, context):
+    def execute(self, c1: int, c2: int, context: 'IContext') -> None:
         pass
 
     @abstractmethod
-    def get_possible_connections(self, c1, c2, context):
+    def get_possible_connections(self, c1: int, c2: int, context: 'IContext') -> Iterable[int]:
         pass
 
     @abstractmethod
-    def programming(self, c1, c2, context):
+    def programming(self, c1: int, c2: int, context: 'IContext') -> object:
         pass
+
+
+from .context import IContext  # noqa: E402

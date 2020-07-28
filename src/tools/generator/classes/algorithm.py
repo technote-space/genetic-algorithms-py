@@ -8,7 +8,7 @@ class Algorithm(Base):
     Algorithm
     """
 
-    def __init__(self, directory, lines, start):
+    def __init__(self, directory, lines, start) -> None:
         super().__init__(directory)
         self.__lines = lines
         self.__start = start

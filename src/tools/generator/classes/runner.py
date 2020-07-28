@@ -8,7 +8,7 @@ class Runner(Base):
     Runner
     """
 
-    def __init__(self, directory, step_limit):
+    def __init__(self, directory, step_limit) -> None:
         super().__init__(directory)
         self.__step_limit = step_limit
 

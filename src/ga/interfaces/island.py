@@ -1,4 +1,10 @@
 from abc import ABCMeta, abstractmethod
+from .population import IPopulation
+from .fitness import IFitness
+from .selection import ISelection
+from .crossover import ICrossover
+from .mutation import IMutation
+from .reinsertion import IReinsertion
 
 
 class IIsland(metaclass=ABCMeta):
@@ -8,17 +14,27 @@ class IIsland(metaclass=ABCMeta):
     島モデルにおける島のinterface
     """
 
+    __population: IPopulation
+    __fitness: IFitness
+    __selection: ISelection
+    __crossover: ICrossover
+    __crossover_probability: float
+    __mutation: IMutation
+    __mutation_probability: float
+    __reinsertion: IReinsertion
+    __evaluate_parents_fitness: bool
+
     def __init__(
-            self,
-            population,
-            fitness,
-            selection,
-            crossover,
-            crossover_probability,
-            mutation,
-            mutation_probability,
-            reinsertion,
-            evaluate_parents_fitness
+        self,
+        population: IPopulation,
+        fitness: IFitness,
+        selection: ISelection,
+        crossover: ICrossover,
+        crossover_probability: float,
+        mutation: IMutation,
+        mutation_probability: float,
+        reinsertion: IReinsertion,
+        evaluate_parents_fitness: bool
     ):
         self.__population = population
         self.__fitness = fitness
@@ -31,60 +47,60 @@ class IIsland(metaclass=ABCMeta):
         self.__evaluate_parents_fitness = evaluate_parents_fitness
 
     @property
-    def population(self):
+    def population(self) -> IPopulation:
         return self.__population
 
     @property
-    def fitness(self):
+    def fitness(self) -> IFitness:
         return self.__fitness
 
     @property
-    def selection(self):
+    def selection(self) -> ISelection:
         return self.__selection
 
     @property
-    def crossover(self):
+    def crossover(self) -> ICrossover:
         return self.__crossover
 
     @property
-    def crossover_probability(self):
+    def crossover_probability(self) -> float:
         return self.__crossover_probability
 
     @property
-    def mutation(self):
+    def mutation(self) -> IMutation:
         return self.__mutation
 
     @property
-    def mutation_probability(self):
+    def mutation_probability(self) -> float:
         return self.__mutation_probability
 
     @property
-    def reinsertion(self):
+    def reinsertion(self) -> IReinsertion:
         return self.__reinsertion
 
     @property
-    def evaluate_parents_fitness(self):
+    def evaluate_parents_fitness(self) -> bool:
         return self.__evaluate_parents_fitness
 
     @property
     @abstractmethod
-    def initialized(self):
+    def initialized(self) -> bool:
         pass
 
     @property
     @abstractmethod
-    def generation_number(self):
+    def generation_number(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def offspring_number(self):
+    def offspring_number(self) -> int:
         pass
 
     @abstractmethod
-    def reset(self):
+    def reset(self) -> None:
         pass
 
     @abstractmethod
-    def step(self):
+    def step(self) -> None:
         pass

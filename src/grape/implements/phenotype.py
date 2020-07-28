@@ -1,43 +1,50 @@
+from typing import Tuple, List
+from target import ITarget
 from .context import Context
 from .functions import Perception
+from ..interfaces import IPhenotype, IGenotype, ITestDataset, IContext
 
 
-class Phenotype:
+class Phenotype(IPhenotype):
     """
     Description:
     ------------
     表現型
     """
 
-    def __init__(self, genotype):
+    __genotype: IGenotype
+    __fitness: float
+    __step: float
+
+    def __init__(self, genotype: IGenotype) -> None:
         self.__genotype = genotype
         self.__fitness = -1
         self.__step = 0
 
     @property
-    def fitness(self):
+    def fitness(self) -> float:
         return self.__fitness
 
     @property
-    def step(self):
+    def step(self) -> float:
         return self.__step
 
     @property
-    def genotype(self):
+    def genotype(self) -> IGenotype:
         return self.__genotype
 
-    def calc_fitness(self, dataset):
+    def calc_fitness(self, dataset: ITestDataset) -> None:
         step, fitness = self._run_episodes(dataset)
         self.__fitness = fitness
         self.__step = step
 
-    def set_fitness(self, fitness, step):
+    def set_fitness(self, fitness: float, step: float) -> None:
         self.__fitness = fitness
         self.__step = step
 
-    def _run_episodes(self, dataset):
-        sum_score = 0
-        sum_steps = 0
+    def _run_episodes(self, dataset: ITestDataset) -> Tuple[float, float]:
+        sum_score: float = 0
+        sum_steps: float = 0
 
         # noinspection PyBroadException
         try:
@@ -51,10 +58,10 @@ class Phenotype:
         return sum_steps / dataset.length, sum_score / dataset.length
 
     @staticmethod
-    def _next(node, context):
+    def _next(node: List[int], context: IContext) -> None:
         context.functions.get_function(node[0]).execute(node[1], node[2], context)
 
-    def until_action(self, context):
+    def until_action(self, context: IContext) -> None:
         while not context.target.has_reached:
             node = self.__genotype.get_node_genes(context.current)
             func = context.functions.get_function(node[0])
@@ -62,21 +69,21 @@ class Phenotype:
             if type(func) is not Perception:
                 break
 
-    def while_end(self, context):
+    def while_end(self, context: IContext) -> None:
         while not context.target.has_reached:
             node = self.__genotype.get_node_genes(context.current)
             self._next(node, context)
 
-    def get_context(self, target, current=0):
+    def get_context(self, target: ITarget, current: int = 0) -> IContext:
         return Context(target, current, self.__genotype.node_count, self.genotype.functions, self)
 
-    def _episode(self, target):
+    def _episode(self, target: ITarget) -> Tuple[float, float]:
         context = self.get_context(target)
         self.while_end(context)
 
         return context.target.step, context.target.get_fitness()
 
-    def get_programming(self, target):
+    def get_programming(self, target: ITarget) -> List[object]:
         blocks = {}
         stack = [0]
         while len(stack) > 0:
