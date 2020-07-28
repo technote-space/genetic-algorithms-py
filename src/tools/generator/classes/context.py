@@ -121,6 +121,7 @@ class Context(Base):
                    'self.__step += 1',
                    'if self.__has_finished:',
                    '{',
+                   'self.__print_status()',
                    'raise Finished()',
                    '}',
                ] + perceptions + [
