@@ -8,9 +8,8 @@ class Fitness(AbstractFitness):
     適応度クラス
     """
 
-    def __init__(self, dataset, functions):
+    def __init__(self, dataset):
         self.__dataset = dataset
-        self.__functions = functions
 
     def evaluate(self, chromosome):
-        chromosome.phenotype.calc_fitness(self.__dataset, self.__functions)
+        chromosome.phenotype.calc_fitness(self.__dataset)

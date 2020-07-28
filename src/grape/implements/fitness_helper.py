@@ -15,7 +15,7 @@ def evaluate(args):
     genotype = Genotype(0, functions)
 
     genotype.create_from_nodes(chromosomes)
-    genotype.phenotype.calc_fitness(dataset, functions)
+    genotype.phenotype.calc_fitness(dataset)
 
     time.sleep(sleep)
 
@@ -29,7 +29,7 @@ class FitnessHelper:
     適応度計算ツール
     """
 
-    pool_size = 6
+    pool_size = 4
     sleep = 0.1
 
     def __init__(self, target):

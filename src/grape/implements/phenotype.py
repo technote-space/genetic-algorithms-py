@@ -26,8 +26,8 @@ class Phenotype:
     def genotype(self):
         return self.__genotype
 
-    def calc_fitness(self, dataset, functions):
-        step, fitness = self._run_episodes(dataset, functions)
+    def calc_fitness(self, dataset):
+        step, fitness = self._run_episodes(dataset)
         self.__fitness = fitness
         self.__step = step
 
@@ -35,14 +35,14 @@ class Phenotype:
         self.__fitness = fitness
         self.__step = step
 
-    def _run_episodes(self, dataset, functions):
+    def _run_episodes(self, dataset):
         sum_score = 0
         sum_steps = 0
 
         # noinspection PyBroadException
         try:
             for target in dataset.create_dataset():
-                result = self._episode(target, functions)
+                result = self._episode(target)
                 sum_steps += result[0]
                 sum_score += result[1]
         except Exception:
@@ -67,11 +67,11 @@ class Phenotype:
             node = self.__genotype.get_node_genes(context.current)
             self._next(node, context)
 
-    def get_context(self, target, functions, current=0):
-        return Context(target, current, self.__genotype.node_count, functions, self)
+    def get_context(self, target, current=0):
+        return Context(target, current, self.__genotype.node_count, self.genotype.functions, self)
 
-    def _episode(self, target, functions):
-        context = self.get_context(target, functions)
+    def _episode(self, target):
+        context = self.get_context(target)
         self.while_end(context)
 
         return context.target.step, context.target.get_fitness()

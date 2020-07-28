@@ -33,6 +33,10 @@ class Genotype(AbstractChromosome):
     def step(self):
         return self.phenotype.step
 
+    @property
+    def functions(self):
+        return self.__functions
+
     def create_from_nodes(self, nodes):
         self.create_from_acids(nodes)
         self.__node_count = len(nodes) / self.__node_length - 1

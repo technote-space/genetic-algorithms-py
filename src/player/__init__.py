@@ -21,7 +21,7 @@ class Player:
         self.__main()
 
     def __reset(self):
-        self.__context = self.__genotype.phenotype.get_context(get_target(self.__target, True), self.__functions)
+        self.__context = self.__genotype.phenotype.get_context(get_target(self.__target, True))
 
     def __main(self):
         while True:

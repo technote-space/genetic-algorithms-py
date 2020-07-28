@@ -32,7 +32,7 @@ class Algorithm(AbstractAlgorithm):
     def __best_changed_function(self, algorithm):
         self.__cloned_target = get_target(self.__target)
         phenotype = self.best.phenotype
-        phenotype.while_end(phenotype.get_context(self.__cloned_target, FunctionSet(self.__cloned_target)))
+        phenotype.while_end(phenotype.get_context(self.__cloned_target))
 
         self.draw()
         for func in self.__best_changed:

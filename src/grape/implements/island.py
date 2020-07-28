@@ -28,7 +28,7 @@ class GrapeIsland(AbstractIsland):
     ):
         super().__init__(
             Population(population_size, Genotype(node_count, functions)),
-            Fitness(dataset, functions),
+            Fitness(dataset),
             Selection(),
             crossover,
             crossover_probability,
