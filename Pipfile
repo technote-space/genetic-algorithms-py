@@ -8,6 +8,7 @@ flake8 = "*"
 autopep8 = "*"
 pep8-naming = "*"
 wheel = "*"
+mypy = "*"
 
 [packages]
 gym = "*"
