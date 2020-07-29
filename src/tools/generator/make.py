@@ -38,7 +38,7 @@ class Make:
         lines: List[str] = reduce(lambda_func2, map(lambda_func1, Compressor.compress(blocks, start)))
 
         makers: List[Base] = [
-            Algorithm(self.__directory, lines, start),
+            Algorithm(self.__directory, lines, start, blocks[0].actions),
             App(self.__directory),
             Context(self.__directory, target, fps, gym_id, action_limit, step_limit, action_number, perception_number),
             Finished(self.__directory),

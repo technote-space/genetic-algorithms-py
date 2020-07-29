@@ -11,11 +11,13 @@ class Algorithm(Base):
 
     __lines: List[str]
     __start: int
+    __start_actions: List[str]
 
-    def __init__(self, directory: str, lines: List[str], start: int) -> None:
+    def __init__(self, directory: str, lines: List[str], start: int, start_actions: List[str]) -> None:
         super().__init__(directory)
         self.__lines = lines
         self.__start = start
+        self.__start_actions = start_actions
 
     def _get_file_name(self) -> str:
         return 'algorithm'
@@ -33,6 +35,7 @@ class Algorithm(Base):
                    '}',
                    'def start(self):',
                    '{',
+               ] + self.__start_actions + [
                    f'self.__func{self.__start}()',
                    '}',
                ] + self.__lines + ['}']
