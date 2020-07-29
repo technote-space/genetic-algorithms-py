@@ -7,21 +7,27 @@ from tools import IO
 from tools import Make
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description='Genetic Algorithm for Python')
     parser.add_argument('target', help='target', choices=get_choices())
     parser.add_argument('-f', '--file', help='file name', default='chromosome.json')
     parser.add_argument('-d', '--dir', help='executable file directory', default='program')
     parser.add_argument('-p', '--player', help='player mode', action='store_true')
-    parser.add_argument('-l', '--load', help='cpu load', default=15, type=int)
+    parser.add_argument('-l', '--load', help='cpu load', default=15, type=float)
     args = parser.parse_args()
 
-    io = IO(args.file)
-    if args.player:
-        Player(args.target, io.load_chromosome())
+    file: str = args.file
+    player: bool = args.player
+    target: str = args.target
+    directory: str = args.dir
+    load: float = args.load
+
+    io = IO(file)
+    if player:
+        Player(target, io.load_chromosome())
     else:
-        make = Make(args.dir)
-        Runner(Algorithm(args.target, io.save_chromosome, make.generate), args.load)
+        make = Make(directory)
+        Runner(Algorithm(target, io.save_chromosome, make.generate), load)
 
 
 if __name__ == "__main__":

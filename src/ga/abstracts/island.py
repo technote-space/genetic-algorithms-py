@@ -1,5 +1,6 @@
 from abc import abstractmethod
-from ..interfaces import IIsland
+from typing import List
+from ..interfaces import IIsland, IPopulation, IFitness, ISelection, ICrossover, IMutation, IReinsertion, IChromosome
 
 
 class AbstractIsland(IIsland):
@@ -9,17 +10,21 @@ class AbstractIsland(IIsland):
     島モデルにおける島の基底クラス
     """
 
+    __generation_number: int
+    __offspring_number: int
+    __initialized: bool
+
     def __init__(
-            self,
-            population,
-            fitness,
-            selection,
-            crossover,
-            crossover_probability,
-            mutation,
-            mutation_probability,
-            reinsertion,
-            evaluate_parents_fitness
+        self,
+        population: IPopulation,
+        fitness: IFitness,
+        selection: ISelection,
+        crossover: ICrossover,
+        crossover_probability: float,
+        mutation: IMutation,
+        mutation_probability: float,
+        reinsertion: IReinsertion,
+        evaluate_parents_fitness: bool
     ):
         super().__init__(
             population,
@@ -38,18 +43,18 @@ class AbstractIsland(IIsland):
         self.__initialized = False
 
     @property
-    def initialized(self):
+    def initialized(self) -> bool:
         return self.__initialized
 
     @property
-    def generation_number(self):
+    def generation_number(self) -> int:
         return self.__generation_number
 
     @property
-    def offspring_number(self):
+    def offspring_number(self) -> int:
         return self.__offspring_number
 
-    def reset(self):
+    def reset(self) -> None:
         self.__initialized = False
         self.population.init()
 
@@ -60,18 +65,18 @@ class AbstractIsland(IIsland):
         self._perform_reset()
         self.__initialized = True
 
-    def _perform_reset(self):
+    def _perform_reset(self) -> None:
         pass
 
-    def _perform_mutate(self, chromosomes):
+    def _perform_mutate(self, chromosomes: List[IChromosome]) -> None:
         for chromosome in chromosomes:
             self.mutation.mutate(chromosome, self.mutation_probability)
 
     @abstractmethod
-    def _evaluate(self, chromosomes):
+    def _evaluate(self, chromosomes: List[IChromosome]) -> None:
         pass
 
-    def step(self):
+    def step(self) -> None:
         if not self.__initialized:
             self.reset()
 
@@ -88,5 +93,5 @@ class AbstractIsland(IIsland):
         self.__offspring_number += len(offspring)
         self._perform_step()
 
-    def _perform_step(self):
+    def _perform_step(self) -> None:
         pass

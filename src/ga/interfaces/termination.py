@@ -10,13 +10,16 @@ class ITermination(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def progress(self):
+    def progress(self) -> float:
         pass
 
     @abstractmethod
-    def has_reached(self, algorithm):
+    def has_reached(self, algorithm: 'IAlgorithm') -> bool:
         pass
 
     @abstractmethod
-    def init(self):
+    def init(self) -> None:
         pass
+
+
+from .algorithm import IAlgorithm  # noqa: E402

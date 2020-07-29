@@ -1,5 +1,6 @@
 from abc import abstractmethod
-from ..interfaces import IReinsertion
+from typing import List
+from ..interfaces import IReinsertion, IChromosome
 
 
 class AbstractReinsertion(IReinsertion):
@@ -10,5 +11,5 @@ class AbstractReinsertion(IReinsertion):
     """
 
     @abstractmethod
-    def select(self, population, offspring, parents, size):
+    def select(self, population: List[IChromosome], offspring: List[IChromosome], parents: List[IChromosome], size: int) -> List[IChromosome]:
         pass

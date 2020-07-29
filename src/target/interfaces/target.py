@@ -1,4 +1,7 @@
 from abc import ABCMeta, abstractmethod
+from typing import Optional
+from .settings import ISettings
+from .ga_settings import IGaSettings
 
 
 class ITarget(metaclass=ABCMeta):
@@ -10,71 +13,71 @@ class ITarget(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def name(self):
+    def name(self) -> Optional[str]:
         pass
 
     @property
     @abstractmethod
-    def is_player(self):
+    def is_player(self) -> bool:
         pass
 
     @property
     @abstractmethod
-    def step(self):
+    def step(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def action_step(self):
+    def action_step(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def settings(self):
+    def settings(self) -> ISettings:
         pass
 
     @property
     @abstractmethod
-    def ga_settings(self):
+    def ga_settings(self) -> IGaSettings:
         pass
 
     @property
     @abstractmethod
-    def has_reached(self):
+    def has_reached(self) -> bool:
         pass
 
     @abstractmethod
-    def action(self, index):
+    def action(self, index: int) -> None:
         pass
 
     @abstractmethod
-    def perceive(self, index):
+    def perceive(self, index: int) -> bool:
         pass
 
     @abstractmethod
-    def get_fitness(self):
+    def get_fitness(self) -> float:
         pass
 
     @abstractmethod
-    def set_name(self, name):
+    def set_name(self, name: str) -> None:
         pass
 
     @abstractmethod
-    def on_player(self):
+    def on_player(self) -> None:
         pass
 
     @abstractmethod
-    def draw(self):
+    def draw(self) -> None:
         pass
 
     @abstractmethod
-    def render(self):
+    def render(self) -> None:
         pass
 
     @abstractmethod
-    def get_action_expression(self, index):
+    def get_action_expression(self, index: int) -> str:
         pass
 
     @abstractmethod
-    def get_perceive_expression(self, index, observation_name):
+    def get_perceive_expression(self, index: int, observation_name: str) -> str:
         pass

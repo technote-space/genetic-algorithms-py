@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from .chromosome import IChromosome
 
 
 class IFitness(metaclass=ABCMeta):
@@ -9,5 +10,5 @@ class IFitness(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def evaluate(self, chromosome):
+    def evaluate(self, chromosome: IChromosome) -> None:
         pass

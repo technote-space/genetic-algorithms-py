@@ -1,3 +1,5 @@
+from typing import List, Optional
+from target import ITarget
 from .base import Base
 
 
@@ -8,7 +10,15 @@ class Context(Base):
     Context
     """
 
-    def __init__(self, directory, target, fps, gym_id, action_limit, step_limit, action_number, perception_number):
+    __target: ITarget
+    __fps: float
+    __gym_id: str
+    __action_limit: int
+    __step_limit: int
+    __action_number: int
+    __perception_number: int
+
+    def __init__(self, directory: str, target: ITarget, fps: float, gym_id: str, action_limit: int, step_limit: int, action_number: int, perception_number: int) -> None:
         super().__init__(directory)
         self.__target = target
         self.__fps = fps
@@ -18,10 +28,10 @@ class Context(Base):
         self.__action_number = action_number
         self.__perception_number = perception_number
 
-    def _get_file_name(self):
+    def _get_file_name(self) -> str:
         return 'context'
 
-    def _get_imports(self):
+    def _get_imports(self) -> Optional[List[str]]:
         return [
             'import gym',
             'import time',
@@ -29,7 +39,7 @@ class Context(Base):
             'from .finished import Finished',
         ]
 
-    def __get_class_source(self):
+    def __get_class_source(self) -> List[str]:
         return [
             'def __init__(self):',
             '{',
@@ -67,7 +77,7 @@ class Context(Base):
             '}',
         ]
 
-    def __get_action_helper(self):
+    def __get_action_helper(self) -> List[str]:
         sleep_time = 1.0 / self.__fps
         actions = []
         for index in range(self.__action_number):
@@ -106,7 +116,7 @@ class Context(Base):
             '}',
         ]
 
-    def __get_perception_helper(self):
+    def __get_perception_helper(self) -> List[str]:
         perceptions = []
         for index in range(self.__perception_number):
             perceptions.extend([
@@ -129,11 +139,11 @@ class Context(Base):
                    '}',
                ]
 
-    def _get_source_code(self):
+    def _get_source_code(self) -> List[str]:
         return [
                    'class Context:',
                    '{',
                ] + self.__get_class_source() + self.__get_action_helper() + self.__get_perception_helper() + ['}']
 
-    def _is_package(self):
+    def _is_package(self) -> bool:
         return True

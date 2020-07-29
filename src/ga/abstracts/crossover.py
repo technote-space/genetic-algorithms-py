@@ -1,5 +1,6 @@
 from abc import abstractmethod
-from ..interfaces import ICrossover
+from typing import List, Iterable
+from ..interfaces import ICrossover, IChromosome
 
 
 class AbstractCrossover(ICrossover):
@@ -9,10 +10,7 @@ class AbstractCrossover(ICrossover):
     交叉の基底クラス
     """
 
-    def __init__(self, parents_number, children_number):
-        super().__init__(parents_number, children_number)
-
-    def cross(self, parents, probability):
+    def cross(self, parents: List[IChromosome], probability: float) -> List[IChromosome]:
         if len(parents) != self.parents_number:
             raise Exception('Length is not same.')
 
@@ -23,5 +21,5 @@ class AbstractCrossover(ICrossover):
         return offspring
 
     @abstractmethod
-    def _perform_cross(self, parents, probability):
+    def _perform_cross(self, parents: List[IChromosome], probability: float) -> Iterable[IChromosome]:
         pass

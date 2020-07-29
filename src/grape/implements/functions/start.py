@@ -1,4 +1,6 @@
 from .action import Action
+from ..block import FuncBlock
+from ...interfaces import IContext, IFuncBlock
 
 
 class Start(Action):
@@ -8,15 +10,11 @@ class Start(Action):
     スタート
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(0)
 
-    def _run(self, c1, c2, context):
+    def _run(self, c1: int, c2: int, context: IContext) -> None:
         context.set_current(c1)
 
-    def programming(self, c1, c2, context):
-        return {
-            "id": context.current,
-            "actions": [],
-            "next": c1
-        }
+    def programming(self, c1: int, c2: int, context: IContext) -> IFuncBlock:
+        return FuncBlock(context.current, [], c1)

@@ -7,7 +7,3 @@ class GaSettings(AbstractGaSettings):
     ------------
     GAの設定
     """
-
-    @property
-    def node_count(self):
-        return 50

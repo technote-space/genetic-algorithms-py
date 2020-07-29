@@ -11,6 +11,7 @@ from .population import Population
 from .selection import Selection
 from .termination import Termination
 from .fitness_helper import FitnessHelper
+from .block import FuncBlock, NextBlock
 
 from .functions import Action, Perception, Start
 from .generations import CulturalCrossover, CulturalReinsertion, CulturalIsland
@@ -23,5 +24,5 @@ __all__ = [
     'Action', 'Perception', 'Start',
     'CulturalCrossover', 'CulturalReinsertion', 'CulturalIsland',
     'MggCrossover', 'MggReinsertion', 'MggIsland',
-    'TestData', 'TestDataset'
+    'TestData', 'TestDataset', 'FuncBlock', 'NextBlock'
 ]

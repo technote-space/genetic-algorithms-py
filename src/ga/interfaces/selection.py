@@ -1,4 +1,6 @@
 from abc import ABCMeta, abstractmethod
+from typing import List, Tuple
+from .chromosome import IChromosome
 
 
 class ISelection(metaclass=ABCMeta):
@@ -9,5 +11,5 @@ class ISelection(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def select(self, chromosomes):
+    def select(self, chromosomes: List[IChromosome]) -> Tuple[List[IChromosome], List[IChromosome]]:
         pass

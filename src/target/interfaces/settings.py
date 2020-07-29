@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from typing import Optional
 
 
 class ISettings(metaclass=ABCMeta):
@@ -10,35 +11,35 @@ class ISettings(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def name(self):
+    def name(self) -> str:
         pass
 
     @property
     @abstractmethod
-    def gym_id(self):
+    def gym_id(self) -> Optional[str]:
         pass
 
     @property
     @abstractmethod
-    def action_limit(self):
+    def action_limit(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def step_limit(self):
+    def step_limit(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def perception_number(self):
+    def perception_number(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def action_number(self):
+    def action_number(self) -> int:
         pass
 
     @property
     @abstractmethod
-    def fps(self):
+    def fps(self) -> float:
         pass

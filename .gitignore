@@ -1,5 +1,6 @@
 __pycache__/
 .idea/
 .python-version
+.mypy_cache/
 /chromosome*.json
 /program*/

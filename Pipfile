@@ -8,6 +8,7 @@ flake8 = "*"
 autopep8 = "*"
 pep8-naming = "*"
 wheel = "*"
+mypy = "*"
 
 [packages]
 gym = "*"
@@ -19,3 +20,4 @@ python_version = "3.7"
 [scripts]
 format = "autopep8 -ivr src"
 lint = "flake8 --show-source src"
+type = "mypy src/app.py"

@@ -1,5 +1,6 @@
 import copy
-from ga import AbstractSelection
+from typing import List, Tuple
+from ga import AbstractSelection, IChromosome
 
 
 class Selection(AbstractSelection):
@@ -9,7 +10,7 @@ class Selection(AbstractSelection):
     選択クラス
     """
 
-    def select(self, chromosomes):
+    def select(self, chromosomes: List[IChromosome]) -> Tuple[List[IChromosome], List[IChromosome]]:
         population = copy.copy(chromosomes)
         parent1 = self._take_by_order(population)
         parent2 = self._take_by_order(population)

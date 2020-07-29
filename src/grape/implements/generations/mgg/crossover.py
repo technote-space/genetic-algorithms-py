@@ -1,5 +1,6 @@
 import random
-from ga import AbstractCrossover
+from typing import List, Iterable
+from ga import AbstractCrossover, IChromosome
 
 
 class MggCrossover(AbstractCrossover):
@@ -9,14 +10,17 @@ class MggCrossover(AbstractCrossover):
     MGGの交叉クラス
     """
 
-    def __init__(self, mix_probability, crossover_time):
+    __mix_probability: float
+    __crossover_time: int
+
+    def __init__(self, mix_probability: float, crossover_time: int) -> None:
         super().__init__(2, crossover_time * 2)
 
         # [0, 0.5)
         self.__mix_probability = min(max(mix_probability if mix_probability < 0.5 else 1 - mix_probability, 0), 0.5)
         self.__crossover_time = crossover_time
 
-    def _perform_cross(self, parents, probability):
+    def _perform_cross(self, parents: List[IChromosome], probability: float) -> Iterable[IChromosome]:
         parent1 = parents[0]
         parent2 = parents[1]
 
