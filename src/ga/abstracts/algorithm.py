@@ -12,14 +12,23 @@ class AbstractAlgorithm(IAlgorithm):
     アルゴリズムの基底クラス
     """
 
+    __thread_number: int
     __best_changed: Callable[[IAlgorithm], None]
     __chromosomes: List[IChromosome]
     __fitness: float
     __best: Optional[IChromosome]
 
-    def __init__(self, best_changed: Callable[[IAlgorithm], None], islands: Iterable[IIsland], termination: ITermination, migration: Optional[IMigration] = None) -> None:
+    def __init__(
+        self,
+        thread_number: int,
+        best_changed: Callable[[IAlgorithm], None],
+        islands: Iterable[IIsland],
+        termination: ITermination,
+        migration: Optional[IMigration] = None
+    ) -> None:
         super().__init__(islands, termination, migration)
 
+        self.__thread_number = thread_number
         self.__best_changed = best_changed  # type: ignore
         self.__chromosomes = []
         self.__fitness = 0
@@ -80,6 +89,8 @@ class AbstractAlgorithm(IAlgorithm):
                 self.__best_changed(self)  # type: ignore
 
     def reset(self) -> None:
+        self.__fitness = 0
+        self.__best = None
         for island in self.islands:
             island.reset()
         if self.migration:
@@ -87,8 +98,6 @@ class AbstractAlgorithm(IAlgorithm):
         self.termination.init()
         self._update_chromosomes()
         self._perform_reset()
-        self.__fitness = 0
-        self.__best = None
 
     def _perform_reset(self) -> None:
         pass
@@ -101,8 +110,12 @@ class AbstractAlgorithm(IAlgorithm):
         if self.has_reached:
             return
 
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            executor.map(self.__island_step, self.islands)
+        if self.__thread_number > 1:
+            with ThreadPoolExecutor(max_workers=self.__thread_number) as executor:
+                executor.map(self.__island_step, self.islands)
+        else:
+            for island in self.islands:
+                self.__island_step(island)
 
         if self.migration:
             self.migration.migrate(self)

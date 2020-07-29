@@ -1,7 +1,7 @@
 import math
 from typing import List, Tuple, Callable, Optional
 from targets import get_target
-from target import ITarget
+from target import ITarget, AbstractAtariTarget
 from ga import AbstractAlgorithm, IChromosome, IAlgorithm, IIsland
 from .termination import Termination
 from .migration import Migration
@@ -30,6 +30,7 @@ class Algorithm(AbstractAlgorithm):
         target_instance = get_target(target)
         settings = target_instance.ga_settings
         super().__init__(
+            1 if isinstance(target_instance, AbstractAtariTarget) else 3,  # type: ignore
             self.__best_changed_function,
             self.__get_islands(target, target_instance),
             Termination(settings.terminate_offspring_number),
