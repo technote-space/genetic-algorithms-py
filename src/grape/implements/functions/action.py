@@ -1,6 +1,7 @@
 from typing import Iterable
+from ..block import FuncBlock
 from ...abstracts import AbstractFunction
-from ...interfaces import IContext
+from ...interfaces import IContext, IFuncBlock
 
 
 class Action(AbstractFunction):
@@ -22,11 +23,9 @@ class Action(AbstractFunction):
     def get_possible_connections(self, c1: int, c2: int, context: IContext) -> Iterable[int]:
         return c1,
 
-    def programming(self, c1: int, c2: int, context: IContext) -> object:
-        return {
-            "id": context.current,
-            "actions": [
-                f'self.__context.action({self.__index})',
-            ],
-            "next": c1
-        }
+    def programming(self, c1: int, c2: int, context: IContext) -> IFuncBlock:
+        return FuncBlock(
+            context.current,
+            [f'self.__context.action({self.__index})'],
+            c1
+        )

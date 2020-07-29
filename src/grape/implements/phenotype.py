@@ -2,7 +2,7 @@ from typing import Tuple, List
 from target import ITarget
 from .context import Context
 from .functions import Perception
-from ..interfaces import IPhenotype, IGenotype, ITestDataset, IContext
+from ..interfaces import IPhenotype, IGenotype, ITestDataset, IContext, IFuncBlock
 
 
 class Phenotype(IPhenotype):
@@ -83,7 +83,7 @@ class Phenotype(IPhenotype):
 
         return context.target.step, context.target.get_fitness()
 
-    def get_programming(self, target: ITarget) -> List[object]:
+    def get_programming(self, target: ITarget) -> List[IFuncBlock]:
         blocks = {}
         stack = [0]
         while len(stack) > 0:

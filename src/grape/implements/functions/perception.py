@@ -1,6 +1,7 @@
 from typing import Iterable
+from ..block import FuncBlock, NextBlock
 from ...abstracts import AbstractFunction
-from ...interfaces import IContext
+from ...interfaces import IContext, IFuncBlock
 
 
 class Perception(AbstractFunction):
@@ -21,15 +22,9 @@ class Perception(AbstractFunction):
     def get_possible_connections(self, c1: int, c2: int, context: IContext) -> Iterable[int]:
         return c1, c2
 
-    def programming(self, c1: int, c2: int, context: IContext) -> object:
-        return {
-            "id": context.current,
-            "actions": [],
-            "next": {
-                "perception": f'self.__context.perception({self.__index})',
-                "actions1": [],
-                "next1": c1,
-                "actions2": [],
-                "next2": c2
-            }
-        }
+    def programming(self, c1: int, c2: int, context: IContext) -> IFuncBlock:
+        return FuncBlock(
+            context.current,
+            [],
+            NextBlock(f'self.__context.perception({self.__index})', [], c1, [], c2)
+        )

@@ -16,7 +16,7 @@ class MountainCar(AbstractGymTarget):
     __max_position: float
 
     def __init__(self) -> None:
-        super().__init__('MountainCar-v0', Settings, GaSettings)
+        super().__init__('MountainCar-v0', Settings, GaSettings)  # type: ignore
         self.__perception_settings = [
             (0, -1.2, -0.9),
             (0, -0.9, -0.6),

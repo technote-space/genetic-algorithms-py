@@ -67,7 +67,7 @@ class AbstractAlgorithm(IAlgorithm):
         lambda_func: Callable[[List[IChromosome], IIsland], List[IChromosome]] = lambda acc, island: acc + island.population.chromosomes
         initial: List[IChromosome] = []
         self.__chromosomes = sorted(
-            reduce(lambda_func, self.islands, initial),
+            reduce(lambda_func, self.islands, initial),  # type: ignore
             key=lambda chromosome: chromosome.fitness,
             reverse=True
         )
@@ -77,7 +77,7 @@ class AbstractAlgorithm(IAlgorithm):
             best_fitness = self.__chromosomes[0].fitness
             if best_fitness >= 0 and best_fitness != self.__fitness:
                 self.__fitness = best_fitness
-                self.__best_changed(self)
+                self.__best_changed(self)  # type: ignore
 
     def reset(self) -> None:
         for island in self.islands:

@@ -11,7 +11,7 @@ class CartPole(AbstractGymTarget):
     """
 
     def __init__(self) -> None:
-        super().__init__('CartPole-v1', Settings, GaSettings)
+        super().__init__('CartPole-v1', Settings, GaSettings)  # type: ignore
 
     def _perform_perceive(self, index: int) -> bool:
         return self.observation[index] < 0  # type: ignore

@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 from target import ITarget
+from .block import IFuncBlock
 
 
 class IPhenotype(metaclass=ABCMeta):
@@ -46,7 +47,7 @@ class IPhenotype(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_programming(self, target: ITarget) -> List[object]:
+    def get_programming(self, target: ITarget) -> List[IFuncBlock]:
         pass
 
 

@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import Iterable
+from .block import IFuncBlock
 
 
 class IFunction(metaclass=ABCMeta):
@@ -18,7 +19,7 @@ class IFunction(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def programming(self, c1: int, c2: int, context: 'IContext') -> object:
+    def programming(self, c1: int, c2: int, context: 'IContext') -> IFuncBlock:
         pass
 
 

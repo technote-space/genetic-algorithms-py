@@ -1,3 +1,4 @@
+from typing import List, Optional
 from .base import Base
 
 
@@ -8,21 +9,23 @@ class Runner(Base):
     Runner
     """
 
-    def __init__(self, directory, step_limit) -> None:
+    __step_limit: int
+
+    def __init__(self, directory: str, step_limit: int) -> None:
         super().__init__(directory)
         self.__step_limit = step_limit
 
-    def _get_file_name(self):
+    def _get_file_name(self) -> str:
         return 'runner'
 
-    def _get_imports(self):
+    def _get_imports(self) -> Optional[List[str]]:
         return [
             'import time',
             'import sys',
             'from .finished import Finished',
         ]
 
-    def _get_source_code(self):
+    def _get_source_code(self) -> List[str]:
         return [
             'class Runner:',
             '{',
@@ -55,5 +58,5 @@ class Runner(Base):
             '}',
         ]
 
-    def _is_package(self):
+    def _is_package(self) -> bool:
         return True

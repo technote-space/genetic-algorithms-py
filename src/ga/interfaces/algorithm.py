@@ -9,9 +9,9 @@ class IAlgorithm(metaclass=ABCMeta):
     アルゴリズムのinterface
     """
 
-    __islands: Tuple['IIsland']
+    __islands: Tuple['IIsland', ...]
     __termination: 'ITermination'
-    __migration: 'IMigration'
+    __migration: Optional['IMigration']
 
     def __init__(self, islands: Iterable['IIsland'], termination: 'ITermination', migration: Optional['IMigration'] = None) -> None:
         self.__islands = tuple(islands)
@@ -19,7 +19,7 @@ class IAlgorithm(metaclass=ABCMeta):
         self.__migration = migration
 
     @property
-    def islands(self) -> Tuple['IIsland']:
+    def islands(self) -> Tuple['IIsland', ...]:
         return self.__islands
 
     @property
@@ -27,7 +27,7 @@ class IAlgorithm(metaclass=ABCMeta):
         return self.__termination
 
     @property
-    def migration(self) -> 'IMigration':
+    def migration(self) -> Optional['IMigration']:
         return self.__migration
 
     @property

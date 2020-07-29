@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from typing import Iterable
-from ..interfaces import IFunction, IContext
+from ..interfaces import IFunction, IContext, IFuncBlock
 
 
 class AbstractFunction(IFunction):
@@ -21,5 +21,5 @@ class AbstractFunction(IFunction):
         pass
 
     @abstractmethod
-    def programming(self, c1: int, c2: int, context: IContext) -> object:
+    def programming(self, c1: int, c2: int, context: IContext) -> IFuncBlock:
         pass

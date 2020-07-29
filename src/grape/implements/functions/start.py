@@ -1,5 +1,6 @@
 from .action import Action
-from ...interfaces import IContext
+from ..block import FuncBlock
+from ...interfaces import IContext, IFuncBlock
 
 
 class Start(Action):
@@ -15,9 +16,5 @@ class Start(Action):
     def _run(self, c1: int, c2: int, context: IContext) -> None:
         context.set_current(c1)
 
-    def programming(self, c1: int, c2: int, context: IContext) -> object:
-        return {
-            "id": context.current,
-            "actions": [],
-            "next": c1
-        }
+    def programming(self, c1: int, c2: int, context: IContext) -> IFuncBlock:
+        return FuncBlock(context.current, [], c1)
