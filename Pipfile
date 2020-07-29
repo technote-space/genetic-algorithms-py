@@ -11,7 +11,7 @@ wheel = "*"
 mypy = "*"
 
 [packages]
-gym = "*"
+gym = {extras = ["atari"], version = "*"}
 psutil = "*"
 
 [requires]
