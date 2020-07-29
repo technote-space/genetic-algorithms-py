@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-from typing import Optional
 from target import ITarget
 
 
@@ -38,6 +37,11 @@ class IContext(metaclass=ABCMeta):
     @property
     @abstractmethod
     def phenotype(self) -> 'IPhenotype':
+        pass
+
+    @property
+    @abstractmethod
+    def is_skipping_frame(self) -> bool:
         pass
 
 

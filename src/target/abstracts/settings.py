@@ -41,3 +41,7 @@ class AbstractSettings(ISettings):
     @property
     def fps(self) -> float:
         return 8
+
+    @property
+    def action_frame(self) -> int:
+        return 1

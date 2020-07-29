@@ -43,3 +43,8 @@ class ISettings(metaclass=ABCMeta):
     @abstractmethod
     def fps(self) -> float:
         pass
+
+    @property
+    @abstractmethod
+    def action_frame(self) -> int:
+        pass

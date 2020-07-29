@@ -18,7 +18,8 @@ class Action(AbstractFunction):
 
     def _run(self, c1: int, c2: int, context: IContext) -> None:
         context.target.action(self.__index)
-        context.current = c1
+        if not context.is_skipping_frame:
+            context.current = c1
 
     def get_possible_connections(self, c1: int, c2: int, context: IContext) -> Iterable[int]:
         return c1,
@@ -26,6 +27,6 @@ class Action(AbstractFunction):
     def programming(self, c1: int, c2: int, context: IContext) -> IFuncBlock:
         return FuncBlock(
             context.current,
-            [f'self.__context.action({self.__index})'],
+            [f'self.__context.action({self.__index})'] * context.target.settings.action_frame,
             c1
         )
