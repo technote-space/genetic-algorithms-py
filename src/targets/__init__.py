@@ -1,6 +1,7 @@
 from .santa_fe_trail import SantaFeTrail
 from .cart_pole import CartPole
 from .mountain_car import MountainCar
+from .breakout import Breakout
 from typing import Iterable, Dict, Callable
 from target import ITarget
 
@@ -12,6 +13,7 @@ def get_targets() -> Dict[str, Callable[[], ITarget]]:
         'santa-fe-trail': SantaFeTrail,
         'cart-pole': CartPole,
         'mountain-car': MountainCar,
+        'breakout': Breakout,
     }
 
 
