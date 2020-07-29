@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from typing import Optional
 from target import ITarget
 
 
@@ -19,6 +20,11 @@ class IContext(metaclass=ABCMeta):
     def current(self) -> int:
         pass
 
+    @current.setter
+    @abstractmethod
+    def current(self, current: int) -> None:
+        pass
+
     @property
     @abstractmethod
     def node_count(self) -> int:
@@ -32,10 +38,6 @@ class IContext(metaclass=ABCMeta):
     @property
     @abstractmethod
     def phenotype(self) -> 'IPhenotype':
-        pass
-
-    @abstractmethod
-    def set_current(self, current: int) -> None:
         pass
 
 

@@ -17,7 +17,7 @@ class Perception(AbstractFunction):
         self.__index = index
 
     def _run(self, c1: int, c2: int, context: IContext) -> None:
-        context.set_current(c1 if context.target.perceive(self.__index) else c2)
+        context.current = c1 if context.target.perceive(self.__index) else c2
 
     def get_possible_connections(self, c1: int, c2: int, context: IContext) -> Iterable[int]:
         return c1, c2

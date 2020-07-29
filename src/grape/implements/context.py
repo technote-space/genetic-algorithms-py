@@ -30,6 +30,10 @@ class Context(IContext):
     def current(self) -> int:
         return self.__current
 
+    @current.setter
+    def current(self, current: int) -> None:
+        self.__current = current
+
     @property
     def node_count(self) -> int:
         return self.__node_count
@@ -41,6 +45,3 @@ class Context(IContext):
     @property
     def phenotype(self) -> IPhenotype:
         return self.__phenotype
-
-    def set_current(self, current: int) -> None:
-        self.__current = current

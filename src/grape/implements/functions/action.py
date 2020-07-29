@@ -18,7 +18,7 @@ class Action(AbstractFunction):
 
     def _run(self, c1: int, c2: int, context: IContext) -> None:
         context.target.action(self.__index)
-        context.set_current(c1)
+        context.current = c1
 
     def get_possible_connections(self, c1: int, c2: int, context: IContext) -> Iterable[int]:
         return c1,

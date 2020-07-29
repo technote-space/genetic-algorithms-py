@@ -14,7 +14,7 @@ class Start(Action):
         super().__init__(0)
 
     def _run(self, c1: int, c2: int, context: IContext) -> None:
-        context.set_current(c1)
+        context.current = c1
 
     def programming(self, c1: int, c2: int, context: IContext) -> IFuncBlock:
         return FuncBlock(context.current, [], c1)
