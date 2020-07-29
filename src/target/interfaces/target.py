@@ -51,7 +51,7 @@ class ITarget(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def action(self, index: int) -> None:
+    def action(self, index: int, is_start: bool = False) -> None:
         pass
 
     @abstractmethod
@@ -79,9 +79,13 @@ class ITarget(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_action_expression(self, index: int) -> str:
+    def get_action_expression(self, index: int, is_start: bool = False) -> str:
         pass
 
     @abstractmethod
     def get_perceive_expression(self, index: int, observation_name: str) -> str:
+        pass
+
+    @abstractmethod
+    def get_finished_expression(self, done_name: str, observation_name: str) -> str:
         pass

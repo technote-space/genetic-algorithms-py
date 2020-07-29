@@ -45,3 +45,7 @@ class AbstractSettings(ISettings):
     @property
     def action_frame(self) -> int:
         return 1
+
+    @property
+    def start_action_index(self) -> Optional[int]:
+        return None

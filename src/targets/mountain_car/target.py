@@ -31,20 +31,13 @@ class MountainCar(AbstractGymTarget):
         ]
         self.__perceptions = {}
         for index, setting in enumerate(self.__perception_settings):
-            self.__perceptions[index] = self.__get_perceive_function(setting[0], setting[1], setting[2])
+            self.__perceptions[index] = self._get_perceive_function(setting[0], setting[1], setting[2])
         self.__max_position = 0
-
-    @staticmethod
-    def __perceive(value: float, left: float, right: float) -> bool:
-        return left <= value < right
-
-    def __get_perceive_function(self, target: int, left: float, right: float) -> Callable[[], bool]:
-        return lambda: self.__perceive(self.observation[target], left, right)  # type: ignore
 
     def _perform_perceive(self, index: int) -> bool:
         return self.__perceptions[index]()
 
-    def _perform_get_fitness(self) -> float:
+    def _calc_fitness(self) -> float:
         self.__max_position = max(self.__max_position, self.observation[0])  # type: ignore
         if self._has_reached_step or self._has_reached_action_step or self.is_player:
             return self.__max_position / 0.5

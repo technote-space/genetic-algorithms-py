@@ -39,16 +39,19 @@ class AbstractGymSettings(AbstractSettings):
     def perception_number(self) -> int:
         pass
 
+    def _calc_action_number(self, env: Env) -> int:
+        if type(env.action_space) is Discrete:  # type: ignore
+            return env.action_space.n  # type: ignore
+
+        raise Exception('Not implemented')
+
     @property
     def action_number(self) -> int:
         if self.__action_number is not None:
             return self.__action_number
 
-        if type(self.__env.action_space) is Discrete:  # type: ignore
-            self.__action_number = self.__env.action_space.n  # type: ignore
-            return self.__action_number  # type: ignore
-
-        raise Exception('Not implemented')
+        self.__action_number = self._calc_action_number(self.__env)  # type: ignore
+        return self.__action_number
 
     @property
     def fps(self) -> float:

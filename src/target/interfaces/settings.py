@@ -48,3 +48,8 @@ class ISettings(metaclass=ABCMeta):
     @abstractmethod
     def action_frame(self) -> int:
         pass
+
+    @property
+    @abstractmethod
+    def start_action_index(self) -> Optional[int]:
+        pass
