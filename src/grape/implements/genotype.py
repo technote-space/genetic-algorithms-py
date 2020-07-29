@@ -40,6 +40,10 @@ class Genotype(IGenotype):
         return self.phenotype.step
 
     @property
+    def action_step(self) -> float:
+        return self.phenotype.action_step
+
+    @property
     def functions(self) -> IFunctionSet:
         return self.__functions
 

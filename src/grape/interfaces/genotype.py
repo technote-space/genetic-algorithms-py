@@ -27,6 +27,11 @@ class IGenotype(AbstractChromosome):
 
     @property
     @abstractmethod
+    def action_step(self) -> float:
+        pass
+
+    @property
+    @abstractmethod
     def functions(self) -> 'IFunctionSet':
         pass
 

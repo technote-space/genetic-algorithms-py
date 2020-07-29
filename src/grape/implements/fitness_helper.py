@@ -9,7 +9,7 @@ from .test import TestData, TestDataset
 from ..interfaces import IGenotype
 
 
-def evaluate(args: Tuple[str, List[int], float]) -> Tuple[float, float]:
+def evaluate(args: Tuple[str, List[int], float]) -> Tuple[float, float, float]:
     target, chromosomes, sleep = args
 
     target_instance = get_target(target)
@@ -22,7 +22,7 @@ def evaluate(args: Tuple[str, List[int], float]) -> Tuple[float, float]:
 
     time.sleep(sleep)
 
-    return genotype.fitness, genotype.step
+    return genotype.fitness, genotype.step, genotype.action_step
 
 
 class FitnessHelper:
@@ -46,4 +46,4 @@ class FitnessHelper:
 
         for index, chromosome in enumerate(chromosomes):
             if isinstance(chromosome, IGenotype):
-                chromosome.phenotype.set_fitness(results[index][0], results[index][1])
+                chromosome.phenotype.set_fitness(results[index][0], results[index][1], results[index][2])
