@@ -1,7 +1,7 @@
 import time
-from typing import List
+from typing import List, Optional
 from targets import get_target
-from grape import Genotype, FunctionSet, IFunctionSet, IGenotype
+from grape import Genotype, FunctionSet, IGenotype, IContext
 
 
 class Player:
@@ -12,23 +12,28 @@ class Player:
     """
 
     __target: str
-    __functions: IFunctionSet
+    __chromosome: List[int]
     __genotype: IGenotype
+    __context: Optional[IContext]
 
     def __init__(self, target: str, chromosome: List[int]) -> None:
         self.__target = target
-
-        functions = FunctionSet(get_target(target))
-        self.__functions = functions
-        self.__genotype = Genotype(0, functions)
-        self.__genotype.create_from_nodes(chromosome)
+        self.__chromosome = chromosome
+        self.__context = None
         self.__reset()
         self.__main()
 
     def __reset(self) -> None:
-        self.__context = self.__genotype.phenotype.get_context(get_target(self.__target, True))
+        if self.__context:
+            self.__context.target.close()
+        target = get_target(self.__target, True)
+        self.__genotype = Genotype(0, FunctionSet(target.settings.action_number, target.settings.perception_number))
+        self.__genotype.create_from_nodes(self.__chromosome)
+        self.__context = self.__genotype.phenotype.get_context(target)
 
     def __main(self) -> None:
+        if not self.__context:
+            return
         while True:
             while not self.__context.target.has_reached:
                 self.__genotype.phenotype.until_action(self.__context)

@@ -16,6 +16,10 @@ class ITarget(metaclass=ABCMeta):
     def name(self) -> Optional[str]:
         pass
 
+    @abstractmethod
+    def close(self) -> None:
+        pass
+
     @property
     @abstractmethod
     def is_player(self) -> bool:

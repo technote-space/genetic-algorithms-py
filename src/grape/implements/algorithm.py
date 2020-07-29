@@ -61,7 +61,7 @@ class Algorithm(AbstractAlgorithm):
 
         dataset = TestDataset(settings.test_number, TestData(target))
         population_size = math.floor(settings.population_size / total_island_number)
-        functions = FunctionSet(target_instance)
+        functions = FunctionSet(target_instance.settings.action_number, target_instance.settings.perception_number)
         helper = FitnessHelper(target)
         islands: List[IIsland] = []
         for _ in range(mgg_island_number):

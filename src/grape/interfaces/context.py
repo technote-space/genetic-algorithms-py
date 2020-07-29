@@ -14,12 +14,12 @@ class IContext(metaclass=ABCMeta):
     def target(self) -> ITarget:
         pass
 
-    @property
+    @property  # type: ignore  #(@see https://github.com/python/mypy/issues/1362)
     @abstractmethod
     def current(self) -> int:
         pass
 
-    @current.setter
+    @current.setter  # type: ignore  #(@see https://github.com/python/mypy/issues/1362)
     @abstractmethod
     def current(self, current: int) -> None:
         pass

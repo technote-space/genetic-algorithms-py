@@ -28,6 +28,9 @@ class AbstractTarget(ITarget):
     def name(self) -> Optional[str]:
         return self.__name
 
+    def close(self) -> None:
+        pass
+
     @property
     def is_player(self) -> bool:
         return self.__is_player

@@ -14,6 +14,7 @@ class AbstractGymTarget(AbstractTarget):
     """
 
     __env: Env
+    __closed: bool
     __settings: ISettings
     __ga_settings: IGaSettings
     __observation: Any  # type: ignore
@@ -23,13 +24,18 @@ class AbstractGymTarget(AbstractTarget):
         super().__init__()
 
         self.__env = gym.make(gym_id)  # type: ignore
+        self.__closed = False
         self.__settings = settings(gym_id, self.__env)  # type: ignore
         self.__ga_settings = ga_settings()
         self.__observation = self.__env.reset()  # type: ignore
         self.__reward = 0
 
     def __del__(self) -> None:
-        if self.__env:  # type: ignore
+        self.close()
+
+    def close(self) -> None:
+        if not self.__closed and self.__env:  # type: ignore
+            self.__closed = True
             self.__env.close()  # type: ignore
 
     @property
@@ -72,7 +78,8 @@ class AbstractGymTarget(AbstractTarget):
         return fitness + self._correction_fitness()
 
     def _perform_render(self) -> None:
-        self.__env.render()  # type: ignore
+        if not self.__closed:
+            self.__env.render()  # type: ignore
 
     # noinspection PyMethodMayBeStatic
     def get_action_expression(self, index: int) -> str:

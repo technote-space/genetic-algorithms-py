@@ -14,7 +14,7 @@ def evaluate(args: Tuple[str, List[int], float]) -> Tuple[float, float]:
 
     target_instance = get_target(target)
     dataset = TestDataset(target_instance.ga_settings.test_number, TestData(target))
-    functions = FunctionSet(target_instance)
+    functions = FunctionSet(target_instance.settings.action_number, target_instance.settings.perception_number)
     genotype = Genotype(0, functions)
 
     genotype.create_from_nodes(chromosomes)
