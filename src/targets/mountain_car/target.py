@@ -12,25 +12,25 @@ class MountainCar(AbstractGymTarget):
     """
 
     __perceptions: MutableMapping[int, Callable[[], bool]]
-    __perception_settings: List[Tuple[int, float, float]]
+    __perception_settings: List[Tuple[int, float, float]] = [
+        (0, -1.2, -0.9),
+        (0, -0.9, -0.6),
+        (0, -0.6, -0.3),
+        (0, -0.3, 0),
+        (0, 0, 0.3),
+        (0, 0.3, 0.6),
+        (1, -0.07, -0.035),
+        (1, -0.035, 0),
+        (1, 0, 0.035),
+        (1, 0.035, 0.07),
+    ]
     __max_position: float
 
     def __init__(self) -> None:
         super().__init__('MountainCar-v0', Settings, GaSettings)  # type: ignore
-        self.__perception_settings = [
-            (0, -1.2, -0.9),
-            (0, -0.9, -0.6),
-            (0, -0.6, -0.3),
-            (0, -0.3, 0),
-            (0, 0, 0.3),
-            (0, 0.3, 0.6),
-            (1, -0.07, -0.035),
-            (1, -0.035, 0),
-            (1, 0, 0.035),
-            (1, 0.035, 0.07),
-        ]
+
         self.__perceptions = {}
-        for index, setting in enumerate(self.__perception_settings):
+        for index, setting in enumerate(MountainCar.__perception_settings):
             self.__perceptions[index] = self._get_perceive_function(setting[0], setting[1], setting[2])
         self.__max_position = 0
 

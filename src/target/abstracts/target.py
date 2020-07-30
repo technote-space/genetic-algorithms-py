@@ -94,6 +94,8 @@ class AbstractTarget(ITarget):
     def get_fitness(self) -> float:
         fitness = self._perform_get_fitness()
         if fitness >= 1:
+            if self.action_step + self.step <= 0:
+                return 0
             return fitness + 1.0 / (self.action_step + self.step)
 
         return fitness

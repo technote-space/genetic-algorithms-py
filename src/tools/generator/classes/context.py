@@ -81,6 +81,7 @@ class Context(Base):
     def __get_action_helper(self) -> List[str]:
         sleep_time = 1.0 / self.__fps
         actions = []
+        is_start = False
         for index in range(self.__action_number):
             v1 = self.__target.get_action_expression(index)
             v2 = self.__target.get_action_expression(index, True)
@@ -98,10 +99,11 @@ class Context(Base):
                     f'return {v2} if is_start else {v1}',
                     '}',
                 ])
+                is_start = True
 
         get_action = [
                          '@staticmethod',
-                         'def __get_action(index, is_start):',
+                         f'def __get_action(index, {"is_start" if is_start else "_is_start"}):',
                          '{',
                      ] + actions + [
                          'raise Exception("Unexpected error")',

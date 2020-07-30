@@ -23,7 +23,9 @@ class Algorithm(Base):
         return 'algorithm'
 
     def _get_imports(self) -> Optional[List[str]]:
-        return ['import random']
+        if any(map(lambda action: 'random' in action, self.__start_actions)):
+            return ['import random']
+        return None
 
     def _get_source_code(self) -> List[str]:
         return [

@@ -89,7 +89,7 @@ class AbstractGymTarget(AbstractTarget):
         return self.__reward / self.__env.spec.reward_threshold  # type: ignore
 
     def _perform_get_fitness(self) -> float:
-        fitness: float = self._calc_fitness()
+        fitness: float = min(1.0, max(0.0, self._calc_fitness()))
         if fitness > 1:
             surplus = fitness - 1
             fitness = 1 + surplus * 0.01
