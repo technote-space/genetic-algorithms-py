@@ -1,7 +1,7 @@
 import math
 from typing import List, Tuple, Callable, Optional
 from targets import get_target
-from target import ITarget
+from target import ITarget, AbstractAtariTarget
 from ga import AbstractAlgorithm, IChromosome, IAlgorithm, IIsland
 from .termination import Termination
 from .migration import Migration
@@ -30,6 +30,7 @@ class Algorithm(AbstractAlgorithm):
         target_instance = get_target(target)
         settings = target_instance.ga_settings
         super().__init__(
+            1 if isinstance(target_instance, AbstractAtariTarget) else 3,  # type: ignore
             self.__best_changed_function,
             self.__get_islands(target, target_instance),
             Termination(settings.terminate_offspring_number),
@@ -45,7 +46,6 @@ class Algorithm(AbstractAlgorithm):
         phenotype = self.best.phenotype
         phenotype.while_end(phenotype.get_context(self.__cloned_target))
 
-        self.draw()
         if self.best:
             for func in self.__best_changed:
                 if callable(func):
@@ -61,7 +61,7 @@ class Algorithm(AbstractAlgorithm):
 
         dataset = TestDataset(settings.test_number, TestData(target))
         population_size = math.floor(settings.population_size / total_island_number)
-        functions = FunctionSet(target_instance)
+        functions = FunctionSet(target_instance.settings.action_number, target_instance.settings.perception_number)
         helper = FitnessHelper(target)
         islands: List[IIsland] = []
         for _ in range(mgg_island_number):
@@ -90,13 +90,3 @@ class Algorithm(AbstractAlgorithm):
                     settings.test_number > 1
                 ))
         return islands
-
-    def draw(self) -> None:
-        if not self.__cloned_target:
-            return
-
-        self.__cloned_target.draw()
-
-        print(f'{self.progress:.3f}', f'{self.fitness:.3f}')
-        print(f'{self.__cloned_target.get_fitness():.3f}', self.__cloned_target.step, self.__cloned_target.action_step)
-        print()

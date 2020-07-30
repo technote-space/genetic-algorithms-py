@@ -14,6 +14,7 @@ class AbstractGymTarget(AbstractTarget):
     """
 
     __env: Env
+    __closed: bool
     __settings: ISettings
     __ga_settings: IGaSettings
     __observation: Any  # type: ignore
@@ -23,13 +24,18 @@ class AbstractGymTarget(AbstractTarget):
         super().__init__()
 
         self.__env = gym.make(gym_id)  # type: ignore
+        self.__closed = False
         self.__settings = settings(gym_id, self.__env)  # type: ignore
         self.__ga_settings = ga_settings()
         self.__observation = self.__env.reset()  # type: ignore
         self.__reward = 0
 
     def __del__(self) -> None:
-        if self.__env:  # type: ignore
+        self.close()
+
+    def close(self) -> None:
+        if not self.__closed and self.__env:  # type: ignore
+            self.__closed = True
             self.__env.close()  # type: ignore
 
     @property
@@ -44,38 +50,57 @@ class AbstractGymTarget(AbstractTarget):
     def observation(self) -> Any:  # type: ignore
         return self.__observation  # type: ignore
 
+    @property
+    def reward(self) -> float:
+        return self.__reward
+
     # noinspection PyMethodMayBeStatic
-    def _get_action(self, index: int) -> Any:  # type: ignore
+    def _get_action(self, index: int, is_start: bool) -> Any:  # type: ignore
         return index
 
-    def _perform_action(self, index: int) -> None:
-        observation, reward, done, _ = self.__env.step(self._get_action(index))  # type: ignore
+    # noinspection PyMethodMayBeStatic
+    def _perform_check_done(self, done: bool) -> bool:
+        return done
+
+    def _perform_action(self, index: int, is_start: bool) -> None:
+        observation, reward, done, _ = self.__env.step(self._get_action(index, is_start))  # type: ignore
         self.__observation = observation  # type: ignore
         self.__reward += reward  # type: ignore
 
-        if done:  # type: ignore
+        if self._perform_check_done(done):  # type: ignore
             self._on_finished()
 
     @abstractmethod
     def _perform_perceive(self, index: int) -> bool:
         pass
 
+    @staticmethod
+    def __perceive(value: float, left: float, right: float) -> bool:
+        return left <= value < right
+
+    def _get_perceive_function(self, target: int, left: float, right: float) -> Callable[[], bool]:
+        return lambda: self.__perceive(self.observation[target], left, right)  # type: ignore
+
     # noinspection PyMethodMayBeStatic
     def _correction_fitness(self) -> float:
         return 0
 
+    def _calc_fitness(self) -> float:
+        return self.__reward / self.__env.spec.reward_threshold  # type: ignore
+
     def _perform_get_fitness(self) -> float:
-        fitness: float = self.__reward / self.__env.spec.reward_threshold  # type: ignore
+        fitness: float = self._calc_fitness()
         if fitness > 1:
             surplus = fitness - 1
             fitness = 1 + surplus * 0.01
         return fitness + self._correction_fitness()
 
     def _perform_render(self) -> None:
-        self.__env.render()  # type: ignore
+        if not self.__closed:
+            self.__env.render()  # type: ignore
 
     # noinspection PyMethodMayBeStatic
-    def get_action_expression(self, index: int) -> str:
+    def get_action_expression(self, index: int, is_start: bool = False) -> str:
         return f'{index}'
 
     @abstractmethod

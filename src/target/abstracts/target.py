@@ -28,6 +28,9 @@ class AbstractTarget(ITarget):
     def name(self) -> Optional[str]:
         return self.__name
 
+    def close(self) -> None:
+        pass
+
     @property
     def is_player(self) -> bool:
         return self.__is_player
@@ -65,16 +68,16 @@ class AbstractTarget(ITarget):
     def _on_finished(self) -> None:
         self.__has_finished = True
 
-    def action(self, index: int) -> None:
+    def action(self, index: int, is_start: bool = False) -> None:
         if self.has_reached:
             raise Exception('The step has reached to limit')
 
         self.__step += 1
         self.__action_step += 1
-        self._perform_action(index)
+        self._perform_action(index, is_start)
 
     @abstractmethod
-    def _perform_action(self, index: int) -> None:
+    def _perform_action(self, index: int, is_start: bool) -> None:
         pass
 
     def perceive(self, index: int) -> bool:
@@ -118,8 +121,11 @@ class AbstractTarget(ITarget):
 
         print(f'{self.get_fitness():.3f}', self.step, self.action_step)
 
-    def get_action_expression(self, index: int) -> str:
+    def get_action_expression(self, index: int, is_start: bool = False) -> str:
         raise Exception('Not implemented.')
 
     def get_perceive_expression(self, index: int, observation_name: str) -> str:
         raise Exception('Not implemented.')
+
+    def get_finished_expression(self, done_name: str, observation_name: str) -> str:
+        return f'{done_name}'

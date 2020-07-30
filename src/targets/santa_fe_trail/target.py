@@ -55,7 +55,7 @@ class SantaFeTrail(AbstractTarget):
     def __turn_left(self) -> None:
         self.__agent.turn_left()
 
-    def _perform_action(self, index: int) -> None:
+    def _perform_action(self, index: int, is_start: bool) -> None:
         self.__actions[index]()
 
     def __is_food(self) -> bool:

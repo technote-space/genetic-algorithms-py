@@ -1,7 +1,7 @@
-from .interfaces import IFunctionSet, IGenotype, IFuncBlock, INextBlock
+from .interfaces import IGenotype, IFuncBlock, INextBlock, IContext
 from .implements import Algorithm, Genotype, FunctionSet, FitnessHelper
 
 __all__ = [
-    'IFunctionSet', 'IGenotype', 'IFuncBlock', 'INextBlock',
+    'IGenotype', 'IFuncBlock', 'INextBlock', 'IContext',
     'Algorithm', 'Genotype', 'FunctionSet', 'FitnessHelper'
 ]

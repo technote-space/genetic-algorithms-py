@@ -40,6 +40,7 @@ class Context(Base):
         ]
 
     def __get_class_source(self) -> List[str]:
+        finished_expression = self.__target.get_finished_expression("self.__context[2]", "self.__context[0]")
         return [
             'def __init__(self):',
             '{',
@@ -54,7 +55,7 @@ class Context(Base):
             '@property',
             'def __has_finished(self):',
             '{',
-            'return self.__context[2] or self.__action_step >= self.__action_limit or self.__step >= self.__step_limit',
+            f'return {finished_expression} or self.__action_step >= self.__action_limit or self.__step >= self.__step_limit',
             '}',
             'def reset(self):',
             '{',
@@ -81,16 +82,26 @@ class Context(Base):
         sleep_time = 1.0 / self.__fps
         actions = []
         for index in range(self.__action_number):
-            actions.extend([
-                f'if index == {index}:',
-                '{',
-                f'return {self.__target.get_action_expression(index)}',
-                '}',
-            ])
+            v1 = self.__target.get_action_expression(index)
+            v2 = self.__target.get_action_expression(index, True)
+            if v1 == v2:
+                actions.extend([
+                    f'if index == {index}:',
+                    '{',
+                    f'return {self.__target.get_action_expression(index)}',
+                    '}',
+                ])
+            else:
+                actions.extend([
+                    f'if index == {index}:',
+                    '{',
+                    f'return {v2} if is_start else {v1}',
+                    '}',
+                ])
 
         get_action = [
                          '@staticmethod',
-                         'def __get_action(index):',
+                         'def __get_action(index, is_start):',
                          '{',
                      ] + actions + [
                          'raise Exception("Unexpected error")',
@@ -98,9 +109,9 @@ class Context(Base):
                      ]
 
         return get_action + [
-            'def action(self, index):',
+            'def action(self, index, is_start=False):',
             '{',
-            'self.__context = self.__env.step(self.__get_action(index))',
+            'self.__context = self.__env.step(self.__get_action(index, is_start))',
             'self.__reward += self.__context[1]',
             'self.__step += 1',
             'self.__action_step += 1',

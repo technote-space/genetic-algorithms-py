@@ -5,7 +5,7 @@ class AbstractGymGaSettings(AbstractGaSettings):
     """
     Description:
     ------------
-    GAの設定
+    Gym用のGAの設定
     """
 
     @property

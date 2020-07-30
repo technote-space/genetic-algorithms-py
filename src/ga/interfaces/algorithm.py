@@ -78,10 +78,6 @@ class IAlgorithm(metaclass=ABCMeta):
     def step(self) -> None:
         pass
 
-    @abstractmethod
-    def draw(self) -> None:
-        pass
-
 
 from .island import IIsland  # noqa: E402
 from .termination import ITermination  # noqa: E402

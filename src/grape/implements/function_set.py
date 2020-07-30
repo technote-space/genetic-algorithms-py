@@ -1,7 +1,6 @@
 import math
 import random
 from typing import List
-from target import ITarget
 from ..interfaces import IFunctionSet, IFunction
 from .functions import Action, Perception, Start
 
@@ -15,15 +14,15 @@ class FunctionSet(IFunctionSet):
 
     __functions: List[IFunction]
 
-    def __init__(self, target: ITarget) -> None:
+    def __init__(self, action_number: int, perception_number: int) -> None:
         super().__init__()
         self.__functions = [Start()]
-        self.__set_target_functions(target)
+        self.__set_target_functions(action_number, perception_number)
 
-    def __set_target_functions(self, target: ITarget) -> None:
-        for index in range(target.settings.action_number):
+    def __set_target_functions(self, action_number: int, perception_number: int) -> None:
+        for index in range(action_number):
             self.add(Action(index))
-        for index in range(target.settings.perception_number):
+        for index in range(perception_number):
             self.add(Perception(index))
 
     @property

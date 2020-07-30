@@ -15,11 +15,13 @@ class Phenotype(IPhenotype):
     __genotype: IGenotype
     __fitness: float
     __step: float
+    __action_step: float
 
     def __init__(self, genotype: IGenotype) -> None:
         self.__genotype = genotype
         self.__fitness = -1
         self.__step = 0
+        self.__action_step = 0
 
     @property
     def fitness(self) -> float:
@@ -30,32 +32,40 @@ class Phenotype(IPhenotype):
         return self.__step
 
     @property
+    def action_step(self) -> float:
+        return self.__action_step
+
+    @property
     def genotype(self) -> IGenotype:
         return self.__genotype
 
     def calc_fitness(self, dataset: ITestDataset) -> None:
-        step, fitness = self._run_episodes(dataset)
+        step, action_step, fitness = self._run_episodes(dataset)
         self.__fitness = fitness
         self.__step = step
+        self.__action_step = action_step
 
-    def set_fitness(self, fitness: float, step: float) -> None:
+    def set_fitness(self, fitness: float, step: float, action_step: float) -> None:
         self.__fitness = fitness
         self.__step = step
+        self.__action_step = action_step
 
-    def _run_episodes(self, dataset: ITestDataset) -> Tuple[float, float]:
-        sum_score: float = 0
+    def _run_episodes(self, dataset: ITestDataset) -> Tuple[float, float, float]:
         sum_steps: float = 0
+        sum_action_steps: float = 0
+        sum_score: float = 0
 
         # noinspection PyBroadException
         try:
             for target in dataset.create_dataset():
                 result = self._episode(target)
                 sum_steps += result[0]
-                sum_score += result[1]
+                sum_action_steps += result[1]
+                sum_score += result[2]
         except Exception:
-            return 0, 0
+            return 0, 0, 0
 
-        return sum_steps / dataset.length, sum_score / dataset.length
+        return sum_steps / dataset.length, sum_action_steps / dataset.length, sum_score / dataset.length
 
     @staticmethod
     def _next(node: List[int], context: IContext) -> None:
@@ -77,11 +87,11 @@ class Phenotype(IPhenotype):
     def get_context(self, target: ITarget, current: int = 0) -> IContext:
         return Context(target, current, self.__genotype.node_count, self.genotype.functions, self)
 
-    def _episode(self, target: ITarget) -> Tuple[float, float]:
+    def _episode(self, target: ITarget) -> Tuple[float, float, float]:
         context = self.get_context(target)
         self.while_end(context)
 
-        return context.target.step, context.target.get_fitness()
+        return context.target.step, context.target.action_step, context.target.get_fitness()
 
     def get_programming(self, target: ITarget) -> List[IFuncBlock]:
         blocks = {}

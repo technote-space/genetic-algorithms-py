@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-from typing import Optional
 from target import ITarget
 
 
@@ -15,12 +14,12 @@ class IContext(metaclass=ABCMeta):
     def target(self) -> ITarget:
         pass
 
-    @property
+    @property  # type: ignore  #(@see https://github.com/python/mypy/issues/1362)
     @abstractmethod
     def current(self) -> int:
         pass
 
-    @current.setter
+    @current.setter  # type: ignore  #(@see https://github.com/python/mypy/issues/1362)
     @abstractmethod
     def current(self, current: int) -> None:
         pass
@@ -38,6 +37,11 @@ class IContext(metaclass=ABCMeta):
     @property
     @abstractmethod
     def phenotype(self) -> 'IPhenotype':
+        pass
+
+    @property
+    @abstractmethod
+    def is_skipping_frame(self) -> bool:
         pass
 
 

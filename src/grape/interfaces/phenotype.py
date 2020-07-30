@@ -23,6 +23,11 @@ class IPhenotype(metaclass=ABCMeta):
 
     @property
     @abstractmethod
+    def action_step(self) -> float:
+        pass
+
+    @property
+    @abstractmethod
     def genotype(self) -> 'IGenotype':
         pass
 
@@ -31,7 +36,7 @@ class IPhenotype(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def set_fitness(self, fitness: float, step: float) -> None:
+    def set_fitness(self, fitness: float, step: float, action_step: float) -> None:
         pass
 
     @abstractmethod

@@ -1,5 +1,6 @@
 import shutil
 import os
+import copy
 from functools import reduce
 from typing import List, Union, Optional, Callable, cast
 from ga import IAlgorithm, IChromosome
@@ -33,12 +34,13 @@ class Make:
 
     def __make(self, target: ITarget, blocks: List[IFuncBlock], gym_id: str, fps: float, action_limit: int, step_limit: int, action_number: int, perception_number: int) -> None:
         start: int = cast(int, blocks[0].next)
+        start_actions: List[str] = copy.copy(blocks[0].actions)
         lambda_func1: Callable[[IFuncBlock], List[str]] = lambda block: Make.__block_to_function(block)
         lambda_func2: Callable[[List[str], List[str]], List[str]] = lambda a, b: a + b
         lines: List[str] = reduce(lambda_func2, map(lambda_func1, Compressor.compress(blocks, start)))
 
         makers: List[Base] = [
-            Algorithm(self.__directory, lines, start),
+            Algorithm(self.__directory, lines, start, start_actions),
             App(self.__directory),
             Context(self.__directory, target, fps, gym_id, action_limit, step_limit, action_number, perception_number),
             Finished(self.__directory),
