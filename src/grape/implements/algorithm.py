@@ -46,7 +46,6 @@ class Algorithm(AbstractAlgorithm):
         phenotype = self.best.phenotype
         phenotype.while_end(phenotype.get_context(self.__cloned_target))
 
-        self.draw()
         if self.best:
             for func in self.__best_changed:
                 if callable(func):
@@ -91,13 +90,3 @@ class Algorithm(AbstractAlgorithm):
                     settings.test_number > 1
                 ))
         return islands
-
-    def draw(self) -> None:
-        if not self.__cloned_target:
-            return
-
-        self.__cloned_target.draw()
-
-        print(f'{self.progress:.3f}', f'{self.fitness:.3f}')
-        print(f'{self.__cloned_target.get_fitness():.3f}', self.__cloned_target.step, self.__cloned_target.action_step)
-        print()

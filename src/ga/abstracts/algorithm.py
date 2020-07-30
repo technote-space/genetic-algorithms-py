@@ -1,4 +1,3 @@
-from abc import abstractmethod
 from functools import reduce
 from concurrent.futures import ThreadPoolExecutor
 from typing import Callable, Iterable, List, Optional
@@ -123,8 +122,4 @@ class AbstractAlgorithm(IAlgorithm):
         self._perform_step()
 
     def _perform_step(self) -> None:
-        pass
-
-    @abstractmethod
-    def draw(self) -> None:
         pass

@@ -3,4 +3,5 @@ __pycache__/
 .python-version
 .mypy_cache/
 /chromosome*.json
+/result.txt
 /program*/
