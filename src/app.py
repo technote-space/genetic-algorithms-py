@@ -3,8 +3,7 @@ from runner import Runner
 from player import Player
 from targets import get_choices
 from grape import Algorithm
-from tools import IO
-from tools import Make
+from tools import IO, Make, Process
 
 
 def main() -> None:
@@ -28,6 +27,7 @@ def main() -> None:
     if player:
         Player(target, io.load_chromosome())
     else:
+        Process()
         make = Make(directory)
         Runner(Algorithm(target, io.draw, io.save_chromosome, io.save_result, make.generate), load)
 
