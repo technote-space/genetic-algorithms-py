@@ -23,7 +23,7 @@ class Algorithm(Base):
         return 'algorithm'
 
     def _get_imports(self) -> Optional[List[str]]:
-        return None
+        return ['import random']
 
     def _get_source_code(self) -> List[str]:
         return [

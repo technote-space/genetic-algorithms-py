@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Optional
+from typing import Optional, List
 from ..interfaces import ISettings
 
 
@@ -47,5 +47,11 @@ class AbstractSettings(ISettings):
         return 1
 
     @property
-    def start_action_index(self) -> Optional[int]:
+    def start_action_index(self) -> Optional[List[int]]:
         return None
+
+    @property
+    def start_action_index_expression(self) -> Optional[List[str]]:
+        if self.start_action_index is not None:
+            return [f'self.__context.action({index}, True)' for index in self.start_action_index]
+        return []

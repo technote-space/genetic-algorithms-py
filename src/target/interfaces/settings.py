@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Optional
+from typing import Optional, List
 
 
 class ISettings(metaclass=ABCMeta):
@@ -51,5 +51,10 @@ class ISettings(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def start_action_index(self) -> Optional[int]:
+    def start_action_index(self) -> Optional[List[int]]:
+        pass
+
+    @property
+    @abstractmethod
+    def start_action_index_expression(self) -> Optional[List[str]]:
         pass
