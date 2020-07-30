@@ -5,3 +5,4 @@ __pycache__/
 /chromosome*.json
 /result.txt
 /program*/
+/bin/
