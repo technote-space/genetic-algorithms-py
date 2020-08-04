@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Callable
 from .base import Base
 
 
@@ -23,7 +23,8 @@ class Algorithm(Base):
         return 'algorithm'
 
     def _get_imports(self) -> Optional[List[str]]:
-        if any(map(lambda action: 'random' in action, self.__start_actions)):
+        lambda_func: Callable[[str], bool] = lambda action: 'random' in action
+        if any(map(lambda_func, self.__start_actions)):
             return ['import random']
         return None
 
