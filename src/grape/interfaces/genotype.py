@@ -1,9 +1,9 @@
 from abc import abstractmethod
 from typing import List
-from ga import AbstractChromosome
+from ga import IChromosome
 
 
-class IGenotype(AbstractChromosome):
+class IGenotype(IChromosome):
     """
     Description:
     ------------

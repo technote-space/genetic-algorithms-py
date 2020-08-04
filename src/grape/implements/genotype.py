@@ -1,11 +1,12 @@
 import math
 import random
 from typing import Optional, List
+from ga import AbstractChromosome
 from ..interfaces import IGenotype, IFunctionSet, IPhenotype
 from .phenotype import Phenotype
 
 
-class Genotype(IGenotype):
+class Genotype(AbstractChromosome, IGenotype):
     """
     Description:
     ------------
