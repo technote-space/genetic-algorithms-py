@@ -87,6 +87,6 @@ class Algorithm(AbstractAlgorithm):
                     dataset,
                     functions,
                     settings.node_count,
-                    settings.test_number > 1
+                    False
                 ))
         return islands
