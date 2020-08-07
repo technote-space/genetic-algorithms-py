@@ -23,7 +23,6 @@ class GrapeIsland(AbstractIsland):
         helper: FitnessHelper,
         population_size: int,
         crossover: ICrossover,
-        crossover_probability: float,
         mutation_probability: float,
         reinsertion: IReinsertion,
         dataset: ITestDataset,
@@ -36,9 +35,7 @@ class GrapeIsland(AbstractIsland):
             Fitness(dataset),
             Selection(),
             crossover,
-            crossover_probability,
-            Mutation(),
-            mutation_probability,
+            Mutation(mutation_probability),
             reinsertion,
             evaluate_parents_fitness
         )

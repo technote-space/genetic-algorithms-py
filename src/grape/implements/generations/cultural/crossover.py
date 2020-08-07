@@ -10,8 +10,8 @@ class CulturalCrossover(AbstractCrossover):
     """
 
     def __init__(self) -> None:
-        super().__init__(2, 2)
+        super().__init__(0, 2, 2)
 
-    def _perform_cross(self, parents: List[IChromosome], probability: float) -> Iterable[IChromosome]:
+    def _perform_cross(self, parents: List[IChromosome]) -> Iterable[IChromosome]:
         lambda_func: Callable[[IChromosome], IChromosome] = lambda parent: parent.clone()
         return map(lambda_func, parents)

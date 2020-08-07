@@ -18,9 +18,7 @@ class IIsland(metaclass=ABCMeta):
     __fitness: IFitness
     __selection: ISelection
     __crossover: ICrossover
-    __crossover_probability: float
     __mutation: IMutation
-    __mutation_probability: float
     __reinsertion: IReinsertion
     __evaluate_parents_fitness: bool
 
@@ -30,9 +28,7 @@ class IIsland(metaclass=ABCMeta):
         fitness: IFitness,
         selection: ISelection,
         crossover: ICrossover,
-        crossover_probability: float,
         mutation: IMutation,
-        mutation_probability: float,
         reinsertion: IReinsertion,
         evaluate_parents_fitness: bool
     ):
@@ -40,9 +36,7 @@ class IIsland(metaclass=ABCMeta):
         self.__fitness = fitness
         self.__selection = selection
         self.__crossover = crossover
-        self.__crossover_probability = crossover_probability
         self.__mutation = mutation
-        self.__mutation_probability = mutation_probability
         self.__reinsertion = reinsertion
         self.__evaluate_parents_fitness = evaluate_parents_fitness
 
@@ -63,16 +57,8 @@ class IIsland(metaclass=ABCMeta):
         return self.__crossover
 
     @property
-    def crossover_probability(self) -> float:
-        return self.__crossover_probability
-
-    @property
     def mutation(self) -> IMutation:
         return self.__mutation
-
-    @property
-    def mutation_probability(self) -> float:
-        return self.__mutation_probability
 
     @property
     def reinsertion(self) -> IReinsertion:

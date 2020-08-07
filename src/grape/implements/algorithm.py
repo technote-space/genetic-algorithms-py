@@ -82,7 +82,6 @@ class Algorithm(AbstractAlgorithm):
                 islands.append(CulturalIsland(
                     helper,
                     population_size,
-                    settings.crossover_probability,
                     settings.mutation_probability,
                     dataset,
                     functions,

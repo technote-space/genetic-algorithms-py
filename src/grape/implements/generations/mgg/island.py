@@ -28,8 +28,7 @@ class MggIsland(GrapeIsland):
         super().__init__(
             helper,
             population_size,
-            MggCrossover(mix_probability, crossover_time),
-            crossover_probability,
+            MggCrossover(crossover_probability, mix_probability, crossover_time),
             mutation_probability,
             MggReinsertion(),
             dataset,

@@ -20,9 +20,7 @@ class AbstractIsland(IIsland):
         fitness: IFitness,
         selection: ISelection,
         crossover: ICrossover,
-        crossover_probability: float,
         mutation: IMutation,
-        mutation_probability: float,
         reinsertion: IReinsertion,
         evaluate_parents_fitness: bool
     ):
@@ -31,9 +29,7 @@ class AbstractIsland(IIsland):
             fitness,
             selection,
             crossover,
-            crossover_probability,
             mutation,
-            mutation_probability,
             reinsertion,
             evaluate_parents_fitness
         )
@@ -70,7 +66,7 @@ class AbstractIsland(IIsland):
 
     def _perform_mutate(self, chromosomes: List[IChromosome]) -> None:
         for chromosome in chromosomes:
-            self.mutation.mutate(chromosome, self.mutation_probability)
+            self.mutation.mutate(chromosome)
 
     @abstractmethod
     def _evaluate(self, chromosomes: List[IChromosome]) -> None:
@@ -81,7 +77,7 @@ class AbstractIsland(IIsland):
             self.reset()
 
         parents, population = self.selection.select(self.population.chromosomes)
-        offspring = self.crossover.cross(parents, self.crossover_probability)
+        offspring = self.crossover.cross(parents)
 
         self._perform_mutate(offspring)
         self._evaluate(offspring)

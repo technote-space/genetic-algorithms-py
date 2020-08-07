@@ -9,7 +9,7 @@ class AbstractMutation(IMutation):
     突然変異の基底クラス
     """
 
-    def mutate(self, chromosome: IChromosome, probability: float) -> None:
+    def mutate(self, chromosome: IChromosome) -> None:
         for index in range(chromosome.length):
-            if random.random() < probability:
+            if random.random() < self.probability:
                 chromosome.mutation(index)
