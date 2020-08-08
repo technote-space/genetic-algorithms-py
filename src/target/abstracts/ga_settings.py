@@ -38,11 +38,11 @@ class AbstractGaSettings(IGaSettings):
 
     @property
     def crossover_probability(self) -> float:
-        return 0.02
+        return 0.1
 
     @property
     def mutation_probability(self) -> float:
-        return 0.1
+        return 0.02
 
     @property
     def mix_probability(self) -> float:
