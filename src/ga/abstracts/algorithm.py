@@ -15,7 +15,6 @@ class AbstractAlgorithm(IAlgorithm):
     __best_changed: Callable[[IAlgorithm], None]
     __chromosomes: List[IChromosome]
     __fitness: float
-    __best: Optional[IChromosome]
 
     def __init__(
         self,
@@ -29,9 +28,10 @@ class AbstractAlgorithm(IAlgorithm):
 
         self.__thread_number = thread_number
         self.__best_changed = best_changed  # type: ignore
-        self.__chromosomes = []
         self.__fitness = 0
-        self.__best = None
+        for island in self.islands:
+            island.reset()
+        self.__reset_chromosomes()
 
     @property
     def initialized(self) -> bool:
@@ -54,9 +54,6 @@ class AbstractAlgorithm(IAlgorithm):
 
     @property
     def best(self) -> Optional[IChromosome]:
-        if self.__best:
-            return self.__best
-
         return self.__chromosomes[0] if len(self.__chromosomes) > 0 else None
 
     @property
@@ -71,17 +68,18 @@ class AbstractAlgorithm(IAlgorithm):
     def has_reached(self) -> bool:
         return self.termination.has_reached(self)
 
+    def __reset_chromosomes(self) -> None:
+        self.__chromosomes = []
+        for island in self.islands:
+            self.__chromosomes.extend(island.population.chromosomes)
+
     def _update_chromosomes(self) -> None:
-        lambda_func: Callable[[List[IChromosome], IIsland], List[IChromosome]] = lambda acc, island: acc + island.population.chromosomes
-        initial: List[IChromosome] = []
-        self.__chromosomes = sorted(
-            reduce(lambda_func, self.islands, initial),  # type: ignore
+        self.__chromosomes.sort(
             key=lambda chromosome: chromosome.fitness,
             reverse=True
         )
 
         if len(self.__chromosomes) > 0:
-            self.__best = self.__chromosomes[0].clone()
             best_fitness = self.__chromosomes[0].fitness
             if best_fitness >= 0 and best_fitness != self.__fitness:
                 self.__fitness = best_fitness
@@ -89,9 +87,9 @@ class AbstractAlgorithm(IAlgorithm):
 
     def reset(self) -> None:
         self.__fitness = 0
-        self.__best = None
         for island in self.islands:
             island.reset()
+        self.__reset_chromosomes()
         if self.migration:
             self.migration.init()
         self.termination.init()
