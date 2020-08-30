@@ -84,7 +84,7 @@ class AbstractIsland(IIsland):
         if self.evaluate_parents_fitness:
             self._evaluate(parents)
 
-        self.population.update(self.reinsertion.select(population, offspring, parents, self.population.size))
+        self.population.update(self.reinsertion.select(population, offspring, parents))
         self.__generation_number += 1
         self.__offspring_number += len(offspring)
         self._perform_step()

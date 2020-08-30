@@ -12,7 +12,7 @@ class MggReinsertion(AbstractReinsertion):
     Mggの挿入クラス
     """
 
-    def select(self, population: List[IChromosome], offspring: List[IChromosome], parents: List[IChromosome], size: int) -> List[IChromosome]:
+    def select(self, population: List[IChromosome], offspring: List[IChromosome], parents: List[IChromosome]) -> List[IChromosome]:
         sorted_offspring = sorted(offspring + parents, key=lambda x: x.fitness, reverse=True)
 
         selected = copy.copy(population)

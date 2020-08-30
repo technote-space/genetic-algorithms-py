@@ -11,5 +11,5 @@ class AbstractReinsertion(IReinsertion):
     """
 
     @abstractmethod
-    def select(self, population: List[IChromosome], offspring: List[IChromosome], parents: List[IChromosome], size: int) -> List[IChromosome]:
+    def select(self, population: List[IChromosome], offspring: List[IChromosome], parents: List[IChromosome]) -> List[IChromosome]:
         pass
