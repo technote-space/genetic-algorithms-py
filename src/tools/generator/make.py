@@ -109,12 +109,12 @@ class Make:
         n2 = 0
         len1 = len(block.actions1)
         len2 = len(block.actions2)
-        while n1 < len1 and n2 < len2:
-            if block.actions1[n1] != block.actions2:
+        while n1 < len1 and n1 < len2:
+            if block.actions1[n1] != block.actions2[n1]:
                 break
             same1.append(block.actions1[n1])
             n1 += 1
-        while n2 - len1 - n1 and n2 < len2 - n1:
+        while n2 < len1 - n1 and n2 < len2 - n1:
             if block.actions1[len1 - 1 - n2] != block.actions2[len2 - 1 - n2]:
                 break
             same2.append(block.actions1[len1 - 1 - n2])
@@ -174,7 +174,7 @@ class Make:
             f'def __func{block.id}(self):',
             '{',
         ]
-        block2 = block.actions + Make.__parse_next(block.next, None, 5)
+        block2 = block.actions + Make.__parse_next(block.next, None, 1)
         block3 = [
             '}',
         ]
