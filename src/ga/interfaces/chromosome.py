@@ -59,3 +59,7 @@ class IChromosome(metaclass=ABCMeta):
     @abstractmethod
     def mutation(self, index: int) -> None:
         pass
+
+    @abstractmethod
+    def set_fitness(self, fitness: float, step: float, action_step: float) -> None:
+        pass

@@ -1,3 +1,4 @@
+import copy
 from abc import abstractmethod
 from typing import List
 from ..interfaces import IIsland, IPopulation, IFitness, ISelection, ICrossover, IMutation, IReinsertion, IChromosome
@@ -78,15 +79,18 @@ class AbstractIsland(IIsland):
 
         parents, population = self.selection.select(self.population.chromosomes)
         offspring = self.crossover.cross(parents)
+        offspring_count = len(offspring)
 
         self._perform_mutate(offspring)
-        self._evaluate(offspring)
+
+        evaluate_targets = copy.copy(offspring)
         if self.evaluate_parents_fitness:
-            self._evaluate(parents)
+            evaluate_targets.extend(parents)
+        self._evaluate(evaluate_targets)
 
         self.population.update(self.reinsertion.select(population, offspring, parents))
         self.__generation_number += 1
-        self.__offspring_number += len(offspring)
+        self.__offspring_number += offspring_count
         self._perform_step()
 
     def _perform_step(self) -> None:

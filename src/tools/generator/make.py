@@ -4,7 +4,7 @@ import copy
 from functools import reduce
 from typing import List, Union, Optional, Callable, cast
 from ga import IAlgorithm, IChromosome
-from grape import IGenotype, IFuncBlock, INextBlock
+from grape import IGenotype, IFuncBlock, INextBlock, Phenotype
 from target import ITarget
 from .compressor import Compressor
 from .classes import Base, Algorithm, App, Context, Finished, Runner, Package
@@ -29,7 +29,7 @@ class Make:
             if os.path.exists(save_directory):
                 shutil.rmtree(save_directory)
             os.makedirs(os.path.join(save_directory, 'packages'))
-            blocks: List[IFuncBlock] = genotype.phenotype.get_programming(target)
+            blocks: List[IFuncBlock] = Phenotype.get_programming(genotype, target)
             self.__make(target, blocks, settings.gym_id, settings.fps, settings.action_limit, settings.step_limit, settings.action_number, settings.perception_number)
 
     def __make(self, target: ITarget, blocks: List[IFuncBlock], gym_id: str, fps: float, action_limit: int, step_limit: int, action_number: int, perception_number: int) -> None:

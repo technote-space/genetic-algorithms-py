@@ -1,11 +1,12 @@
 import math
-from typing import List, Tuple, Callable, Optional
+from typing import List, Tuple, Callable, Optional, cast
 from targets import get_target
 from target import ITarget, AbstractAtariTarget
 from ga import AbstractAlgorithm, IChromosome, IAlgorithm, IIsland
 from .termination import Termination
 from .migration import Migration
 from .function_set import FunctionSet
+from .phenotype import Phenotype
 from .generations import MggIsland, CulturalIsland
 from .test import TestData, TestDataset
 from .fitness_helper import FitnessHelper
@@ -40,16 +41,15 @@ class Algorithm(AbstractAlgorithm):
         self.__cloned_target = None
 
     def __best_changed_function(self, algorithm: IAlgorithm) -> None:
-        self.__cloned_target = get_target(self.__target)
-        if not isinstance(self.best, IGenotype):
+        if not self.best or not isinstance(self.best, IGenotype):
             raise Exception('Unexpected Error')
-        phenotype = self.best.phenotype
-        phenotype.while_end(phenotype.get_context(self.__cloned_target))
 
-        if self.best:
-            for func in self.__best_changed:
-                if callable(func):
-                    func(algorithm, self.__cloned_target, self.best)
+        genotype: IGenotype = cast(IGenotype, self.best)
+        self.__cloned_target = get_target(self.__target)
+        Phenotype.while_end(genotype, Phenotype.get_context(genotype, self.__cloned_target))
+        for func in self.__best_changed:
+            if callable(func):
+                func(algorithm, self.__cloned_target, self.best)
 
     @staticmethod
     def __get_islands(target: str, target_instance: ITarget) -> List[IIsland]:

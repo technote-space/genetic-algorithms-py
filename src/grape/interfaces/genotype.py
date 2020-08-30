@@ -12,11 +12,6 @@ class IGenotype(IChromosome):
 
     @property
     @abstractmethod
-    def phenotype(self) -> 'IPhenotype':
-        pass
-
-    @property
-    @abstractmethod
     def fitness(self) -> float:
         pass
 
@@ -61,5 +56,4 @@ class IGenotype(IChromosome):
         pass
 
 
-from .phenotype import IPhenotype  # noqa: E402
 from .function_set import IFunctionSet  # noqa: E402

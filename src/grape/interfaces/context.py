@@ -36,14 +36,8 @@ class IContext(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def phenotype(self) -> 'IPhenotype':
-        pass
-
-    @property
-    @abstractmethod
     def is_skipping_frame(self) -> bool:
         pass
 
 
 from .function_set import IFunctionSet  # noqa: E402
-from .phenotype import IPhenotype  # noqa: E402

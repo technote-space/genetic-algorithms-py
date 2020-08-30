@@ -1,4 +1,3 @@
-import copy
 from typing import List
 from ..interfaces import IPopulation, IChromosome
 
@@ -11,11 +10,15 @@ class AbstractPopulation(IPopulation):
     """
 
     __chromosomes: List[IChromosome]
+    __pool: List[IChromosome]
 
     def __init__(self, size: int, adam: IChromosome) -> None:
         super().__init__(size, adam)
 
         self.__chromosomes = []
+        self.__pool = []
+        for _ in range(size):
+            self.__pool.append(self.adam.clone())
 
     @property
     def chromosomes(self) -> List[IChromosome]:
@@ -34,4 +37,8 @@ class AbstractPopulation(IPopulation):
         if self.size != len(chromosomes):
             raise Exception('Population size does not match the setting.')
 
-        self.__chromosomes = copy.copy(chromosomes)
+        for index in range(self.size):
+            self.__pool[index].copy_from(chromosomes[index])
+
+        for index in range(self.size):
+            self.__chromosomes[index].copy_from(self.__pool[index])

@@ -25,7 +25,7 @@ class CulturalIsland(GrapeIsland):
         super().__init__(
             helper,
             population_size,
-            CulturalCrossover(),
+            CulturalCrossover(node_count, functions),
             mutation_probability,
             CulturalReinsertion(),
             dataset,
