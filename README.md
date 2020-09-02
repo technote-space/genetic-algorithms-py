@@ -41,17 +41,17 @@ python src/app.py -p [task]
 #### Santa Fe Trail
 `santa-fe-trail`
 
-準備中...
+![Santa Fe Trail](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/santa-fe-trail.png)
 
 #### Cart Pole
 `cart-pole`
 
-準備中...
+![Cart Pole](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/cart-pole.gif)
 
 #### Mountain Car
 `mountain-car`
 
-準備中...
+![Mountain Car](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/mountain-car.gif)
 
 
 ## Linter
