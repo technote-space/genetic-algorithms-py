@@ -11,7 +11,7 @@ class ITestData(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def task(self) -> str:
+    def task_name(self) -> str:
         pass
 
     @abstractmethod

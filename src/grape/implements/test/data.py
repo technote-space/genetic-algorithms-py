@@ -10,14 +10,14 @@ class TestData(ITestData):
     テストデータ
     """
 
-    __task: str
+    __task_name: str
 
-    def __init__(self, task: str) -> None:
-        self.__task = task
+    def __init__(self, task_name: str) -> None:
+        self.__task_name = task_name
 
     @property
-    def task(self) -> str:
-        return self.__task
+    def task_name(self) -> str:
+        return self.__task_name
 
     def create_new(self) -> ITask:
-        return get_task(self.task)
+        return get_task(self.task_name)

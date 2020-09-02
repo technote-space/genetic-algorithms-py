@@ -11,11 +11,11 @@ from ..interfaces import IGenotype
 
 
 def evaluate(args: Tuple[str, List[int], float]) -> Tuple[float, float, float]:
-    task, chromosomes, sleep = args
+    task_name, chromosomes, sleep = args
 
-    task_instance = get_task(task)
-    dataset = TestDataset(task_instance.ga_settings.test_number, TestData(task))
-    functions = FunctionSet(task_instance.settings.action_number, task_instance.settings.perception_number)
+    task = get_task(task_name)
+    dataset = TestDataset(task.ga_settings.test_number, TestData(task_name))
+    functions = FunctionSet(task.settings.action_number, task.settings.perception_number)
     genotype = Genotype(0, functions)
 
     genotype.create_from_nodes(chromosomes)
@@ -35,13 +35,13 @@ class FitnessHelper:
 
     pool_size: int = 4
     sleep: float = 0.1
-    __task: str
+    __task_name: str
 
-    def __init__(self, task: str) -> None:
-        self.__task = task
+    def __init__(self, task_name: str) -> None:
+        self.__task_name = task_name
 
     def run(self, chromosomes: List[IChromosome]) -> None:
-        filter_func: Callable[[IChromosome], Tuple[str, List[int], float]] = lambda x: (self.__task, x.acids, FitnessHelper.sleep)
+        filter_func: Callable[[IChromosome], Tuple[str, List[int], float]] = lambda x: (self.__task_name, x.acids, FitnessHelper.sleep)
         with Pool(FitnessHelper.pool_size) as pool:
             results = pool.map(evaluate, map(filter_func, chromosomes))
 

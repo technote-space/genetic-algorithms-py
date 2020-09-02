@@ -19,9 +19,9 @@ def get_choices() -> Iterable[str]:
     return get_tasks().keys()
 
 
-def get_task(task: str, is_player: bool = False) -> ITask:
-    instance = get_tasks()[task]()
-    instance.set_name(task)
+def get_task(task_name: str, is_player: bool = False) -> ITask:
+    instance = get_tasks()[task_name]()
+    instance.set_name(task_name)
     if is_player:
         instance.on_player()
     return instance

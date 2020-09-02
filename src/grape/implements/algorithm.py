@@ -20,20 +20,20 @@ class Algorithm(AbstractAlgorithm):
     アルゴリズム
     """
 
-    __task: str
+    __task_name: str
     __best_changed: Tuple[Callable[[IAlgorithm, ITask, IChromosome], None], ...]
     __cloned_task: Optional[ITask]
 
-    def __init__(self, task: str, *best_changed: Callable[[IAlgorithm, ITask, IChromosome], None]) -> None:
-        self.__task = task
+    def __init__(self, task_name: str, *best_changed: Callable[[IAlgorithm, ITask, IChromosome], None]) -> None:
+        self.__task_name = task_name
         self.__best_changed = best_changed
 
-        task_instance = get_task(task)
-        settings = task_instance.ga_settings
+        task = get_task(task_name)
+        settings = task.ga_settings
         super().__init__(
-            1 if isinstance(task_instance, AbstractAtariTask) else 3,  # type: ignore
+            1 if isinstance(task, AbstractAtariTask) else 3,  # type: ignore
             self.__best_changed_function,
-            self.__get_islands(task, task_instance),
+            self.__get_islands(task_name, task),
             Termination(settings.terminate_offspring_number),
             Migration(settings.migration_rate, settings.migration_interval)
         )
@@ -45,24 +45,24 @@ class Algorithm(AbstractAlgorithm):
             raise Exception('Unexpected Error')
 
         genotype: IGenotype = cast(IGenotype, self.best)
-        self.__cloned_task = get_task(self.__task)
+        self.__cloned_task = get_task(self.__task_name)
         Phenotype.while_end(genotype, Phenotype.get_context(genotype, self.__cloned_task))
         for func in self.__best_changed:
             if callable(func):
                 func(algorithm, self.__cloned_task, self.best)
 
     @staticmethod
-    def __get_islands(task: str, task_instance: ITask) -> List[IIsland]:
-        settings = task_instance.ga_settings
+    def __get_islands(task_name: str, task: ITask) -> List[IIsland]:
+        settings = task.ga_settings
         total_island_number = max(1, settings.island_number)
         cultural_island_number = math.floor(total_island_number * settings.cultural_island_rate)
         mgg_island_number = max(1, total_island_number - cultural_island_number)
         cultural_island_number = total_island_number - mgg_island_number
 
-        dataset = TestDataset(settings.test_number, TestData(task))
+        dataset = TestDataset(settings.test_number, TestData(task_name))
         population_size = math.floor(settings.population_size / total_island_number)
-        functions = FunctionSet(task_instance.settings.action_number, task_instance.settings.perception_number)
-        helper = FitnessHelper(task)
+        functions = FunctionSet(task.settings.action_number, task.settings.perception_number)
+        helper = FitnessHelper(task_name)
         islands: List[IIsland] = []
         for _ in range(mgg_island_number):
             islands.append(MggIsland(
