@@ -12,7 +12,7 @@ Genetic Algorithms for Python.
 - [Setup](#setup)
 - [Run](#run)
 - [Play](#play)
-  - [Target](#target)
+  - [Task](#task)
 - [Linter](#linter)
 - [Docker](#docker)
   - [Build Docker Image](#build-docker-image)
