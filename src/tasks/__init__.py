@@ -1,7 +1,6 @@
 from .santa_fe_trail import SantaFeTrail
 from .cart_pole import CartPole
 from .mountain_car import MountainCar
-from .breakout import Breakout
 from typing import Iterable, Dict, Callable
 from task import ITask
 
@@ -13,7 +12,6 @@ def get_tasks() -> Dict[str, Callable[[], ITask]]:
         'santa-fe-trail': SantaFeTrail,
         'cart-pole': CartPole,
         'mountain-car': MountainCar,
-        'breakout': Breakout,
     }
 
 
