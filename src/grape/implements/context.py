@@ -52,4 +52,5 @@ class Context(IContext):
         if self.__skip >= self.__action_frame:
             self.__skip = 0
             return False
+
         return True

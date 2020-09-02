@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from .algorithm import IAlgorithm
 
 
 class ITermination(metaclass=ABCMeta):
@@ -14,12 +15,9 @@ class ITermination(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def has_reached(self, algorithm: 'IAlgorithm') -> bool:
+    def has_reached(self, algorithm: IAlgorithm) -> bool:
         pass
 
     @abstractmethod
     def init(self) -> None:
         pass
-
-
-from .algorithm import IAlgorithm  # noqa: E402

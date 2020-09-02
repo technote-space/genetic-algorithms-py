@@ -17,9 +17,7 @@ class AbstractMigration(IMigration):
 
     def __init__(self, rate: float, interval: int) -> None:
         super().__init__(rate, interval)
-
-        self.__prev = 0
-        self.__time = 0
+        self.init()
 
     def init(self) -> None:
         self.__prev = 0

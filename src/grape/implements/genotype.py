@@ -60,6 +60,7 @@ class Genotype(AbstractChromosome, IGenotype):
         nodes = []
         for index in range(self.__node_count + 1):
             nodes.extend(self.get_node_genes(index))
+
         return nodes
 
     @property

@@ -22,6 +22,7 @@ class FunctionSet(IFunctionSet):
     def __set_functions(self, action_number: int, perception_number: int) -> None:
         for index in range(action_number):
             self.add(Action(index))
+
         for index in range(perception_number):
             self.add(Perception(index))
 
