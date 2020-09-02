@@ -41,18 +41,27 @@ python src/app.py -p [task]
 #### Santa Fe Trail
 `santa-fe-trail`
 
+[wikipedia](https://en.wikipedia.org/wiki/Santa_Fe_Trail_problem)
+
 ![Santa Fe Trail](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/santa-fe-trail.png)
 
 #### Cart Pole
 `cart-pole`
 
+[Environment](https://github.com/openai/gym/wiki/CartPole-v0)
+
 ![Cart Pole](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/cart-pole.gif)
+
+[Generated Source Code](./samples/cart-pole)
 
 #### Mountain Car
 `mountain-car`
 
+[Environment](https://github.com/openai/gym/wiki/MountainCar-v0)
+
 ![Mountain Car](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/mountain-car.gif)
 
+[Generated Source Code](./samples/mountain-car)
 
 ## Linter
 lint
