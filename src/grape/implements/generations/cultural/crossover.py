@@ -1,4 +1,4 @@
-from typing import List, Iterable, Callable
+from typing import List, Iterable
 from ga import AbstractCrossover, IChromosome
 from ...genotype import Genotype
 from ....interfaces import IFunctionSet
