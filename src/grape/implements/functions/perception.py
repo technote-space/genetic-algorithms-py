@@ -17,7 +17,7 @@ class Perception(AbstractFunction):
         self.__index = index
 
     def _run(self, c1: int, c2: int, context: IContext) -> None:
-        context.current = c1 if context.target.perceive(self.__index) else c2  # type: ignore  #(@see https://github.com/python/mypy/issues/1362)
+        context.current = c1 if context.task.perceive(self.__index) else c2  # type: ignore  #(@see https://github.com/python/mypy/issues/1362)
 
     def get_possible_connections(self, c1: int, c2: int, context: IContext) -> Iterable[int]:
         return c1, c2

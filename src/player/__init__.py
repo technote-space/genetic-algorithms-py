@@ -1,6 +1,6 @@
 import time
 from typing import List, Optional
-from targets import get_target
+from tasks import get_task
 from grape import Genotype, FunctionSet, IGenotype, IContext, Phenotype
 
 
@@ -11,13 +11,13 @@ class Player:
     再生ヘルパー
     """
 
-    __target: str
+    __task: str
     __chromosome: List[int]
     __genotype: IGenotype
     __context: Optional[IContext]
 
-    def __init__(self, target: str, chromosome: List[int]) -> None:
-        self.__target = target
+    def __init__(self, task: str, chromosome: List[int]) -> None:
+        self.__task = task
         self.__chromosome = chromosome
         self.__context = None
         self.__reset()
@@ -25,20 +25,20 @@ class Player:
 
     def __reset(self) -> None:
         if self.__context:
-            self.__context.target.close()
-        target = get_target(self.__target, True)
-        self.__genotype = Genotype(0, FunctionSet(target.settings.action_number, target.settings.perception_number))
+            self.__context.task.close()
+        task = get_task(self.__task, True)
+        self.__genotype = Genotype(0, FunctionSet(task.settings.action_number, task.settings.perception_number))
         self.__genotype.create_from_nodes(self.__chromosome)
-        self.__context = Phenotype.get_context(self.__genotype, target)
+        self.__context = Phenotype.get_context(self.__genotype, task)
 
     def __main(self) -> None:
         if not self.__context:
             return
         while True:
-            while not self.__context.target.has_reached:
+            while not self.__context.task.has_reached:
                 Phenotype.until_action(self.__genotype, self.__context)
-                self.__context.target.render()
-                time.sleep(1.0 / self.__context.target.settings.fps)
+                self.__context.task.render()
+                time.sleep(1.0 / self.__context.task.settings.fps)
 
             time.sleep(2)
             self.__reset()

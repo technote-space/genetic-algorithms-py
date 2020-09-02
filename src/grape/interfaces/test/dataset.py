@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import Iterable
-from target import ITarget
+from task import ITask
 from .data import ITestData
 
 
@@ -22,5 +22,5 @@ class ITestDataset(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def create_dataset(self) -> Iterable[ITarget]:
+    def create_dataset(self) -> Iterable[ITask]:
         pass

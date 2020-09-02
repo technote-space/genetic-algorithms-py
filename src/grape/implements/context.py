@@ -1,4 +1,4 @@
-from target import ITarget
+from task import ITask
 from ..interfaces import IContext, IFunctionSet
 
 
@@ -9,23 +9,23 @@ class Context(IContext):
     コンテキスト
     """
 
-    __target: ITarget
+    __task: ITask
     __current: int
     __node_count: int
     __functions: IFunctionSet
     __action_frame: int
 
-    def __init__(self, target: ITarget, start: int, node_count: int, functions: IFunctionSet) -> None:
-        self.__target = target
+    def __init__(self, task: ITask, start: int, node_count: int, functions: IFunctionSet) -> None:
+        self.__task = task
         self.__current = start
         self.__node_count = node_count
         self.__functions = functions
-        self.__action_frame = target.settings.action_frame
+        self.__action_frame = task.settings.action_frame
         self.__skip = 0
 
     @property
-    def target(self) -> ITarget:
-        return self.__target
+    def task(self) -> ITask:
+        return self.__task
 
     @property
     def current(self) -> int:

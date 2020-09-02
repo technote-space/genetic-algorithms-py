@@ -2,7 +2,7 @@ import time
 from typing import Tuple, List, Callable
 from multiprocessing import Pool
 from ga import IChromosome
-from targets import get_target
+from tasks import get_task
 from .genotype import Genotype
 from .function_set import FunctionSet
 from .test import TestData, TestDataset
@@ -11,11 +11,11 @@ from ..interfaces import IGenotype
 
 
 def evaluate(args: Tuple[str, List[int], float]) -> Tuple[float, float, float]:
-    target, chromosomes, sleep = args
+    task, chromosomes, sleep = args
 
-    target_instance = get_target(target)
-    dataset = TestDataset(target_instance.ga_settings.test_number, TestData(target))
-    functions = FunctionSet(target_instance.settings.action_number, target_instance.settings.perception_number)
+    task_instance = get_task(task)
+    dataset = TestDataset(task_instance.ga_settings.test_number, TestData(task))
+    functions = FunctionSet(task_instance.settings.action_number, task_instance.settings.perception_number)
     genotype = Genotype(0, functions)
 
     genotype.create_from_nodes(chromosomes)
@@ -35,13 +35,13 @@ class FitnessHelper:
 
     pool_size: int = 4
     sleep: float = 0.1
-    __target: str
+    __task: str
 
-    def __init__(self, target: str) -> None:
-        self.__target = target
+    def __init__(self, task: str) -> None:
+        self.__task = task
 
     def run(self, chromosomes: List[IChromosome]) -> None:
-        filter_func: Callable[[IChromosome], Tuple[str, List[int], float]] = lambda x: (self.__target, x.acids, FitnessHelper.sleep)
+        filter_func: Callable[[IChromosome], Tuple[str, List[int], float]] = lambda x: (self.__task, x.acids, FitnessHelper.sleep)
         with Pool(FitnessHelper.pool_size) as pool:
             results = pool.map(evaluate, map(filter_func, chromosomes))
 

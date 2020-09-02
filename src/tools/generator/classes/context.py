@@ -1,5 +1,5 @@
 from typing import List, Optional
-from target import ITarget
+from task import ITask
 from .base import Base
 
 
@@ -10,7 +10,7 @@ class Context(Base):
     Context
     """
 
-    __target: ITarget
+    __task: ITask
     __fps: float
     __gym_id: str
     __action_limit: int
@@ -18,9 +18,9 @@ class Context(Base):
     __action_number: int
     __perception_number: int
 
-    def __init__(self, directory: str, target: ITarget, fps: float, gym_id: str, action_limit: int, step_limit: int, action_number: int, perception_number: int) -> None:
+    def __init__(self, directory: str, task: ITask, fps: float, gym_id: str, action_limit: int, step_limit: int, action_number: int, perception_number: int) -> None:
         super().__init__(directory)
-        self.__target = target
+        self.__task = task
         self.__fps = fps
         self.__gym_id = gym_id
         self.__action_limit = action_limit
@@ -40,7 +40,7 @@ class Context(Base):
         ]
 
     def __get_class_source(self) -> List[str]:
-        finished_expression = self.__target.get_finished_expression("self.__context[2]", "self.__context[0]")
+        finished_expression = self.__task.get_finished_expression("self.__context[2]", "self.__context[0]")
         return [
             'def __init__(self):',
             '{',
@@ -83,13 +83,13 @@ class Context(Base):
         actions = []
         is_start = False
         for index in range(self.__action_number):
-            v1 = self.__target.get_action_expression(index)
-            v2 = self.__target.get_action_expression(index, True)
+            v1 = self.__task.get_action_expression(index)
+            v2 = self.__task.get_action_expression(index, True)
             if v1 == v2:
                 actions.extend([
                     f'if index == {index}:',
                     '{',
-                    f'return {self.__target.get_action_expression(index)}',
+                    f'return {self.__task.get_action_expression(index)}',
                     '}',
                 ])
             else:
@@ -135,7 +135,7 @@ class Context(Base):
             perceptions.extend([
                 f'if index == {index}:',
                 '{',
-                f'return {self.__target.get_perceive_expression(index, "self.__context[0]")}',
+                f'return {self.__task.get_perceive_expression(index, "self.__context[0]")}',
                 '}',
             ])
         return [

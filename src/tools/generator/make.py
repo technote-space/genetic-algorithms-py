@@ -5,7 +5,7 @@ from functools import reduce
 from typing import List, Union, Optional, Callable, cast
 from ga import IAlgorithm, IChromosome
 from grape import IGenotype, IFuncBlock, INextBlock, Phenotype
-from target import ITarget
+from task import ITask
 from .compressor import Compressor
 from .classes import Base, Algorithm, App, Context, Finished, Runner, Package
 
@@ -22,17 +22,17 @@ class Make:
     def __init__(self, directory: str) -> None:
         self.__directory = directory
 
-    def generate(self, _algorithm: IAlgorithm, target: ITarget, genotype: IChromosome) -> None:
-        settings = target.settings
+    def generate(self, _algorithm: IAlgorithm, task: ITask, genotype: IChromosome) -> None:
+        settings = task.settings
         if settings.gym_id and isinstance(genotype, IGenotype):
             save_directory = os.path.join(os.getcwd(), self.__directory)
             if os.path.exists(save_directory):
                 shutil.rmtree(save_directory)
             os.makedirs(os.path.join(save_directory, 'packages'))
-            blocks: List[IFuncBlock] = Phenotype.get_programming(genotype, target)
-            self.__make(target, blocks, settings.gym_id, settings.fps, settings.action_limit, settings.step_limit, settings.action_number, settings.perception_number)
+            blocks: List[IFuncBlock] = Phenotype.get_programming(genotype, task)
+            self.__make(task, blocks, settings.gym_id, settings.fps, settings.action_limit, settings.step_limit, settings.action_number, settings.perception_number)
 
-    def __make(self, target: ITarget, blocks: List[IFuncBlock], gym_id: str, fps: float, action_limit: int, step_limit: int, action_number: int, perception_number: int) -> None:
+    def __make(self, task: ITask, blocks: List[IFuncBlock], gym_id: str, fps: float, action_limit: int, step_limit: int, action_number: int, perception_number: int) -> None:
         start: int = cast(int, blocks[0].next)
         start_actions: List[str] = copy.copy(blocks[0].actions)
         lambda_func1: Callable[[IFuncBlock], List[str]] = lambda block: Make.__block_to_function(block)
@@ -42,7 +42,7 @@ class Make:
         makers: List[Base] = [
             Algorithm(self.__directory, lines, start, start_actions),
             App(self.__directory),
-            Context(self.__directory, target, fps, gym_id, action_limit, step_limit, action_number, perception_number),
+            Context(self.__directory, task, fps, gym_id, action_limit, step_limit, action_number, perception_number),
             Finished(self.__directory),
             Runner(self.__directory, step_limit),
             Package(self.__directory),

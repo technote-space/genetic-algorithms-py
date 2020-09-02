@@ -1,5 +1,5 @@
 from typing import Iterable
-from target import ITarget
+from task import ITask
 from ...interfaces import ITestDataset, ITestData
 
 
@@ -25,8 +25,8 @@ class TestDataset(ITestDataset):
     def data(self) -> ITestData:
         return self.__data
 
-    def __lambda(self, _: int) -> ITarget:
+    def __lambda(self, _: int) -> ITask:
         return self.data.create_new()
 
-    def create_dataset(self) -> Iterable[ITarget]:
+    def create_dataset(self) -> Iterable[ITask]:
         return map(self.__lambda, range(self.length))

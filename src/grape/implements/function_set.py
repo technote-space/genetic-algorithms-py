@@ -17,9 +17,9 @@ class FunctionSet(IFunctionSet):
     def __init__(self, action_number: int, perception_number: int) -> None:
         super().__init__()
         self.__functions = [Start()]
-        self.__set_target_functions(action_number, perception_number)
+        self.__set_functions(action_number, perception_number)
 
-    def __set_target_functions(self, action_number: int, perception_number: int) -> None:
+    def __set_functions(self, action_number: int, perception_number: int) -> None:
         for index in range(action_number):
             self.add(Action(index))
         for index in range(perception_number):

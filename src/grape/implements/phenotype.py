@@ -1,5 +1,5 @@
 from typing import Tuple, List
-from target import ITarget
+from task import ITask
 from .context import Context
 from .functions import Perception
 from ..interfaces import IGenotype, ITestDataset, IContext, IFuncBlock
@@ -20,8 +20,8 @@ class Phenotype:
 
         # noinspection PyBroadException
         try:
-            for target in dataset.create_dataset():
-                result = Phenotype._episode(genotype, target)
+            for task in dataset.create_dataset():
+                result = Phenotype._episode(genotype, task)
                 sum_steps += result[0]
                 sum_action_steps += result[1]
                 sum_score += result[2]
@@ -36,7 +36,7 @@ class Phenotype:
 
     @staticmethod
     def until_action(genotype: IGenotype, context: IContext) -> None:
-        while not context.target.has_reached:
+        while not context.task.has_reached:
             node = genotype.get_node_genes(context.current)
             func = context.functions.get_function(node[0])
             func.execute(node[1], node[2], context)
@@ -45,23 +45,23 @@ class Phenotype:
 
     @staticmethod
     def while_end(genotype: IGenotype, context: IContext) -> None:
-        while not context.target.has_reached:
+        while not context.task.has_reached:
             node = genotype.get_node_genes(context.current)
             Phenotype._next(node, context)
 
     @staticmethod
-    def get_context(genotype: IGenotype, target: ITarget, current: int = 0) -> IContext:
-        return Context(target, current, genotype.node_count, genotype.functions)
+    def get_context(genotype: IGenotype, task: ITask, current: int = 0) -> IContext:
+        return Context(task, current, genotype.node_count, genotype.functions)
 
     @staticmethod
-    def _episode(genotype: IGenotype, target: ITarget) -> Tuple[float, float, float]:
-        context = Phenotype.get_context(genotype, target)
+    def _episode(genotype: IGenotype, task: ITask) -> Tuple[float, float, float]:
+        context = Phenotype.get_context(genotype, task)
         Phenotype.while_end(genotype, context)
 
-        return context.target.step, context.target.action_step, context.target.get_fitness()
+        return context.task.step, context.task.action_step, context.task.get_fitness()
 
     @staticmethod
-    def get_programming(genotype: IGenotype, target: ITarget) -> List[IFuncBlock]:
+    def get_programming(genotype: IGenotype, task: ITask) -> List[IFuncBlock]:
         blocks = {}
         stack = [0]
         while len(stack) > 0:
@@ -71,7 +71,7 @@ class Phenotype:
 
             node = genotype.get_node_genes(current)
             func = genotype.functions.get_function(node[0])
-            context = Phenotype.get_context(genotype, target, current)
+            context = Phenotype.get_context(genotype, task, current)
             blocks[current] = func.programming(node[1], node[2], context)
             for c in func.get_possible_connections(node[1], node[2], context):
                 stack.append(c)

@@ -1,7 +1,7 @@
 import math
 from typing import List, Tuple, Callable, Optional, cast
-from targets import get_target
-from target import ITarget, AbstractAtariTarget
+from tasks import get_task
+from task import ITask, AbstractAtariTask
 from ga import AbstractAlgorithm, IChromosome, IAlgorithm, IIsland
 from .termination import Termination
 from .migration import Migration
@@ -20,49 +20,49 @@ class Algorithm(AbstractAlgorithm):
     アルゴリズム
     """
 
-    __target: str
-    __best_changed: Tuple[Callable[[IAlgorithm, ITarget, IChromosome], None], ...]
-    __cloned_target: Optional[ITarget]
+    __task: str
+    __best_changed: Tuple[Callable[[IAlgorithm, ITask, IChromosome], None], ...]
+    __cloned_task: Optional[ITask]
 
-    def __init__(self, target: str, *best_changed: Callable[[IAlgorithm, ITarget, IChromosome], None]) -> None:
-        self.__target = target
+    def __init__(self, task: str, *best_changed: Callable[[IAlgorithm, ITask, IChromosome], None]) -> None:
+        self.__task = task
         self.__best_changed = best_changed
 
-        target_instance = get_target(target)
-        settings = target_instance.ga_settings
+        task_instance = get_task(task)
+        settings = task_instance.ga_settings
         super().__init__(
-            1 if isinstance(target_instance, AbstractAtariTarget) else 3,  # type: ignore
+            1 if isinstance(task_instance, AbstractAtariTask) else 3,  # type: ignore
             self.__best_changed_function,
-            self.__get_islands(target, target_instance),
+            self.__get_islands(task, task_instance),
             Termination(settings.terminate_offspring_number),
             Migration(settings.migration_rate, settings.migration_interval)
         )
 
-        self.__cloned_target = None
+        self.__cloned_task = None
 
     def __best_changed_function(self, algorithm: IAlgorithm) -> None:
         if not self.best or not isinstance(self.best, IGenotype):
             raise Exception('Unexpected Error')
 
         genotype: IGenotype = cast(IGenotype, self.best)
-        self.__cloned_target = get_target(self.__target)
-        Phenotype.while_end(genotype, Phenotype.get_context(genotype, self.__cloned_target))
+        self.__cloned_task = get_task(self.__task)
+        Phenotype.while_end(genotype, Phenotype.get_context(genotype, self.__cloned_task))
         for func in self.__best_changed:
             if callable(func):
-                func(algorithm, self.__cloned_target, self.best)
+                func(algorithm, self.__cloned_task, self.best)
 
     @staticmethod
-    def __get_islands(target: str, target_instance: ITarget) -> List[IIsland]:
-        settings = target_instance.ga_settings
+    def __get_islands(task: str, task_instance: ITask) -> List[IIsland]:
+        settings = task_instance.ga_settings
         total_island_number = max(1, settings.island_number)
         cultural_island_number = math.floor(total_island_number * settings.cultural_island_rate)
         mgg_island_number = max(1, total_island_number - cultural_island_number)
         cultural_island_number = total_island_number - mgg_island_number
 
-        dataset = TestDataset(settings.test_number, TestData(target))
+        dataset = TestDataset(settings.test_number, TestData(task))
         population_size = math.floor(settings.population_size / total_island_number)
-        functions = FunctionSet(target_instance.settings.action_number, target_instance.settings.perception_number)
-        helper = FitnessHelper(target)
+        functions = FunctionSet(task_instance.settings.action_number, task_instance.settings.perception_number)
+        helper = FitnessHelper(task)
         islands: List[IIsland] = []
         for _ in range(mgg_island_number):
             islands.append(MggIsland(

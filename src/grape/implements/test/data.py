@@ -1,5 +1,5 @@
-from targets import get_target
-from target import ITarget
+from tasks import get_task
+from task import ITask
 from ...interfaces import ITestData
 
 
@@ -10,14 +10,14 @@ class TestData(ITestData):
     テストデータ
     """
 
-    __target: str
+    __task: str
 
-    def __init__(self, target: str) -> None:
-        self.__target = target
+    def __init__(self, task: str) -> None:
+        self.__task = task
 
     @property
-    def target(self) -> str:
-        return self.__target
+    def task(self) -> str:
+        return self.__task
 
-    def create_new(self) -> ITarget:
-        return get_target(self.target)
+    def create_new(self) -> ITask:
+        return get_task(self.task)

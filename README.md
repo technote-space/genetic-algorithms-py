@@ -29,15 +29,15 @@ pipenv install -d
 
 ## Run
 ```shell script
-python src/app.py [target]
+python src/app.py [task]
 ```
 
 ## Play
 ```shell script
-python src/app.py -p [target]
+python src/app.py -p [task]
 ```
 
-### Target
+### Task
 #### Santa Fe Trail
 `santa-fe-trail`
 
@@ -73,5 +73,5 @@ docker build -t ga:latest .
 
 ### Run
 ```shell script
-docker run ga:latest [target]
+docker run ga:latest [task]
 ```

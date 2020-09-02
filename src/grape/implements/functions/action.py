@@ -17,7 +17,7 @@ class Action(AbstractFunction):
         self.__index = index
 
     def _run(self, c1: int, c2: int, context: IContext) -> None:
-        context.target.action(self.__index)
+        context.task.action(self.__index)
         if not context.is_skipping_frame:
             context.current = c1  # type: ignore  #(@see https://github.com/python/mypy/issues/1362)
 
@@ -27,6 +27,6 @@ class Action(AbstractFunction):
     def programming(self, c1: int, c2: int, context: IContext) -> IFuncBlock:
         return FuncBlock(
             context.current,
-            [f'self.__context.action({self.__index})'] * context.target.settings.action_frame,
+            [f'self.__context.action({self.__index})'] * context.task.settings.action_frame,
             c1
         )

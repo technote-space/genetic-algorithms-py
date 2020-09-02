@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from target import ITarget
+from task import ITask
 
 
 class IContext(metaclass=ABCMeta):
@@ -11,7 +11,7 @@ class IContext(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def target(self) -> ITarget:
+    def task(self) -> ITask:
         pass
 
     @property  # type: ignore  #(@see https://github.com/python/mypy/issues/1362)
