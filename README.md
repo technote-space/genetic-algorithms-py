@@ -41,7 +41,7 @@ python src/app.py -p [task]
 #### Santa Fe Trail
 `santa-fe-trail`
 
-[wikipedia](https://en.wikipedia.org/wiki/Santa_Fe_Trail_problem)
+[Wikipedia](https://en.wikipedia.org/wiki/Santa_Fe_Trail_problem)
 
 ![Santa Fe Trail](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/santa-fe-trail.png)
 
