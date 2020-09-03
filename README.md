@@ -52,7 +52,8 @@ python src/app.py -p [task]
 
 ![Cart Pole](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/cart-pole.gif)
 
-[Generated Source Code](./samples/cart-pole)
+* [Generated Source Code](./samples/cart-pole)
+* [Generated Algorithm](./samples/cart-pole/packages/algorithm.py)
 
 #### Mountain Car
 `mountain-car`
@@ -61,7 +62,8 @@ python src/app.py -p [task]
 
 ![Mountain Car](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/mountain-car.gif)
 
-[Generated Source Code](./samples/mountain-car)
+* [Generated Source Code](./samples/mountain-car)
+* [Generated Algorithm](./samples/mountain-car/packages/algorithm.py)
 
 ## Linter
 lint
