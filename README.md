@@ -41,7 +41,7 @@ python src/app.py -p [task]
 
 [Wikipedia](https://en.wikipedia.org/wiki/Santa_Fe_Trail_problem)
 
-![Santa Fe Trail](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/santa-fe-trail.png)
+![Santa Fe Trail](https://raw.githubusercontent.com/technote-space/genetic-algorithms-py/images/santa-fe-trail.gif)
 
 #### Cart Pole
 `cart-pole`
