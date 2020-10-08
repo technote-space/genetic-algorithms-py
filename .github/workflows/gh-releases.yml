@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 3
     steps:
       - name: Get version
-        run: echo "::set-env name=TAG_NAME::${HEAD_REF#refs/tags/}"
+        run: echo "TAG_NAME=${HEAD_REF#refs/tags/}" >> $GITHUB_ENV
         env:
           HEAD_REF: ${{ github.ref }}
       - name: Create Release
