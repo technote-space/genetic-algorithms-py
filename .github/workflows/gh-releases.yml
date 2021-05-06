@@ -3,6 +3,9 @@ on:
     tags:
       - "v*"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 name: GitHub Releases
 
 jobs:
