@@ -1,5 +1,8 @@
 on: push
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 name: TOC Generator
 
 jobs:
